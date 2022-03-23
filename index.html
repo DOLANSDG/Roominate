@@ -3,10 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="style.css"> <!-- Link CSS file -->
+    <title>ROOMinate</title>
 </head>
 <body>
-    
+    <!-- Top Bar ----------------------------------->
+    <div id="topbar">
+        <div id="logobar">
+            <img src="logo.png" alt="logo" style="width: 60px; height: 60px">
+        </div>
+        <!-- Sidebar Selection Bar -------------------------------->
+        <div id="sidebar-select">
+            <div class="sidebar-buttons" onclick="toggleEditSidebar();">Object Editor</div> 
+            <div class="sidebar-buttons" onclick="toggleShapeSidebar();">Object Select</div> 
+        </div>
+        <!-- Object Editor Sidebar --------------------->
+        <div id="obj-editor" class="hidden sidebar">
+            <h1>Test</h1>
+        </div>
+        <!-- Shape Sidebar ----------------------------->
+        <div id="shape-select" class="hidden sidebar">
+            <h1>Test 2</h1>
+        </div>
+    </div>
 </body>
-    <script src="lib\fabric.min.js"></script> 
+
+<!-- Link JS files -->
+<script src="lib\fabric.min.js"></script> 
+<script src="scripts.js"></script>
 </html>
