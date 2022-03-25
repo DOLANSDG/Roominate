@@ -9,12 +9,17 @@ html {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+body {
+    overflow-y: hidden;
+}
+
 .hidden {
     display: none !important;
 }
 
 #topbar {
     display: grid;
+    overflow-x: hidden;
 }
 
 #logobar {
@@ -34,4 +39,25 @@ html {
 
 .sidebar-buttons {
     display: inline;
+}
+
+#sidebar-container {
+    background-color: beige;
+    right: 0;
+    position: absolute;
+    height: 100%;
+
+}
+
+.sidebar {
+    height: 100%; /* dont know how to get this to fill the rest of the page height */
+    width: 250px;
+    float: right;
+    position: relative;
+    z-index: 1;
+    background-color: rgba(160, 235, 191, 0.8);
+}
+
+#shape-select {
+    width: 200px;
 }
