@@ -50,14 +50,58 @@ body {
 }
 
 .sidebar {
-    height: 100%; /* dont know how to get this to fill the rest of the page height */
-    width: 250px;
+    height: 100%;
     float: right;
     position: relative;
     z-index: 1;
-    background-color: rgba(160, 235, 191, 0.8);
+    background-color: rgba(210, 176, 248, 0.8);
 }
 
+/* Shape Select Sidebar ********************************************/
 #shape-select {
-    width: 200px;
+    width: 80px;
+    padding-inline: 10px;
+    padding-top: 10px;
+}
+
+.shape-icon {
+    width: inherit;
+    padding-bottom: 10px;
+}
+
+/* Obj Editor Sidebar ********************************************/
+#obj-editor {
+    width: 220px;
+    padding: 10px;
+}
+
+.obj-sidebar-size {
+    border-bottom: 1px solid;
+    border-color: rgba(120, 40, 167, 0.5);
+    right: 0;
+    text-align: right;
+    padding: 15px 0px 15px 0px;
+}
+
+input[type=number] {
+    text-align: right;
+    margin-top: -2px;
+    width: 70px;
+    height: 21px;
+    border: 1px solid rgb(160, 160, 160);
+    border-radius: 4px;
+    box-sizing: border-box;
+    right:0;
+}
+
+.container-label {
+    font-weight: bold;
+    position:absolute; 
+    left:20px;
+}
+
+.container-title {
+    font-weight: bold;
+    font-size: 120%;
+    padding-bottom: 4px;
 }
