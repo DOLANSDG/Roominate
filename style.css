@@ -26,7 +26,7 @@ body {
     display: none !important;
 }
 
-/* Topbar *********************************************************/
+/* --------------------------------- Topbar --------------------------------- */
 #topbar {
     display: grid;
     overflow-x: hidden;
@@ -67,7 +67,7 @@ body {
     background-color: rgba(210, 176, 248, 0.8);
 }
 
-/* Shape Select Sidebar ********************************************/
+/* -------------------------- Shape select sidebar -------------------------- */
 #shape-select {
     width: 80px;
     padding-inline: 10px;
@@ -79,7 +79,7 @@ body {
     padding-bottom: 10px;
 }
 
-/* Obj Editor Sidebar ********************************************/
+/* -------------------------- Object editor sidebar ------------------------- */
 #obj-editor {
     width: 220px;
     padding: 10px;

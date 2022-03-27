@@ -5,7 +5,9 @@ let canvas = new fabric.Canvas('canvas');
 // Quick helper function to get HTML elements
 var $ = function(id) {return document.getElementById(id)};
 
-
+/**
+ * Toggles the edit sidebar
+ */
 function toggleEditSidebar() {
     if (editSideActive) { // turn off sidebar
         $('obj-editor').classList.add('hidden');
@@ -16,6 +18,9 @@ function toggleEditSidebar() {
     }
 }
 
+/**
+ * Toggles the shape sidebar
+ */
 function toggleShapeSidebar() {
     if (shapeSideActive) { // turn off sidebar
         $('shape-select').classList.add('hidden');
@@ -26,8 +31,13 @@ function toggleShapeSidebar() {
     }
 }
 
-// Canvas Functions //////////////////////////////////
-// Makes the canvas fullscreen
+/* -------------------------------------------------------------------------- */
+/*                              Canvas Functions                              */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Resizes the canvas  when brower size is adjusted, make the canvas fullscreen
+ */
 (function() {
     // resize the canvas to fill browser window dynamically
     window.addEventListener('resize', resizeCanvas, false);
@@ -40,7 +50,9 @@ function toggleShapeSidebar() {
     resizeCanvas();
 })();
 
-// Create Rectangle
+/**
+ *  Creates Rectangle object and renders it onto the canvas
+ */
 function createRect() {
     var rect = new fabric.Rect( {
         fill: '#b291ff',
@@ -55,7 +67,9 @@ function createRect() {
     canvas.centerObject(rect);
 }
 
-//Create Circle
+/**
+ * Creates Circle object and renders it onto the canvas
+ */
 function createCircle() {
     var circle = new fabric.Circle({
         fill: '#b291ff',

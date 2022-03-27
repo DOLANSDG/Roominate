@@ -7,24 +7,28 @@
     <title>ROOMinate</title>
 </head>
 <body>
-    <!-- Top Bar ----------------------------------->
+    <!-- ----------------------------------------------------------------------- -->
+    <!--                                 Topbar                                  -->
+    <!-- ----------------------------------------------------------------------- -->
     <div id="topbar">
         <div id="logobar">
             <img src="img\logo.png" alt="logo" style="width: 60px; height: 60px">
         </div>
-        <!-- Sidebar Selection Bar -------------------------------->
+        <!-- ------------------------ Sidebar Selection Bar ------------------------ -->
         <div id="sidebar-select">
             <div class="sidebar-buttons" onclick="toggleEditSidebar();">Object Editor</div> 
             <div class="sidebar-buttons" onclick="toggleShapeSidebar();">Shape Select</div> 
         </div>
     </div>
     
-    <!-- Sidebars -------------------------------------->
+    <!-- ----------------------------------------------------------------------- -->
+    <!--                                 Sidebar                                 -->
+    <!-- ----------------------------------------------------------------------- -->
     <div id="sidebar-container">
-        <!-- Object Editor Sidebar --------------------->
+        <!-- ------------------------ Object Editor Sidebar ------------------------ -->
         <div id="obj-editor" class="hidden sidebar">
             <div class="container-title">Object Properties</div>
-            <!-- Object Size container --------------------------------------------->
+            <!-- ------------------------ Object Size Container ------------------------ -->
             <div class="obj-sidebar-size">
                 <span class="container-label">Size</span>
                 <input type="number" id="obj-len" name="obj-len">
@@ -37,7 +41,7 @@
                 <label for="constrain-props">Constrain Proportions</label>
             </div>
             
-            <!-- Object Position container --------------------------------------------->
+            <!-- ---------------------- Object Position Container ---------------------- -->
             <div class="obj-sidebar-size">
                 <span class="container-label">Position</span>
                 <input type="number" id="obj-x" name="obj-x">
@@ -48,14 +52,14 @@
                 </div>
             </div>
             
-            <!-- Object Color container --------------------------------------------->
+            <!-- ----------------------- Object Color Container ------------------------ -->
             <div class="obj-sidebar-size">
                 <span class="container-label">Color</span>
                 <input type="color" id="obj-color">
             </div>
         </div>
         
-        <!-- Shape Sidebar ----------------------------->
+        <!-- ---------------------------- Shape Sidebar ---------------------------- -->
         <div id="shape-select" class="hidden sidebar">
             <img src="img\square_icon.png" class="shape-icon" onclick="createRect();">
             <img src="img\circle_icon.png" class="shape-icon" onclick="createCircle();">
@@ -66,7 +70,7 @@
     <canvas id="canvas"></canvas> <!-- Canvas-->
 </body>
 
-<!-- Link JS files -->
+<!-- ---------------------------- Link JS files ---------------------------- -->
 <script src="lib\fabric.min.js"></script> 
 <script src="scripts.js"></script>
 </html>
