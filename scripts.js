@@ -26,7 +26,7 @@ function toggleShapeSidebar() {
     }
 }
 
-// Basic Canvas Functions //////////////////////////////////
+// Canvas Functions //////////////////////////////////
 // Makes the canvas fullscreen
 (function() {
     // resize the canvas to fill browser window dynamically
@@ -39,6 +39,35 @@ function toggleShapeSidebar() {
     
     resizeCanvas();
 })();
+
+// Create Rectangle
+function createRect() {
+    var rect = new fabric.Rect( {
+        fill: '#b291ff',
+        width: 200,
+        height: 100,
+        objectCaching: false,
+        stroke: 'black',
+        strokeWidth: 4,
+    })
+    canvas.add(rect);
+    canvas.setActiveObject(rect);
+    canvas.centerObject(rect);
+}
+
+//Create Circle
+function createCircle() {
+    var circle = new fabric.Circle({
+        fill: '#b291ff',
+        radius: 50,
+        objectCaching: false,
+        stroke: 'black',
+        strokeWidth: 4,
+    })
+    canvas.add(circle);
+    canvas.setActiveObject(circle);
+    canvas.centerObject(circle);
+}
 
 // Canvas Zoom and Pan
 canvas.on('mouse:wheel', function(opt) {
