@@ -4,6 +4,12 @@ let canvas = new fabric.Canvas('canvas');
 
 // Quick helper function to get HTML elements
 var $ = function(id) {return document.getElementById(id)};
+var round = function(num) {return +(Math.round(num + "e+2")  + "e-2")};
+var toInch = function(feet) {return feet * 12};
+
+var lenInput = $('obj-len');
+var widthInput = $('obj-width');
+var colorInput = $('obj-color');
 
 /**
  * Toggles the edit sidebar
@@ -82,6 +88,54 @@ function createCircle() {
     canvas.setActiveObject(circle);
     canvas.centerObject(circle);
 }
+
+/**
+ * Update input box when object changes
+ */
+function updateControls() {
+    var aObject = canvas.getActiveObject();
+    var scale = aObject.getObjectScaling();
+
+    lenInput.value = round((aObject.height * scale.scaleY) / 50);
+    widthInput.value = round((aObject.width * scale.scaleX / 50));
+    colorInput.value = aObject.fill;
+}
+
+/**
+ * Update object when length input box changes
+ */
+lenInput.oninput = function() {
+    var aObject = canvas.getActiveObject();
+    var scale = aObject.getObjectScaling();
+
+    aObject.set('height', (lenInput.value / scale.scaleY * 50));
+    canvas.requestRenderAll();
+}
+
+/**
+ * Update object when width input box changes
+ */
+widthInput.oninput = function() {
+    var aObject = canvas.getActiveObject();
+    var scale = aObject.getObjectScaling();
+
+    aObject.set('width', (widthInput.value / scale.scaleX * 50));
+    canvas.requestRenderAll();
+}
+
+colorInput.oninput = function() {
+    var aObject = canvas.getActiveObject();
+    aObject.set('fill', colorInput.value);
+    canvas.requestRenderAll();
+}
+
+canvas.on({
+    'object:scaling': updateControls,
+    'selection:updated': updateControls,
+    'selection:created': updateControls
+});
+
+/* -------------------------------------------------------------------------- */
 
 // Canvas Zoom and Pan
 canvas.on('mouse:wheel', function(opt) {
