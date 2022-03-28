@@ -2,7 +2,7 @@ let editSideActive = false; // Check whether editor sidebar is displayed
 let shapeSideActive = false; // Check whether object sidebar is displayed
 let canvas = new fabric.Canvas('canvas');
 
-// Quick helper function to get HTML elements
+// Quick helper functions
 var $ = function(id) {return document.getElementById(id)};
 var round = function(num) {return +(Math.round(num + "e+2")  + "e-2")};
 var toInch = function(feet) {return feet * 12};
@@ -12,8 +12,20 @@ var widthInput = $('obj-width');
 var colorInput = $('obj-color');
 
 /**
- * Toggles the edit sidebar
+ * Get center of the viewport
  */
+function centerCoord(){
+    var zoom=canvas.getZoom()
+
+    return{
+        x: fabric.util.invertTransform(canvas.viewportTransform)[4]+(canvas.width/zoom)/2,
+        y: fabric.util.invertTransform(canvas.viewportTransform)[5]+(canvas.height/zoom)/2
+    }
+}
+
+/**
+* Toggles the edit sidebar
+*/
 function toggleEditSidebar() {
     if (editSideActive) { // turn off sidebar
         $('obj-editor').classList.add('hidden');
@@ -25,8 +37,8 @@ function toggleEditSidebar() {
 }
 
 /**
- * Toggles the shape sidebar
- */
+* Toggles the shape sidebar
+*/
 function toggleShapeSidebar() {
     if (shapeSideActive) { // turn off sidebar
         $('shape-select').classList.add('hidden');
@@ -42,23 +54,31 @@ function toggleShapeSidebar() {
 /* -------------------------------------------------------------------------- */
 
 /**
- * Resizes the canvas  when brower size is adjusted, make the canvas fullscreen
- */
+* Resizes the canvas  when brower size is adjusted, make the canvas fullscreen
+*/
 (function() {
     // resize the canvas to fill browser window dynamically
     window.addEventListener('resize', resizeCanvas, false);
     function resizeCanvas() {
-            canvas.setWidth(window.innerWidth);
-            canvas.setHeight(window.innerHeight);
-            canvas.renderAll();
+        canvas.setWidth(window.innerWidth);
+        canvas.setHeight(window.innerHeight);
+        canvas.renderAll();
     }
     
     resizeCanvas();
 })();
 
+var grid = 50;
+totalWidth = canvas.getWidth() * 5;
+for (var i = 0; i < (totalWidth / grid); i++) {
+    canvas.add(new fabric.Line([ i * grid, 0, i * grid, totalWidth], { stroke: '#000', selectable: false }));
+    canvas.add(new fabric.Line([ 0, i * grid, totalWidth, i * grid], { stroke: '#000', selectable: false }))
+}
+
+/* -------------------------------------------------------------------------- */
 /**
- *  Creates Rectangle object and renders it onto the canvas
- */
+*  Creates Rectangle object and renders it onto the canvas
+*/
 function createRect() {
     var rect = new fabric.Rect( {
         fill: '#b291ff',
@@ -67,15 +87,17 @@ function createRect() {
         objectCaching: false,
         stroke: 'black',
         strokeWidth: 4,
+        top: centerCoord().y,
+        left : centerCoord().x
+
     })
     canvas.add(rect);
     canvas.setActiveObject(rect);
-    canvas.centerObject(rect);
 }
 
 /**
- * Creates Circle object and renders it onto the canvas
- */
+* Creates Circle object and renders it onto the canvas
+*/
 function createEllipse() {
     var ellipse = new fabric.Ellipse({
         fill: '#b291ff',
@@ -84,60 +106,82 @@ function createEllipse() {
         objectCaching: false,
         stroke: 'black',
         strokeWidth: 4,
+        top: centerCoord().y,
+        left : centerCoord().x
     })
     canvas.add(ellipse);
     canvas.setActiveObject(ellipse);
-    canvas.centerObject(ellipse);
 }
 
+var points = [{x: 0, y: 0}, {x: 16, y: 0}, {x: 30, y: 15},  {x: 25, y: 55}, {x: 0, y: 44}];
+
 /**
- * Update input box when object changes
- */
+* Create Polygon
+*/
+function createPoly() {
+    var poly = new fabric.Polygon(points, {
+        fill: '#b291ff',
+        objectCaching: false,
+        stroke: 'black',
+        strokeWidth: 4,
+        top: centerCoord().y,
+        left : centerCoord().x
+    })
+    canvas.add(poly);
+    canvas.setActiveObject(poly);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/**
+* Update input box when object changes
+*/
 function updateControls() {
     var aObject = canvas.getActiveObject();
     var scale = aObject.getObjectScaling();
-
+    
     lenInput.value = round((aObject.height * scale.scaleY) / 50);
     widthInput.value = round((aObject.width * scale.scaleX / 50));
     colorInput.value = aObject.fill;
 }
 
 /**
- * Update object when length input box changes
- */
+* Update object when length input box changes
+*/
 lenInput.oninput = function() {
     var aObject = canvas.getActiveObject();
     var scale = aObject.getObjectScaling();
-
+    
     switch (aObject.type) {
         case 'ellipse':
-            aObject.set('ry', (lenInput.value / scale.scaleY * 50) / 2) // Divide by 2 for diameter instead of radius
-            break;
+        aObject.set('ry', (lenInput.value / scale.scaleY * 50) / 2) // Divide by 2 for diameter instead of radius
+        break;
         case 'rect':
-            aObject.set('height', (lenInput.value / scale.scaleY * 50));
-            break;
+        aObject.set('height', (lenInput.value / scale.scaleY * 50));
+        break;
         case 'polygon':
-                break;
+        break;
+        
     }
     canvas.requestRenderAll();
 }
 
 /**
- * Update object when width input box changes
- */
+* Update object when width input box changes
+*/
 widthInput.oninput = function() {
     var aObject = canvas.getActiveObject();
     var scale = aObject.getObjectScaling();
-
+    
     switch (aObject.type) {
         case 'ellipse':
-            aObject.set('rx', (widthInput.value / scale.scaleX * 50) / 2); // Divide by 2 for diameter instead of radius
-            break;
+        aObject.set('rx', (widthInput.value / scale.scaleX * 50) / 2); // Divide by 2 for diameter instead of radius
+        break;
         case 'rect':
-            aObject.set('width', (widthInput.value / scale.scaleX * 50));
-            break;
+        aObject.set('width', (widthInput.value / scale.scaleX * 50));
+        break;
         case 'polygon':
-            break;
+        break;
     }
     canvas.requestRenderAll();
 }
@@ -161,30 +205,32 @@ canvas.on('mouse:wheel', function(opt) {
     var delta = opt.e.deltaY;
     var zoom = canvas.getZoom();
     zoom *= 0.999 ** delta;
-    if (zoom > 20) zoom = 20;
-    if (zoom < 0.01) zoom = 0.01;
+    if (zoom > 2) zoom = 2; // Restrict zoom size
+    if (zoom < 0.25) zoom = 0.25; // Restrict zoom size
     canvas.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
     opt.e.preventDefault();
     opt.e.stopPropagation();
 });
+
+
 canvas.on('mouse:down', function(opt) {
     var evt = opt.e;
     if (evt.altKey === true) {
-    this.isDragging = true;
-    this.selection = false;
-    this.lastPosX = evt.clientX;
-    this.lastPosY = evt.clientY;
+        this.isDragging = true;
+        this.selection = false;
+        this.lastPosX = evt.clientX;
+        this.lastPosY = evt.clientY;
     }
 });
 canvas.on('mouse:move', function(opt) {
     if (this.isDragging) {
-    var e = opt.e;
-    var vpt = this.viewportTransform;
-    vpt[4] += e.clientX - this.lastPosX;
-    vpt[5] += e.clientY - this.lastPosY;
-    this.requestRenderAll();
-    this.lastPosX = e.clientX;
-    this.lastPosY = e.clientY;
+        var e = opt.e;
+        var vpt = this.viewportTransform;
+        vpt[4] += e.clientX - this.lastPosX;
+        vpt[5] += e.clientY - this.lastPosY;
+        this.requestRenderAll();
+        this.lastPosX = e.clientX;
+        this.lastPosY = e.clientY;
     }
 });
 canvas.on('mouse:up', function(opt) {
