@@ -35,14 +35,14 @@ body {
 #logobar {
     width: 100%;
     padding: 5px 0px;
-    background-color: rgb(141, 93, 187);
+    background-color: rgb(115, 29, 216);
     display: inline;
     text-align: center;
 }
 
 #sidebar-select {
     width: 100%;
-    background-color: rgb(241, 241, 70);
+    background-color: rgb(188, 150, 230);
     display: inline;
     padding: 5px;
 }
