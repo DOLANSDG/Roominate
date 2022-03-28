@@ -5,10 +5,13 @@ let canvas = new fabric.Canvas('canvas');
 // Quick helper functions
 var $ = function(id) {return document.getElementById(id)};
 var round = function(num) {return +(Math.round(num + "e+2")  + "e-2")};
-var toInch = function(feet) {return feet * 12};
 
-var lenInput = $('obj-len');
-var widthInput = $('obj-width');
+var lenFtInput = $('obj-len-ft');
+var lenInInput = $('obj-len-in');
+
+var widthFtInput = $('obj-width-ft');
+var widthInInput = $('obj-width-in');
+
 var colorInput = $('obj-color');
 
 /**
@@ -85,8 +88,8 @@ function createRect() {
         width: 200,
         height: 100,
         objectCaching: false,
-        stroke: 'black',
-        strokeWidth: 4,
+        // stroke: 'black',
+        // strokeWidth: 4,
         top: centerCoord().y,
         left : centerCoord().x
 
@@ -140,24 +143,49 @@ function updateControls() {
     var aObject = canvas.getActiveObject();
     var scale = aObject.getObjectScaling();
     
-    lenInput.value = round((aObject.height * scale.scaleY) / 50);
-    widthInput.value = round((aObject.width * scale.scaleX / 50));
+    lenFtInput.value = Math.floor(round((aObject.height * scale.scaleY) / 50));
+    lenInInput.value = Math.floor((aObject.height * scale.scaleY) % 50 / 4.1); // Math to get inches from pixels
+
+    widthFtInput.value = Math.floor(round((aObject.width * scale.scaleX) / 50));
+    widthInInput.value = Math.floor((aObject.height * scale.scaleY) % 50 / 4.1); // Math to get inches from pixels
+
     colorInput.value = aObject.fill;
 }
 
 /**
-* Update object when length input box changes
+* Update object ft when length input box changes
 */
-lenInput.oninput = function() {
+lenFtInput.oninput = function() {
     var aObject = canvas.getActiveObject();
     var scale = aObject.getObjectScaling();
     
     switch (aObject.type) {
         case 'ellipse':
-        aObject.set('ry', (lenInput.value / scale.scaleY * 50) / 2) // Divide by 2 for diameter instead of radius
+        aObject.set('ry', (lenFtInput.value / scale.scaleY * 50) / 2) // Divide by 2 for diameter instead of radius
         break;
         case 'rect':
-        aObject.set('height', (lenInput.value / scale.scaleY * 50));
+        aObject.set('height', (lenFtInput.value / scale.scaleY * 50));
+        break;
+        case 'polygon':
+        break;
+        
+    }
+    canvas.requestRenderAll();
+}
+
+/**
+* Update object in when length input box changes
+*/
+lenInInput.oninput = function() {
+    var aObject = canvas.getActiveObject();
+    var scale = aObject.getObjectScaling();
+    
+    switch (aObject.type) {
+        case 'ellipse':
+        aObject.set('ry', (lenInInput.value / scale.scaleY * 50) / 2) // Divide by 2 for diameter instead of radius
+        break;
+        case 'rect':
+        aObject.set('height', ((lenInInput.value / scale.scaleY * 50)));
         break;
         case 'polygon':
         break;
@@ -169,7 +197,7 @@ lenInput.oninput = function() {
 /**
 * Update object when width input box changes
 */
-widthInput.oninput = function() {
+widthFtInput.oninput = function() {
     var aObject = canvas.getActiveObject();
     var scale = aObject.getObjectScaling();
     

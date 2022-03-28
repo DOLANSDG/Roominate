@@ -64,7 +64,7 @@ body {
     float: right;
     position: relative;
     z-index: 1;
-    background-color: rgba(210, 176, 248, 0.8);
+    background-color: rgba(210, 176, 248, 0.733);
 }
 
 /* -------------------------- Shape select sidebar -------------------------- */
@@ -81,7 +81,7 @@ body {
 
 /* -------------------------- Object editor sidebar ------------------------- */
 #obj-editor {
-    width: 220px;
+    width: 180px;
     padding: 10px;
 }
 
@@ -102,6 +102,10 @@ input[type=number] {
     border-radius: 4px;
     box-sizing: border-box;
     right:0;
+}
+
+#obj-len-ft, #obj-len-in, #obj-width-ft, #obj-width-in{
+    width: 35px;
 }
 
 .container-label {

@@ -31,19 +31,23 @@
             <!-- ------------------------ Object Size Container ------------------------ -->
             <div class="obj-sidebar-size">
                 <span class="container-label">Size</span>
-                <input type="number" id="obj-len" name="obj-len">
-                <input type="number" id="obj-width" name="obj-width">
+                <br>
+                <input type="number" id="obj-len-ft" min="0" name="obj-len-ft">
+                <span>'</span>
+                <input type="number" id="obj-len-in" max="12" min="0" name="obj-len-inch">
+                <input type="number" id="obj-width-ft" min="0" name="obj-width-ft">
+                <span>'</span>
+                <input type="number" id="obj-width-in" max="12" min="0" name="obj-width-in">
                 <div id="size-labels" style="display:block; padding-bottom: 5px;">
                     <label for="obj-len" style="padding-right: 35px;">Length</label>
                     <label for="obj-width" style="padding-right: 5px;">Width</label>
                 </div>
-                <input type="checkbox" id="constrain-props" value="constrain-props"> 
-                <label for="constrain-props">Constrain Proportions</label>
             </div>
             
             <!-- ---------------------- Object Position Container ---------------------- -->
             <div class="obj-sidebar-size">
                 <span class="container-label">Position</span>
+                <br>
                 <input type="number" id="obj-x" name="obj-x">
                 <input type="number" id="obj-y" name="obj-y">
                 <div id="size-labels" style="display:block">
