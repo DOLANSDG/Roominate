@@ -76,17 +76,18 @@ function createRect() {
 /**
  * Creates Circle object and renders it onto the canvas
  */
-function createCircle() {
-    var circle = new fabric.Circle({
+function createEllipse() {
+    var ellipse = new fabric.Ellipse({
         fill: '#b291ff',
-        radius: 50,
+        rx: 50,
+        ry: 50,
         objectCaching: false,
         stroke: 'black',
         strokeWidth: 4,
     })
-    canvas.add(circle);
-    canvas.setActiveObject(circle);
-    canvas.centerObject(circle);
+    canvas.add(ellipse);
+    canvas.setActiveObject(ellipse);
+    canvas.centerObject(ellipse);
 }
 
 /**
@@ -108,7 +109,16 @@ lenInput.oninput = function() {
     var aObject = canvas.getActiveObject();
     var scale = aObject.getObjectScaling();
 
-    aObject.set('height', (lenInput.value / scale.scaleY * 50));
+    switch (aObject.type) {
+        case 'ellipse':
+            aObject.set('ry', (lenInput.value / scale.scaleY * 50) / 2) // Divide by 2 for diameter instead of radius
+            break;
+        case 'rect':
+            aObject.set('height', (lenInput.value / scale.scaleY * 50));
+            break;
+        case 'polygon':
+                break;
+    }
     canvas.requestRenderAll();
 }
 
@@ -119,7 +129,16 @@ widthInput.oninput = function() {
     var aObject = canvas.getActiveObject();
     var scale = aObject.getObjectScaling();
 
-    aObject.set('width', (widthInput.value / scale.scaleX * 50));
+    switch (aObject.type) {
+        case 'ellipse':
+            aObject.set('rx', (widthInput.value / scale.scaleX * 50) / 2); // Divide by 2 for diameter instead of radius
+            break;
+        case 'rect':
+            aObject.set('width', (widthInput.value / scale.scaleX * 50));
+            break;
+        case 'polygon':
+            break;
+    }
     canvas.requestRenderAll();
 }
 
