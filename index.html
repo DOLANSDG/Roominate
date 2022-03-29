@@ -16,8 +16,14 @@
         </div>
         <!-- ------------------------ Sidebar Selection Bar ------------------------ -->
         <div id="sidebar-select">
-            <div class="sidebar-buttons" onclick="toggleEditSidebar();">Object Editor</div> 
-            <div class="sidebar-buttons" onclick="toggleShapeSidebar();">Shape Select</div> 
+            <span>
+                <input type="button" value="Shape Select"
+                       class="sidebar-buttons" id="shapes-button" onclick="toggle('shapes-button');">
+                <input type="hidden" value="Object Editor"
+                       class="sidebar-buttons" id="editor-button" onclick="toggle('editor-button');">
+<!--                <input type="button" value="Toggle Grid"-->
+<!--                       class="sidebar-buttons" id="toggle-grid" onclick="toggleGrid();">-->
+            </span>
         </div>
     </div>
     
