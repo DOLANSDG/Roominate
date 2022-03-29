@@ -47,20 +47,37 @@ body {
     padding: 5px;
 }
 
-.sidebar-buttons {
-    display: inline;
+.button {
+    border: none;
+    display: inline-block;
     float: left;
+    color: white;
+    text-align: center;
+    font-size: 16px;
+    margin: 2px 2px;
+    cursor: pointer;
+
 
 }
 
-.sidebar-buttons:hover {
+.object-editor {
     background-color: rgb(252, 230, 107);
     color: black;
+    border: 2px solid rgb(252, 230, 107);
 }
-
-./sidebar-buttons:active {
+.object-editor:hover {
     background-color: rgb(0, 0, 0);
     color: white; 
+}
+.shape-select {
+    background-color: rgb(252, 230, 107);
+    color: black;
+    border: 2px solid rbg(252, 230, 107);
+}
+
+.shape-select:hover {
+    background-color: rgb(0, 0, 0);
+    color: white;
 }
 
 #sidebar-container {
