@@ -167,13 +167,13 @@ function toggle(buttonID) {
 
 // Grid Creation - TODO: Implement unlimited grid functionality
 let gridCreator = function() {
-    let pixelSize = 50;
-    let totalWidth = canvas.getWidth() * 5;
-    let lineCount = (totalWidth / pixelSize);
+    let pixelDelta = 50;
+    let totalWidth = canvas.getWidth()*50;
+    let lineCount = (totalWidth / pixelDelta);
     let lines = [];
-    for (let i = 0; i < (totalWidth / pixelSize); i++) {
-        lines[i] = new fabric.Line([i * pixelSize, 0, i * pixelSize, totalWidth], {stroke: '#000', selectable: false});
-        lines[i+lineCount] = new fabric.Line([0, i * pixelSize, totalWidth, i * pixelSize], {stroke: '#000', selectable: false});
+    for (let i = 0; i < (totalWidth / pixelDelta); i++) {
+        lines.push(new fabric.Line([i * pixelDelta, 0, i * pixelDelta, totalWidth], {stroke: '#000', selectable: false}));
+        lines.push(new fabric.Line([0, i * pixelDelta, totalWidth, i * pixelDelta], {stroke: '#000', selectable: false}));
     }
 
     return lines;
