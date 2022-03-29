@@ -5,6 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css"> <!-- Link CSS file -->
     <title>ROOMinate</title>
+    
+    <input type = "Help" onClick="helpPage()"/>
+        <input type = "Get Creating!" onClick="editorPage()"/>
+        <input type = "About Us" onClick="aboutPage()"/>
+        <script>
+            function helpPage() {
+                <a href="html/helpPage.html"> Help Page </a>
+            }
+            function editorPage() {
+                window.location.href="https://dolansdg.github.io/Roominate/";
+            }
+            function aboutPage() {
+                <a href="html/aboutPage.html"> About Page </a>
+           </script>
 </head>
 <body>
     <!-- ----------------------------------------------------------------------- -->
@@ -16,8 +30,8 @@
         </div>
         <!-- ------------------------ Sidebar Selection Bar ------------------------ -->
         <div id="sidebar-select">
-            <div class="sidebar-buttons" onclick="toggleEditSidebar();">Object Editor</div> 
-            <div class="sidebar-buttons" onclick="toggleShapeSidebar();">Shape Select</div> 
+            <button class="object-editor" onclick="toggleEditSidebar();">Object Editor</button> 
+            <button class="shape-select" onclick="toggleShapeSidebar();">Shape Select</button>
         </div>
     </div>
     
