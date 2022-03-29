@@ -1,7 +1,6 @@
-let editSideActive = false;  // Check whether editor sidebar is displayed
-let shapeSideActive = false; // Check whether object sidebar is displayed
+// let editSideActive = false;  // Check whether editor sidebar is displayed
+// let shapeSideActive = false; // Check whether object sidebar is displayed
 let gridActive = false;      // boolean to track if the grid should be added or removed
-let buttonIDStack = [];      // button stack for the button bar
 let canvas = new fabric.Canvas('canvas');
 
 // Quick helper functions
@@ -54,22 +53,18 @@ function changeSideBarButtonColor(turnedOn, button) {
  */
 function removeChildrenButtons(childrenButtons) {
     // proceed if children are not null
-    console.log("hi");
     if (childrenButtons != null) {
-        console.log("hi");
-        for (let i = 0; i < childrenButtons[i]; i++) {
-            console.log("hi");
+        for (let i = 0; i < childrenButtons.length; i++) {
             let childButton = buttonCollection[childrenButtons[i]];
-            // recurse through children of children
-
             removeChildrenButtons(childButton.childrenButtons);
 
             // turn off functionality
             $(childButton.purposeID).classList.add('hidden');
 
-            // turn off display of button
+            // reset the display of the button
             $(childButton.buttonID).type = "hidden";
-            buttonCollection[childButton].buttonActive = false;
+            childButton.buttonActive = false;
+            changeSideBarButtonColor(false, childButton.buttonID);
         }
     }
 }
@@ -82,11 +77,11 @@ function removeChildrenButtons(childrenButtons) {
  * @param purposeID    ID for the css id used when clicked
  * @param creationList list of buttons that are enabled when clicked
  */
-function Button(buttonID, active, purposeID, ChildrenButtons) {
+function Button(buttonID, active, purposeID, childrenButtons) {
     this.buttonActive = active;
     this.buttonID = buttonID;
     this.purposeID = purposeID;
-    this.childrenButtons = ChildrenButtons;
+    this.childrenButtons = childrenButtons;
 }
 
 Button.prototype = {
@@ -128,7 +123,6 @@ let buttonCollection = {
  */
 function toggle(buttonID) {
     let button = buttonCollection[buttonID];
-
     button.toggleButton();
 }
 
