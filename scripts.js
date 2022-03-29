@@ -4,7 +4,7 @@ let gridActive = false;      // boolean to track if the grid should be added or 
 let canvas = new fabric.Canvas('canvas');
 
 // Quick helper functions
-var $ = function(id) {return document.getElementById(id)};
+var $ = function(id) { return document.getElementById(id)};
 var round = function(num) {return +(Math.round(num + "e+2")  + "e-2")};
 var toInch = function(feet) {return feet * 12};
 

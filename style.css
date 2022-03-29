@@ -48,10 +48,15 @@ body {
 }
 
 .sidebar-buttons {
-    color: rgb(255, 255, 255);
+    color: white;
     background-color: rgb(141, 93, 187);
     display: inline;
     padding: 5px;
+}
+
+.sidebar-buttons-hover {
+    background-color: darkslategray;
+    color: gray;
 }
 
 #sidebar-container {
