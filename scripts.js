@@ -170,8 +170,8 @@ function toggle(buttonID) {
 
 // Grid Creation - TODO: Implement unlimited grid functionality
 let gridCreator = function() {
-    let pixelDelta = 50;
-    let totalWidth = canvas.getWidth()*50;
+    let pixelDelta = 60;
+    let totalWidth = canvas.getWidth()*60;
     let lineCount = (totalWidth / pixelDelta);
     let lines = [];
     for (let i = 0; i < (totalWidth / pixelDelta); i++) {
