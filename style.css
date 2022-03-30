@@ -35,14 +35,14 @@ body {
 #logobar {
     width: 100%;
     padding: 5px 0px;
-    background-color: rgb(141, 93, 187);
+    background-color: rgb(115, 29, 216);
     display: inline;
     text-align: center;
 }
 
 #sidebar-select {
     width: 100%;
-    background-color: rgb(241, 241, 70);
+    background-color: rgb(252, 230, 107);
     display: inline;
     padding: 5px;
 }
@@ -58,7 +58,41 @@ body {
     background-color: darkslategray;
     color: gray;
 }
+  
+/*  Double check if we need these from merge conflict */
+/* .button {
+    border: none;
+    display: inline-block;
+    float: left;
+    color: white;
+    text-align: center;
+    font-size: 25px;
+    margin: 4px 4px;
+    cursor: pointer;
 
+
+}
+
+.object-editor {
+    background-color: rgb(252, 230, 107);
+    color: black;
+    border: 2px solid rgb(252, 230, 107);
+}
+.object-editor:hover {
+    background-color: #FFFFFF;
+    color: white; 
+}
+.shape-select {
+    background-color: rgb(252, 230, 107);
+    color: black;
+    border: 2px solid rgb(252, 230, 107);
+}
+
+.shape-select:hover {
+    background-color: #FFFFFF;
+    color: white; 
+} */
+/* -------------double check above------------------- */
 #sidebar-container {
     background-color: beige;
     right: 0;
@@ -72,7 +106,7 @@ body {
     float: right;
     position: relative;
     z-index: 1;
-    background-color: rgba(210, 176, 248, 0.8);
+    background-color: rgba(210, 176, 248, 0.733);
 }
 
 /* -------------------------- Shape select sidebar -------------------------- */
@@ -89,7 +123,7 @@ body {
 
 /* -------------------------- Object editor sidebar ------------------------- */
 #obj-editor {
-    width: 220px;
+    width: 180px;
     padding: 10px;
 }
 
@@ -112,6 +146,10 @@ input[type=number] {
     right:0;
 }
 
+#obj-len-ft, #obj-len-in, #obj-width-ft, #obj-width-in{
+    width: 35px;
+}
+
 .container-label {
     font-weight: bold;
     position:absolute; 
@@ -122,4 +160,54 @@ input[type=number] {
     font-weight: bold;
     font-size: 120%;
     padding-bottom: 4px;
+}
+/* -------------------------- Navigation Bar at bottom home page ------------------------- */
+ .navbar {
+    overflow: hidden;
+    background-color: #731dd8;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+ }
+      
+ .navbar a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+ }
+      
+ .navbar a:hover {
+    background: #bc96e6;
+    color: #13070c;
+ }
+      
+ .main {
+    padding: 16px;
+    margin-bottom: 30px;
+ }
+
+/*--------Go to top of page function style-----------*/
+
+#myBtn {
+  display: none; /* Hidden by default */
+  position: fixed; /* Fixed/sticky position */
+  bottom: 30px; /* Place the button at the bottom of the page */
+  right: 30px; /* Place the button 30px from the right */
+  z-index: 99; /* Make sure it does not overlap */
+  border: none; /* Remove borders */
+  outline: none; /* Remove outline */
+  background-color: purple; /* Set a background color */
+  color: white; /* Text color */
+  cursor: pointer; /* Add a mouse pointer on hover */
+  padding: 15px; /* Some padding */
+  border-radius: 10px; /* Rounded corners */
+  font-size: 18px; /* Increase font size */
+}
+
+#myBtn:hover {
+  background-color: #555; /* Add a dark-grey background on hover */
 }
