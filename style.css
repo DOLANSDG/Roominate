@@ -47,7 +47,20 @@ body {
     padding: 5px;
 }
 
-.button {
+.sidebar-buttons {
+    color: white;
+    background-color: rgb(141, 93, 187);
+    display: inline;
+    padding: 5px;
+}
+
+.sidebar-buttons-hover {
+    background-color: darkslategray;
+    color: gray;
+}
+  
+/*  Double check if we need these from merge conflict */
+/* .button {
     border: none;
     display: inline-block;
     float: left;
@@ -77,9 +90,9 @@ body {
 
 .shape-select:hover {
     background-color: #FFFFFF;
-    color: white;
-}
-
+    color: white; 
+} */
+/* -------------double check above------------------- */
 #sidebar-container {
     background-color: beige;
     right: 0;

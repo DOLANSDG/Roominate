@@ -23,16 +23,28 @@
 </head>
 <body>
     <!-- ----------------------------------------------------------------------- -->
-    <!--                                 Topbar                                  -->
+    <!--                           Topbar/Logo                                   -->
     <!-- ----------------------------------------------------------------------- -->
     <div id="topbar">
         <div id="logobar">
-            <img src="img\logo.png" alt="logo" style="width: 100px; height: 80px">
+            <img src="img\logo.png" alt="logo" style="width: 60px; height: 60px"> <br>
+            <input type="button" class="contactbar" value="Help Page"
+                   alt="help" onclick="document.location='html/helpPage.html'"/>
+            <input type="button" class="contactbar" value="Build your own Canvas!"
+                   alt="getCreating" onclick="document.location='https://dolansdg.github.io/Roominate/'"/>
+            <input type="button" class="contactbar" value="About Us"
+                   alt="aboutUs" onclick="document.location='html/aboutPage.html'"/>
         </div>
         <!-- ------------------------ Sidebar Selection Bar ------------------------ -->
         <div id="sidebar-select">
-            <button class="object-editor" onclick="toggleEditSidebar();">Object Editor</button> 
-            <button class="shape-select" onclick="toggleShapeSidebar();">Shape Select</button>
+            <span>
+                <input type="button" value="Shape Select"
+                       class="sidebar-buttons" id="shapes-button" onclick="toggle('shapes-button');">
+                <input type="hidden" value="Object Editor"
+                       class="sidebar-buttons" id="editor-button" onclick="toggle('editor-button');">
+                <input type="button" value="Toggle Grid"
+                       class="sidebar-buttons" id="toggle-grid" onclick="toggleGrid();">
+            </span>
         </div>
     </div>
     

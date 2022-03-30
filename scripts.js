@@ -1,9 +1,10 @@
-let editSideActive = false; // Check whether editor sidebar is displayed
-let shapeSideActive = false; // Check whether object sidebar is displayed
+// let editSideActive = false;  // Check whether editor sidebar is displayed
+// let shapeSideActive = false; // Check whether object sidebar is displayed
+let gridActive = false;      // boolean to track if the grid should be added or removed
 let canvas = new fabric.Canvas('canvas');
 
 // Quick helper functions
-var $ = function(id) {return document.getElementById(id)};
+var $ = function(id) { return document.getElementById(id)};
 var round = function(num) {return +(Math.round(num + "e+2")  + "e-2")};
 
 var lenFtInput = $('obj-len-ft');
@@ -26,35 +27,174 @@ function centerCoord(){
     }
 }
 
+/* -------------------------------------------------------------------------- */
+/*                              Button Functions                              */
+/* -------------------------------------------------------------------------- */
+
 /**
-* Toggles the edit sidebar
-*/
-function toggleEditSidebar() {
-    if (editSideActive) { // turn off sidebar
-        $('obj-editor').classList.add('hidden');
-        editSideActive = false;
-    } else { // turn on sidebar
-        $('obj-editor').classList.remove('hidden');
-        editSideActive = true;
+ * Helper function for changing button color
+ *
+ * @param on turn on or off button colors
+ */
+function changeSideBarButtonColor(turnedOn, button) {
+    let id = $(button);
+    let textColor;
+    let backgroundColor;
+    if (turnedOn) {
+        textColor = "rgb(0, 0, 0)"
+        backgroundColor = "rgb(125,125,125)"
+    } else {
+        textColor = "rgb(255, 255, 255)"
+        backgroundColor = "rgb(141, 93, 187)"
+    }
+    id.style.color = textColor;
+    id.style.backgroundColor = backgroundColor;
+}
+
+/**
+ * removes children buttons
+ */
+function removeChildrenButtons(childrenButtons) {
+    // proceed if children are not null
+    if (childrenButtons != null) {
+        for (let i = 0; i < childrenButtons.length; i++) {
+            let childButton = buttonCollection[childrenButtons[i]];
+            removeChildrenButtons(childButton.childrenButtons);
+
+            // turn off functionality
+            $(childButton.purposeID).classList.add('hidden');
+
+            // reset the display of the button
+            $(childButton.buttonID).type = "hidden";
+            childButton.buttonActive = false;
+            changeSideBarButtonColor(false, childButton.buttonID);
+        }
     }
 }
 
 /**
-* Toggles the shape sidebar
-*/
-function toggleShapeSidebar() {
-    if (shapeSideActive) { // turn off sidebar
-        $('shape-select').classList.add('hidden');
-        shapeSideActive = false;
-    } else { // turn on sidebar
-        $('shape-select').classList.remove('hidden');
-        shapeSideActive = true;
+ * Button Constructor
+ *
+ * @param buttonID     button id
+ * @param active       state
+ * @param purposeID    ID for the css id used when clicked
+ * @param creationList list of buttons that are enabled when clicked
+ */
+function Button(buttonID, active, purposeID, childrenButtons) {
+    this.buttonActive = active;
+    this.buttonID = buttonID;
+    this.purposeID = purposeID;
+    this.childrenButtons = childrenButtons;
+}
+
+Button.prototype = {
+    // changeSideBarButtonColor: function(turnedOn, buttonID)
+    toggleButton: function() {
+        if (this.buttonActive) { // turn off sidebar
+            if (this.purposeID != null)
+                $(this.purposeID).classList.add('hidden');
+            this.buttonActive = false;
+            changeSideBarButtonColor(false, this.buttonID); // displays a button unpressed
+            removeChildrenButtons(this.childrenButtons) // remove buttons from the stack
+            //$(this.childrenButtons[0]).type = "hidden";
+        } else { // turn on sidebar
+            if (this.purposeID != null)
+                $(this.purposeID).classList.remove('hidden');
+            this.buttonActive = true;
+            changeSideBarButtonColor(true, this.buttonID); // displays a button pressed
+            for (let i = 0; i < this.childrenButtons.length; i++) {
+                $(this.childrenButtons[i]).type = "button"; // adds a child button to the display
+            }
+        }
     }
 }
+
+Button.prototype.constructor = Button;
+
+/* -------------------------------------------------------------------------- */
+/*             Button Collection and Button Toggle Selection                  */
+/* -------------------------------------------------------------------------- */
+let buttonCollection = {
+    "shapes-button": new Button("shapes-button", false, 'shape-select', ["editor-button"]),
+    "editor-button": new Button("editor-button", false, 'obj-editor', []),
+    "toggle-grid": new Button("toggle-grid", false, null, [])
+}
+
+/**
+ * Chooses the correct button to toggle based off the collection and parameter
+ * @param buttonid argument
+ */
+function toggle(buttonID) {
+    let button = buttonCollection[buttonID];
+    button.toggleButton();
+}
+
+// old functionality
+
+// /**
+//  * Toggles the shape sidebar
+//  */
+// function toggleShapeSidebar() {
+//     if (shapeSideActive) { // turn off sidebar
+//         $('shape-select').classList.add('hidden');
+//         shapeSideActive = false;
+//         changeSideBarButtonColor(false, "shapes-button");
+//         //popStack("shapes-button", "editor-button"); // remove buttons from the stack
+//     } else { // turn on sidebar
+//         $('shape-select').classList.remove('hidden');
+//         shapeSideActive = true;
+//         changeSideBarButtonColor(true, "shapes-button");
+//         //pushStack("editor-button");
+//     }
+// }
+//
+// /**
+// * Toggles the edit sidebar
+// */
+// function toggleEditSidebar() {
+//     if (editSideActive) { // turn off sidebar
+//         $('obj-editor').classList.add('hidden');
+//         editSideActive = false;
+//         this.changeSideBarButtonColor(false, "editor-button");
+//         //popStack("editor-button", "");
+//     } else { // turn on sidebar
+//         $('obj-editor').classList.remove('hidden');
+//         editSideActive = true;
+//         this.changeSideBarButtonColor(true, "editor-button");
+//     }
+// }
 
 /* -------------------------------------------------------------------------- */
 /*                              Canvas Functions                              */
 /* -------------------------------------------------------------------------- */
+
+// Grid Creation - TODO: Implement unlimited grid functionality
+let gridCreator = function() {
+    let pixelDelta = 50;
+    let totalWidth = canvas.getWidth()*50;
+    let lineCount = (totalWidth / pixelDelta);
+    let lines = [];
+    for (let i = 0; i < (totalWidth / pixelDelta); i++) {
+        lines.push(new fabric.Line([i * pixelDelta, 0, i * pixelDelta, totalWidth], {stroke: '#000', selectable: false}));
+        lines.push(new fabric.Line([0, i * pixelDelta, totalWidth, i * pixelDelta], {stroke: '#000', selectable: false}));
+    }
+
+    return lines;
+};
+
+let grid = gridCreator();
+
+/**
+ * Enable or Disable the canvas grid
+ * In the future, implement this as a class
+ */
+function toggleGrid() {
+    for (let i = 0; i < grid.length; i++) {
+        gridActive ?  canvas.remove(grid[i]) : canvas.add(grid[i]);
+    }
+
+    gridActive = gridActive ? false : true;
+}
 
 /**
 * Resizes the canvas  when brower size is adjusted, make the canvas fullscreen
@@ -70,13 +210,6 @@ function toggleShapeSidebar() {
     
     resizeCanvas();
 })();
-
-var grid = 60;
-totalWidth = canvas.getWidth() * 5;
-for (var i = 0; i < (totalWidth / grid); i++) {
-    canvas.add(new fabric.Line([ i * grid, 0, i * grid, totalWidth], { stroke: '#000', selectable: false }));
-    canvas.add(new fabric.Line([ 0, i * grid, totalWidth, i * grid], { stroke: '#000', selectable: false }))
-}
 
 /* -------------------------------------------------------------------------- */
 /**
