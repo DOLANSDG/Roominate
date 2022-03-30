@@ -191,8 +191,8 @@ let grid = gridCreator();
 function toggleGrid() {
     for (let i = 0; i < grid.length; i++) {
         gridActive ?  canvas.remove(grid[i]) : canvas.add(grid[i]);
+        if (gridActive) canvas.sendToBack(grid[i]); // On grid creation, send to back to prevent object behind grid
     }
-
     gridActive = gridActive ? false : true;
 }
 
