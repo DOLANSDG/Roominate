@@ -4,20 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css"> <!-- Link CSS file -->
-        <!--Image logo-->
-    <img src="img/logo.png" alt="logo" style="width: 100px; height: 100px">
+    <title> Contact the ROOMinate Team! </title>
 </head>
 <body>
     <div class="container">
-      <div style="text-align:center">
-        <!--contact us header-->
+      <div id="contact-header" style="text-align:center;">
+        <!--contact header -->
         <h2>Contact Us</h2>
       </div>
-      <div class="row">
-        <div class="column">
-            <!--adds visual images to the contact form-->
-          <img src="img/jmucs.jpg" style="width:100%">
-          <img src="img/jmulogo.jpg" style="width:100%">
+      <div class="Header">
+        <div style="display:inline; background-color: white;">
+          <!--adds visual images to the contact form-->
+          <img src="img/jmucs.jpg" style="width:25%; height:25%;">
+          <img src="img/jmulogo.png" style="width:25%;">
         </div>
         <div class="column">
             <!--php to collect the information-->
@@ -47,7 +46,7 @@
             <!--how would they rate our website so far-->
              <div class="rate">
                 <label for="ratings">How would you rate our website?</label>
-                
+
                 <input type="radio" id="5stars" name="rate" value="5" />
                 <label for="5stars" title="text">5 stars</label>
 
@@ -63,7 +62,7 @@
                 <input type="radio" id="1star" name="rate" value="1" />
                 <label for="1star" title="text">1 star</label>
             </div>
-            
+
             <!--message the user wants to know-->
             <label for="message">Message:</label>
             <textarea id="message" name="message" placeholder="Type a message..." style="height:180px" required>
