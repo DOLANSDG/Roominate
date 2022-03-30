@@ -5,17 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css"> <!-- Link CSS file -->
     <title>ROOMinate</title>
-    
-    <input type = "Help" onClick="helpPage()"/>
+        
         <input type = "Get Creating!" onClick="editorPage()"/>
+        <input type = "Help" onClick="helpPage()"/>
+        <input type = "Contact Us" onClick="contactPage()"/>
         <input type = "About Us" onClick="aboutPage()"/>
+    
         <script>
-            function helpPage() {
-                <a href="html/helpPage.html"> Help Page </a>
-            }
+            
             function editorPage() {
                 window.location.href="https://dolansdg.github.io/Roominate/";
             }
+            function helpPage() {
+                <a href="html/helpPage.html"> Help Page </a>
+            }
+            
+            function contactPage() {
+                <a href="html/aboutPage.html"> Contact Page </a>
+            }
+                     
             function aboutPage() {
                 <a href="html/aboutPage.html"> About Page </a>
             }
