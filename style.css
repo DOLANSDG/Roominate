@@ -53,8 +53,8 @@ body {
     float: left;
     color: white;
     text-align: center;
-    font-size: 16px;
-    margin: 2px 2px;
+    font-size: 25px;
+    margin: 4px 4px;
     cursor: pointer;
 
 
@@ -66,17 +66,17 @@ body {
     border: 2px solid rgb(252, 230, 107);
 }
 .object-editor:hover {
-    background-color: rgb(0, 0, 0);
+    background-color: #FFFFFF;
     color: white; 
 }
 .shape-select {
     background-color: rgb(252, 230, 107);
     color: black;
-    border: 2px solid rbg(252, 230, 107);
+    border: 2px solid rgb(252, 230, 107);
 }
 
 .shape-select:hover {
-    background-color: rgb(0, 0, 0);
+    background-color: #FFFFFF;
     color: white;
 }
 
@@ -176,3 +176,25 @@ input[type=number] {
     padding: 16px;
     margin-bottom: 30px;
  }
+
+/*--------Go to top of page function style-----------*/
+
+#myBtn {
+  display: none; /* Hidden by default */
+  position: fixed; /* Fixed/sticky position */
+  bottom: 30px; /* Place the button at the bottom of the page */
+  right: 30px; /* Place the button 30px from the right */
+  z-index: 99; /* Make sure it does not overlap */
+  border: none; /* Remove borders */
+  outline: none; /* Remove outline */
+  background-color: purple; /* Set a background color */
+  color: white; /* Text color */
+  cursor: pointer; /* Add a mouse pointer on hover */
+  padding: 15px; /* Some padding */
+  border-radius: 10px; /* Rounded corners */
+  font-size: 18px; /* Increase font size */
+}
+
+#myBtn:hover {
+  background-color: #555; /* Add a dark-grey background on hover */
+}
