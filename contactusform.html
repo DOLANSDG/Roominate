@@ -10,7 +10,7 @@
 
     <!--Sets up the style sheet   <link rel="stylesheet" type="text/css" href="css/main.css">-->
     
-    <link rel="stylesheet" type="text/css" href="contactformStyle.css"> <!-- Link CSS file -->
+    <link rel="stylesheet" type="text/css" href="formstyle.css"> <!-- Link CSS file -->
     <img src="img/jmulogo.png" style="width: 120px; height: 80px">
 </head>
 
@@ -32,21 +32,21 @@
                 <!--Enter first name-->
                 <div class="wrapinput validate-input" data-validate="Please enter your first name">
 					<input class="contactinput" type="text" name="name" id="user_firstname"
-                    placeholder="First Name" aria-required="true">
+                    placeholder="First Name" required>
 					<span class="focusINPUT"></span>
 				</div>
 
                 <!--Enter last name-->
                 <div class="wrapinput validate-input" data-validate="Please enter your last name">
 					<input class="contactinput" type="text" name="name" id="user_lastname"
-                    placeholder="Last Name" aria-required="true">
+                    placeholder="Last Name" required>
 					<span class="focusINPUT"></span>
 				</div>
 
                  <!--Enter email-->
                 <div class="wrapinput validate-input" data-validate = "Please enter your email: example@provider.x">
 					<input class="contactinput" type="text" name="email" id="user_email" 
-                    placeholder="Email" aria-required="true">
+                    placeholder="Email" required>
 
 					<span class="focusINPUT"></span>
 				</div>
@@ -54,14 +54,14 @@
                 <!--Enter message-->
                 <div class="wrapinput validate-input">
 					<textarea class="contactinput" name="message" id="user_message"
-                    placeholder="Your Message" aria-required="true"></textarea>
+                    placeholder="Your Message" required></textarea>
 					<span class="focusINPUT"></span>
 				</div>
 
                 <!--Dropdown menu for JMU or not data-->
                 <div class="dropdown">
                     <label for="student">Are you a student or professor at JMU?</label>
-                    <select id="user_jmu" aria-required="false">
+                    <select id="user_jmu">
                         <option value="" disabled selected>Select your option</option>
                         <option value="1">yes</option>
                         <option value="2">no</option>
@@ -71,7 +71,10 @@
                 <!--sourced from stack overflow  -->
                 <!--https://stackoverflow.com/questions/8118266/integrating-
                 css-star-rating-into-an-html-form -->
-
+                
+                <label for="rate">
+                    How would you rate ROOMinate?
+                </label>
                 
                 <div class="rating">
                 
