@@ -1,8 +1,6 @@
 // let editSideActive = false;  // Check whether editor sidebar is displayed
 // let shapeSideActive = false; // Check whether object sidebar is displayed
 let gridActive = false;      // boolean to track if the grid should be added or removed
-let polyMode = false;        // boolean to track if polygon mode is active
-let roomMode = false;
 let canvas = new fabric.Canvas('canvas');
 
 // Quick helper functions
@@ -26,35 +24,6 @@ function centerCoord(){
     return{
         x: fabric.util.invertTransform(canvas.viewportTransform)[4]+(canvas.width/zoom)/2,
         y: fabric.util.invertTransform(canvas.viewportTransform)[5]+(canvas.height/zoom)/2
-    }
-}
-
-/**
- * Point class
- */
-class Point {
-    /**
-     * Create a point.
-     * @param {number} x - The x value.
-     * @param {number} y - The y value.
-     */
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    /**
-     * Determines whether points are at the same coordinates
-     *
-     * @param {Point} point Point to compare to.
-     * @return {boolean} indicating whether x and y coords are the same. 
-     * @memberof Point
-     */
-    isEqual(point) {
-        var xInRange = this.x - 10 <= point.x && point.x <= this.x + 10;
-        var yInRange = this.y - 10 <= point.y && point.y <= this.y + 10;
-
-        return xInRange && yInRange;
     }
 }
 
@@ -281,120 +250,6 @@ function createEllipse() {
     })
     canvas.add(ellipse);
     canvas.setActiveObject(ellipse);
-}
-
-/**
-* Create Polygon
-*/
-function createPoly(points) {
-    var poly = new fabric.Polygon(points, {
-        fill: '#b291ff',
-        objectCaching: false,
-        stroke: 'black',
-        strokeWidth: 4,
-    })
-    canvas.add(poly);
-    canvas.setActiveObject(poly);
-}
-
-var roomButton = $('room-icon');
-var points = [];
-var lines = [];
-var lineCount = 0;
-var startCircle = null;
-var x = 0;
-var y = 0;
-
-roomButton.onclick = function () {
-    console.log("test");
-    if (!roomMode) { // Begin drawing polygon
-        roomMode = true;
-    } else {
-        roomMode = false;
-    }
-};
-
-canvas.on('mouse:down', function (options) {
-    if (roomMode) {
-        var canvasPoint = new Point(canvas.getPointer().x, canvas.getPointer().y);
-        // If end and start points meet
-        if (points.length != 0 && options.target && canvasPoint.isEqual(points[0])) {
-            // Remove each line
-            lines.forEach(function(line, index) {
-                canvas.remove(line);
-            });
-            canvas.remove(startCircle);
-
-            // Draw render polygon from point array
-            createPoly(points);
-            canvas.renderAll();
-            // Reset vars
-            points = [];
-            lines = [];
-            lineCount = 0;
-            roomMode = false;
-
-        } else {
-            canvas.selection = false;
-            setStartingPoint(options); // Update to curr x and y pos
-            points.push(new Point(x, y));
-
-            // Circle indicating start point
-            if (lineCount == 0) {
-                startCircle =  new fabric.Circle({
-                    radius: 7,
-                    fill: 'red',
-                    stroke: '#333333',
-                    strokeWidth: 0.5,
-                    left: (x),
-                    top: (y),
-                    selectable: false,
-                    hasBorders: false,
-                    hasControls: false,
-                    originX:'center',
-                    originY:'center',
-                });
-                canvas.add(startCircle);
-            }
-
-            var point = [x,y,x,y];
-            var line = new fabric.Line(point, {
-                strokeWidth: 4,
-                fill: '#999999',
-                stroke: 'red',
-                class:'line',
-                originX:'center',
-                originY:'center',
-                selectable: false,
-                hasBorders: false,
-                hasControls: false,
-                evented: false
-            });
-            lines.push(line);
-            canvas.add(lines[lineCount]);
-            lineCount++;
-            canvas.on('mouse:up', function (options) {
-                canvas.selection = true;
-            });
-        }
-        console.log(canvasPoint);
-    }
-});
-canvas.on('mouse:move', function (options) {
-    if (lines[0] !== null && lines[0] !== undefined && roomMode) {
-        setStartingPoint(options);
-        lines[lineCount - 1].set({
-            x2: x,
-            y2: y
-        });
-        canvas.renderAll();
-    }
-});
-
-function setStartingPoint(options) {
-    var pointer = canvas.getPointer();
-    x = pointer.x;
-    y = pointer.y;
 }
 
 /* -------------------------------------------------------------------------- */
