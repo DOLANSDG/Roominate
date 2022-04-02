@@ -1,11 +1,14 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="contactformStyle.css"> <!-- Link CSS file -->
         <!--Image logo-->
-    <img src="img/logo.png" alt="logo" style="width: 100px; height: 100px">
+    <div style="text-align:left"> 
+      <img src="img/logo.png" alt="logo" style="width: 50px; height: 50px;">
+      <img src="img/jmulogo.jpg" style="width: 50px; height: 50px">
+    </div>
 </head>
 <body>
     <div class="container">
@@ -16,9 +19,11 @@
       <div class="row">
         <div class="column">
             <!--adds visual images to the contact form-->
-          <img src="img/jmucs.jpg" style="width: 50px; height: 50px">
-          <img src="img/jmulogo.jpg" style="width: 50px; height: 50px">
-        </div>
+          
+          <div style="text-align: center;">
+            <img src="img/jmucs.jpg" style="width: 50px; height: 50px">
+          </div>
+        </div>  
         <div class="column">
             <!--php to collect the information-->
           <form action="https://formsubmit.co/jmuroominate@gmail.com" method="POST">
@@ -26,58 +31,68 @@
 
             <!--first name label that is required-->
             <!--required to submit form-->
-            First Name: <input type="text" id="firstname" name="firstname" placeholder="Your last name.." required>
+            <label for="user_firstname">First Name: </label>
+            <input type="text" id="user_firstname" name="user_firstname" placeholder="Type here..." required> 
 
             <!--last name label that is required-->
             <!--required to submit form-->
-            <label for="lastname">Last Name: </label>
-            <input type="text" id="lastname" name="lastname" placeholder="Your last name.." required>
+            <label for="user_lastname">Last Name:</label>
+            <input type="text" id="user_lastname" name="user_lastname" placeholder="Type here..." required>
 
             <!--email address so we can contact them back-->
-            
+
             <!--required to submit form-->
-            <label for="email">Please write your email so we can get back to you: </label>
-            <input type="text" id="email" name="elMail" placeholder="Your email..." required>
+            <label for="user_email">Email:</label>
+            <input type="text" id="user_email" name="user_email" placeholder="Type here..." required>
 
             <!--survey question on if the person submitting the form is a JMU student/prof-->
             <label for="student">Are you a student or professor at JMU?</label>
-            <select id="student" name="student">
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
+            <select id="user_student">
+                <option value="" disabled selected>Select your option</option>
+                <option value="1">yes</option>
+                <option value="2">no</option>
+            </select>
 
-            <!--how would they rate our website so far-->
-             <div class="rate">
-                <label for="ratings">How would you rate our website?</label>
-                
-                <input type="radio" id="5stars" name="rate" value="5" />
-                <label for="5stars" title="text">5 stars</label>
-
-                <input type="radio" id="4stars" name="rate" value="4" />
-                <label for="4stars" title="text">4 stars</label>
-
-                <input type="radio" id="3stars" name="rate" value="3" />
-                <label for="3stars" title="text">3 stars</label>
-
-                <input type="radio" id="2stars" name="rate" value="2" />
-                <label for="2stars" title="text">2 stars</label>
-
-                <input type="radio" id="1star" name="rate" value="1" />
-                <label for="1star" title="text">1 star</label>
-            </div>
-            
-            <!--message the user wants to know-->
             <label for="message">Message:</label>
-            <textarea id="message" name="message" placeholder="Type a message..." style="height:180px" required>
+            <!--message the user wants to know-->
+            <textarea maxlength="500" rows="10" cols="80" placeholder="Type here...">
             </textarea>
 
+            <!--sourced from stack overflow  -->
+            <!--https://stackoverflow.com/questions/8118266/integrating-
+              css-star-rating-into-an-html-form -->
+
+            <p2>How would you rate ROOMinate?</p2>
+
+            <div class="rating">
+
+              <input id="star5" name="star" type="radio" value="5" class="radio-btn hide" />
+              <label for="star5">☆</label>
+
+              <input id="star4" name="star" type="radio" value="4" class="radio-btn hide" />
+              <label for="star4">☆</label>
+
+              <input id="star3" name="star" type="radio" value="3" class="radio-btn hide" />
+              <label for="star3">☆</label>
+
+              <input id="star2" name="star" type="radio" value="2" class="radio-btn hide" />
+              <label for="star2">☆</label>
+
+              <input id="star1" name="star" type="radio" value="1" class="radio-btn hide" />
+              <label for="star1">☆</label>
+
+              <div class="clear"></div>
+            </div>
+
             <!--submit form button-->
-            <input type="submit" name='submit' value="submit">
-            <input type="hidden" name="_next" value="https://dolansdg.github.io/Roominate/thankyousubmit.html">
+            <input type="submit" value="submit">
+            <input type="reset" value="reset">
+
+            <input type="hidden" target="_blank" value="https://dolansdg.github.io/Roominate/thankyousubmit.html">
 
           </form>
         </div>
       </div>
-    </div>
+    </div>    
     </body>
     </html>
-    
