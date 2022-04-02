@@ -1,75 +1,88 @@
 /*sourced from W3School - text and submit boxes */ 
-body {font-family: Arial, Helvetica, sans-serif;}
+body {
+    font-family: Optima, sans-serif;
+    font-weight: 500;
+    background-color:#ffffd2;
 
-* {box-sizing: border-box}
+}
 
 input[type=text], select, texrarea {
     width: 100%;
     padding: 12px;
     border: 3px solid #ccc;
-    border-radius: 4px;
+    border-radius: 12px;
     box-sizing: border-box;
-    margin-top: 4px;
-    margin-bottom: 16px;
+    margin-top: 40px;
+    margin-bottom: 40px;
     resize: vertical;
 }
-
+/*submit button */ 
 input[type=submit] {
-    background-color: aquamarine;
-    color:aliceblue;
+    background-color: #731dd8;
+    color: #f7f0f5;
     padding: 12px 20px;
     border: none;
-    border-radius: 4px;
+    border-radius: 12px;
     cursor: pointer;
 }
 input[type=submit]:hover {
-    background-color: #45a049;
-  }
-  
-  .container {
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    padding: 20px;
+    background-color: #bc96e6;
+    color: #13070c
   }
 
-/*sourced from openpen.io - star system rating*/ 
+option[disabled]{ display: none; }
+
+input { margin-bottom: 5px; }
+
 *{
-    margin: 0;
-    padding: 0;
+    margin: 12px;
+    padding: 0px;
 }
-.rate {
-    float: left;
-    height: 46px;
-    padding: 0 10px;
-}
-.rate:not(:checked) > input {
-    position:absolute;
-    top:-9999px;
-}
-.rate:not(:checked) > label {
-    float:right;
-    width:1em;
-    overflow:hidden;
-    white-space:nowrap;
-    cursor:pointer;
-    font-size:30px;
-    color:#ccc;
-}
-.rate:not(:checked) > label:before {
-    content: '★ ';
-}
-.rate > input:checked ~ label {
-    color: #ffc700;    
-}
-.rate:not(:checked) > label:hover,
-.rate:not(:checked) > label:hover ~ label {
-    color: #deb217;  
-}
-.rate > input:checked + label:hover,
-.rate > input:checked + label:hover ~ label,
-.rate > input:checked ~ label:hover,
-.rate > input:checked ~ label:hover ~ label,
-.rate > label:hover ~ input:checked ~ label {
 
-    color: #c59b08;
+.txt-center {
+    text-align: center;
 }
+.hide {
+    display: none;
+}
+
+.clear {
+    float: none;
+    clear: both;
+}
+
+.rating {
+    width: 90px;
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    text-align: center;
+    position: relative;
+}
+
+.rating > label {
+    float: right;
+    display: inline;
+    padding: 10;
+    margin: 0;
+    position: relative;
+    width: 1.1em;
+    cursor: pointer;
+    color: #000;
+}
+
+.rating > label:hover,
+.rating > label:hover ~ label,
+.rating > input.radio-btn:checked ~ label {
+    color: transparent;
+}
+
+.rating > label:hover:before,
+.rating > label:hover ~ label:before,
+.rating > input.radio-btn:checked ~ label:before,
+.rating > input.radio-btn:checked ~ label:before {
+    content: "\2605";
+    position: absolute;
+    left: 0;
+    color: #FFD700;
+}
+
