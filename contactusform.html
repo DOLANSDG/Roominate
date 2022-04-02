@@ -1,98 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="contactformStyle.css"> <!-- Link CSS file -->
-        <!--Image logo-->
-    <div style="text-align:left"> 
-      <img src="img/logo.png" alt="logo" style="width: 90px; height: 70px;">
-      <img src="img/jmulogo.png" style="width: 90px; height: 70px">
-    </div>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Puts our logo in the top corner next to Contact us in tab-->
+    <link rel="icon" type="png" href="img/logo.png"/>
+
+    <!--Sets up the style sheet   <link rel="stylesheet" type="text/css" href="css/main.css">-->
+    
+    <link rel="stylesheet" type="text/css" href="contactformStyle.css"> <!-- Link CSS file -->
+    <img src="img/jmulogo.png" style="width: 120px; height: 80px">
 </head>
+
 <body>
+    
     <div class="container">
-      <div style="text-align:center">
-        <!--contact us header-->
-        <h2>Contact Us</h2>
-      </div>
-      <div class="row">
-        <div class="column">
-            <!--adds visual images to the contact form-->
-          
-          <div style="text-align: center;">
-            <img src="img/jmucs.jpg" style="width: 500px; height: 500px">
-          </div>
-        </div>  
-        <div class="column">
-            <!--php to collect the information-->
-          <form action="https://formsubmit.co/jmuroominate@gmail.com" method="POST">
-            <input type="hidden" name="_subject" value="New Submission!">
 
-            <!--first name label that is required-->
-            <!--required to submit form-->
-            <label for="user_firstname">First Name: </label>
-            <input type="text" id="user_firstname" name="user_firstname" placeholder="Type here..." required> 
+        <div class="wrap-container">
 
-            <!--last name label that is required-->
-            <!--required to submit form-->
-            <label for="user_lastname">Last Name:</label>
-            <input type="text" id="user_lastname" name="user_lastname" placeholder="Type here..." required>
 
-            <!--email address so we can contact them back-->
+            <form class="RoomForm" action="https://formsubmit.co/jmuroominate@gmail.com" method="POST">
+                <input type="hidden" name="_subject" value="New Submission!">
 
-            <!--required to submit form-->
-            <label for="user_email">Email:</label>
-            <input type="text" id="user_email" name="user_email" placeholder="Type here..." required>
+                <!--Title of form-->
+                <span class="contactTitle">
+                    Contact Us
+                </span>
 
-            <!--survey question on if the person submitting the form is a JMU student/prof-->
-            <label for="student">Are you a student or professor at JMU?</label>
-            <select id="user_student">
-                <option value="" disabled selected>Select your option</option>
-                <option value="1">yes</option>
-                <option value="2">no</option>
-            </select>
+                <!--Enter first name-->
+                <div class="wrapinput validate-input" data-validate="Please enter your first name">
+					<input class="contactinput" type="text" name="name" id="user_firstname"
+                    placeholder="First Name" aria-required="true">
+					<span class="focusINPUT"></span>
+				</div>
 
-            <label for="message">Message:</label>
-            <!--message the user wants to know-->
-            <textarea maxlength="500" rows="10" cols="80" placeholder="Type here...">
-            </textarea>
+                <!--Enter last name-->
+                <div class="wrapinput validate-input" data-validate="Please enter your last name">
+					<input class="contactinput" type="text" name="name" id="user_lastname"
+                    placeholder="Last Name" aria-required="true">
+					<span class="focusINPUT"></span>
+				</div>
 
-            <!--sourced from stack overflow  -->
-            <!--https://stackoverflow.com/questions/8118266/integrating-
-              css-star-rating-into-an-html-form -->
+                 <!--Enter email-->
+                <div class="wrapinput validate-input" data-validate = "Please enter your email: example@provider.x">
+					<input class="contactinput" type="text" name="email" id="user_email" 
+                    placeholder="Email" aria-required="true">
 
-            <p2>How would you rate ROOMinate?</p2>
+					<span class="focusINPUT"></span>
+				</div>
 
-            <div class="rating">
+                <!--Enter message-->
+                <div class="wrapinput validate-input">
+					<textarea class="contactinput" name="message" id="user_message"
+                    placeholder="Your Message" aria-required="true"></textarea>
+					<span class="focusINPUT"></span>
+				</div>
 
-              <input id="star5" name="star" type="radio" value="5" class="radio-btn hide" />
-              <label for="star5">☆</label>
+                <!--Dropdown menu for JMU or not data-->
+                <div class="dropdown">
+                    <label for="student">Are you a student or professor at JMU?</label>
+                    <select id="user_jmu" aria-required="false">
+                        <option value="" disabled selected>Select your option</option>
+                        <option value="1">yes</option>
+                        <option value="2">no</option>
+                    </select>
+                </div>
 
-              <input id="star4" name="star" type="radio" value="4" class="radio-btn hide" />
-              <label for="star4">☆</label>
+                <!--sourced from stack overflow  -->
+                <!--https://stackoverflow.com/questions/8118266/integrating-
+                css-star-rating-into-an-html-form -->
 
-              <input id="star3" name="star" type="radio" value="3" class="radio-btn hide" />
-              <label for="star3">☆</label>
+                
+                <div class="rating">
+                
 
-              <input id="star2" name="star" type="radio" value="2" class="radio-btn hide" />
-              <label for="star2">☆</label>
+                    <input id="star5" name="star" type="radio" value="5" class="radio-btn hide"/>
+                    <label for="star5">☆</label>
+      
+                    <input id="star4" name="star" type="radio" value="4" class="radio-btn hide"/>
+                    <label for="star4">☆</label>
+      
+                    <input id="star3" name="star" type="radio" value="3" class="radio-btn hide" />
+                    <label for="star3">☆</label>
+      
+                    <input id="star2" name="star" type="radio" value="2" class="radio-btn hide"/>
+                    <label for="star2">☆</label>
+      
+                    <input id="star1" name="star" type="radio" value="1" class="radio-btn hide"/>
+                    <label for="star1">☆</label>
+      
+                    <div class="clear"></div>
 
-              <input id="star1" name="star" type="radio" value="1" class="radio-btn hide" />
-              <label for="star1">☆</label>
+                </div>
 
-              <div class="clear"></div>
-            </div>
+                <!--submit form button-->
+                <div class="container-contact100-form-btn">
+					<button class="contact100-form-btn">Submit</button>
+				</div>
 
-            <!--submit form button-->
-            <input type="submit" value="submit">
-            <input type="reset" value="reset">
+ 
+                <input type="hidden" target="_blank" value="https://dolansdg.github.io/Roominate/thankyousubmit.html">
+                <input type="hidden" target="_self" value="https://dolansdg.github.io/Roominate">
 
-            <input type="hidden" target="_blank" value="https://dolansdg.github.io/Roominate/thankyousubmit.html">
+            </form>
 
-          </form>
         </div>
-      </div>
-    </div>    
-    </body>
-    </html>
+
+    </div>
+
+</body>
