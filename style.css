@@ -58,40 +58,7 @@ body {
     background-color: darkslategray;
     color: gray;
 }
-  
-/*  Double check if we need these from merge conflict */
-/* .button {
-    border: none;
-    display: inline-block;
-    float: left;
-    color: white;
-    text-align: center;
-    font-size: 25px;
-    margin: 4px 4px;
-    cursor: pointer;
 
-
-}
-
-.object-editor {
-    background-color: rgb(252, 230, 107);
-    color: black;
-    border: 2px solid rgb(252, 230, 107);
-}
-.object-editor:hover {
-    background-color: #FFFFFF;
-    color: white; 
-}
-.shape-select {
-    background-color: rgb(252, 230, 107);
-    color: black;
-    border: 2px solid rgb(252, 230, 107);
-}
-
-.shape-select:hover {
-    background-color: #FFFFFF;
-    color: white; 
-} */
 /* -------------double check above------------------- */
 #sidebar-container {
     background-color: beige;
@@ -211,3 +178,6 @@ input[type=number] {
 #myBtn:hover {
   background-color: #555; /* Add a dark-grey background on hover */
 }
+
+
+/* ------------ About Us Page ------------------*/
