@@ -2,9 +2,102 @@
 <html>
   <head>
     <title>Contact Us</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      .html {
+        padding: 0;
+        margin: 0;
+      }
+      .names {
+        float: left;
+        padding: 10px;
+        width: 25%;
+        font-family: "Lucida Console", Monaco, monospace;
+        color: white;
+        text-align: center;
+      }
+      .row:after {
+        content: "";
+        display: table;
+        clear: both;
+      }
+      #about-page {
+        text-align: center;
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        letter-spacing: 2px;
+        color: #bc96e6;
+        font-weight: bold;
+        font-size: 30px;
+        background-color: #731dd8;
+        text-shadow: 4px 3px 0 white;
+      }
+
+    
+      #container {
+        background-color: #bc96e6;
+        height: 100%;
+      }
+      
+      .logo {
+        display: inline;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 5px;
+      }
+
+      .mission-statement {
+        background-color: #731dd8;
+        font-family: Andale Mono, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        text-align: center;
+        letter-spacing: 2.6px;
+        font-style: italic;
+        color: white;
+        text-shadow: 2px 1px 6px grey;
+        padding: 20px 50px;
+      }
+    </style>
     <link href="style.css" rel="stylesheet" type="text/css">
   </head>
   <body>
-    ...
+    <div id="about-page">
+      <a href="https://dolansdg.github.io/Roominate/">
+        <img src="img\logo.png" alt="logo" class="logo" style="width: 110px; height: 67px"> <br>
+      </a>
+      <h1>About ROOMinate</h1>
+    </div>
+    <div class="mission-statement">
+      <h2>Whether living on campus or off campus, most students will experience living with other people 
+        in small spaces for the first time. Currently, many people will draw their own crude floor plans 
+        or be forced to alter their furniture or belongings to fit the space available. Our goal is to 
+        create a collaborative design application that allows users to silutaneously create and edit
+        custom floorplans.</h2>
+    </div>
+    <div id="container">
+      <div class="row">
+        <div class="names">
+        <h2>Dawson Dolanksy</h2>
+        <p>Bio</p>
+      </div>
+
+      <div class="names">
+        <h2>Margaux Johnson</h2>
+        <p>Bio</p>
+      </div>
+
+      <div class="names">
+        <h2>Olivia Leonard</h2>
+        <p>Bio</p>
+      </div>
+
+      <div class="names">
+        <h2>Lauren Hartley</h2>
+        <p>Bio</p>
+      </div>
+      </div>
+
+    </div>
+
   </body>
 </html>
