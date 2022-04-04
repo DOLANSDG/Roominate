@@ -286,6 +286,8 @@ lenFtInput.oninput = function() {
             aObject.set('height', currFt + (lenInInput.value * 5));
             break;
         case 'polygon':
+            aObject.set('height', currFt + (lenInInput.value * 5));
+            //aObject.scaleToHeight(currFt + (lenInInput.value * 5), true);
             break;
     }
     canvas.requestRenderAll();
