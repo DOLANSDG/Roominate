@@ -191,8 +191,8 @@ let grid = gridCreator();
 function toggleGrid() {
     for (let i = 0; i < grid.length; i++) {
         gridActive ?  canvas.remove(grid[i]) : canvas.add(grid[i]);
+        if (!gridActive) canvas.sendToBack(grid[i]); // On grid creation, send to back to prevent object behind grid
     }
-
     gridActive = gridActive ? false : true;
 }
 
@@ -380,6 +380,82 @@ canvas.on({
     'selection:updated': updateControls,
     'selection:created': updateControls
 });
+
+/* ------------------------------ Object Icons ------------------------------ */
+
+
+// Set up remove icon
+var removeIcon = "img/remove_icon.png";
+var removeImg = document.createElement('img');
+removeImg.src = removeIcon;
+
+// Set up copy icon
+var cloneIcon = "img/clone_icon.png";
+var cloneImg = document.createElement('img');
+cloneImg.src = cloneIcon;
+
+// Render icons
+function renderIcon(icon) {
+    return function renderIcon(ctx, left, top, styleOverride, fabricObject) {
+        var size = this.cornerSize;
+        ctx.save();
+        ctx.translate(left, top);
+        ctx.rotate(fabric.util.degreesToRadians(fabricObject.angle));
+        ctx.drawImage(icon, -size/2, -size/2, size, size);
+        ctx.restore();
+    }
+}
+
+// Remove icon control
+fabric.Object.prototype.controls.removeControl = new fabric.Control({
+    x: 0.5,
+    y: -0.5,
+    offsetY: -16,
+    offsetX: 16,
+    cursorStyle: 'pointer',
+    mouseUpHandler: removeObject,
+    render: renderIcon(removeImg),
+    cornerSize: 24
+});
+
+// Clone icon control
+fabric.Object.prototype.controls.clone = new fabric.Control({
+    x: -0.5,
+    y: -0.5,
+    offsetY: -16,
+    offsetX: -16,
+    cursorStyle: 'pointer',
+    mouseUpHandler: cloneObject,
+    render: renderIcon(cloneImg),
+    cornerSize: 24
+});
+
+/**
+ * Delete object from the canvas.  
+ * @param {*} eventData 
+ * @param {*} transform 
+ */
+function removeObject(eventData, transform) {
+    var target = transform.target;
+    var canvas = target.canvas;
+    canvas.remove(target);
+    canvas.requestRenderAll();
+}
+
+/**
+ * Clone object on the canvas.
+ * @param {*} eventData 
+ * @param {*} transform 
+ */
+function cloneObject(eventData, transform) {
+    var target = transform.target;
+    var canvas = target.canvas;
+    target.clone(function(cloned) {
+    cloned.left += 10;
+    cloned.top += 10;
+    canvas.add(cloned);
+    });
+}
 
 /* -------------------------------------------------------------------------- */
 
