@@ -128,7 +128,7 @@ Button.prototype = {
         } else { // turn on sidebar
             if (this.purposeID != null)
                 // Do the purpose id function or enable the html element string
-                if (typeof this.purposeID === 'isString') {
+                if (typeof this.purposeID === 'string') {
                     $(this.purposeID).classList.remove('hidden');
                 } else {
                     this.purposeID();
