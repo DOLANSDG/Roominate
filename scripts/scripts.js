@@ -217,6 +217,9 @@ function toggle(buttonID) {
 })();
 
 /* -------------------------------------------------------------------------- */
+/*                               Shape Creation                               */
+/* -------------------------------------------------------------------------- */
+
 /**
 *  Creates Rectangle object and renders it onto the canvas
 */
@@ -254,24 +257,6 @@ function createEllipse() {
     canvas.setActiveObject(ellipse);
 }
 
-var points = [{x: 0, y: 0}, {x: 16, y: 0}, {x: 30, y: 15},  {x: 25, y: 55}, {x: 0, y: 44}];
-
-/**
-* Create Polygon
-*/
-function createPoly() {
-    var poly = new fabric.Polygon(points, {
-        fill: '#b291ff',
-        objectCaching: false,
-        stroke: 'black',
-        strokeWidth: 4,
-        top: centerCoord().y,
-        left : centerCoord().x
-    })
-    canvas.add(poly);
-    canvas.setActiveObject(poly);
-}
-
 /* -------------------------------------------------------------------------- */
 
 /**
@@ -306,6 +291,8 @@ lenFtInput.oninput = function() {
             aObject.set('height', currFt + (lenInInput.value * 5));
             break;
         case 'polygon':
+            aObject.set('height', currFt + (lenInInput.value * 5));
+            //aObject.scaleToHeight(currFt + (lenInInput.value * 5), true);
             break;
     }
     canvas.requestRenderAll();
