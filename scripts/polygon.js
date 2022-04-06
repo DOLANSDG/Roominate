@@ -103,7 +103,7 @@ canvas.on('mouse:down', function (options) {
                 canvas.add(startCircle);
             }
 
-            text = new fabric.Text ('test', {
+            text = new fabric.Text ('', {
                 left: x,
                 top: y,
                 width: 150,
