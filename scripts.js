@@ -31,6 +31,37 @@ function centerCoord(){
 /*                              Button Functions                              */
 /* -------------------------------------------------------------------------- */
 
+<<<<<<< Updated upstream:scripts.js
+=======
+// Grid Creation - TODO: Implement unlimited grid functionality
+let gridCreator = function() {
+    let pixelDelta = 60;
+    let totalWidth = canvas.getWidth()*60;
+    let lineCount = (totalWidth / pixelDelta);
+    let lines = [];
+    for (let i = 0; i < (totalWidth / pixelDelta); i++) {
+        lines.push(new fabric.Line([i * pixelDelta, 0, i * pixelDelta, totalWidth], {stroke: '#000', selectable: false}));
+        lines.push(new fabric.Line([0, i * pixelDelta, totalWidth, i * pixelDelta], {stroke: '#000', selectable: false}));
+    }
+
+    return lines;
+};
+
+let grid = gridCreator();
+
+/**
+ * Enable or Disable the canvas grid
+ * In the future, implement this as a class
+ */
+function toggleGrid() {
+    for (let i = 0; i < grid.length; i++) {
+        gridActive ? canvas.remove(grid[i]) : canvas.add(grid[i]);
+        if (!gridActive) canvas.sendToBack(grid[i]); // On grid creation, send to back to prevent object behind grid
+    }
+    gridActive = gridActive ? false : true;
+}
+
+>>>>>>> Stashed changes:scripts/scripts.js
 /**
  * Helper function for changing button color
  *
@@ -41,11 +72,11 @@ function changeSideBarButtonColor(turnedOn, button) {
     let textColor;
     let backgroundColor;
     if (turnedOn) {
-        textColor = "rgb(0, 0, 0)"
-        backgroundColor = "rgb(125,125,125)"
+        textColor = "rgb(0, 0, 0)";
+        backgroundColor = "rgb(125,125,125)";
     } else {
-        textColor = "rgb(255, 255, 255)"
-        backgroundColor = "rgb(141, 93, 187)"
+        textColor = "rgb(255, 255, 255)";
+        backgroundColor = "rgb(141, 93, 187)";
     }
     id.style.color = textColor;
     id.style.backgroundColor = backgroundColor;
@@ -66,7 +97,7 @@ function removeChildrenButtons(childrenButtons) {
 
             // reset the display of the button
             $(childButton.buttonID).type = "hidden";
-            childButton.buttonActive = false;
+            childButton.active = false;
             changeSideBarButtonColor(false, childButton.buttonID);
         }
     }
@@ -79,20 +110,23 @@ function removeChildrenButtons(childrenButtons) {
  * @param active       state
  * @param purposeID    ID for the css id used when clicked
  * @param creationList list of buttons that are enabled when clicked
+ * @param singleClickButton Necessary field for checking if the button needs to just do a simple task
  */
-function Button(buttonID, active, purposeID, childrenButtons) {
-    this.buttonActive = active;
+function Button(buttonID, active, purposeID, childrenButtons = [], singleClickButton = false) {
     this.buttonID = buttonID;
+    this.active = active;
     this.purposeID = purposeID;
     this.childrenButtons = childrenButtons;
+    this.singleClickButton = singleClickButton;
 }
 
 Button.prototype = {
     // changeSideBarButtonColor: function(turnedOn, buttonID)
     toggleButton: function() {
-        if (this.buttonActive) { // turn off sidebar
-            if (this.purposeID != null)
+        if (this.active) {
+            if (typeof this.purposeID === 'string') {
                 $(this.purposeID).classList.add('hidden');
+<<<<<<< Updated upstream:scripts.js
             this.buttonActive = false;
             changeSideBarButtonColor(false, this.buttonID); // displays a button unpressed
             removeChildrenButtons(this.childrenButtons) // remove buttons from the stack
@@ -102,10 +136,27 @@ Button.prototype = {
                 $(this.purposeID).classList.remove('hidden');
             this.buttonActive = true;
             changeSideBarButtonColor(true, this.buttonID); // displays a button pressed
+=======
+            } else {
+                this.purposeID();
+            }
+            removeChildrenButtons(this.childrenButtons);
+        } else {
+            // Do the purpose id function or enable the html element string
+            if (typeof this.purposeID === 'string') {
+                $(this.purposeID).classList.remove('hidden');
+            } else {
+                this.purposeID();
+            }
+            // add children button nodes
+>>>>>>> Stashed changes:scripts/scripts.js
             for (let i = 0; i < this.childrenButtons.length; i++) {
-                $(this.childrenButtons[i]).type = "button"; // adds a child button to the display
+                $(this.childrenButtons[i]).type = "button"; // enable the visibility from hidden to button
             }
         }
+
+        this.active = !this.active;
+        changeSideBarButtonColor(this.active, this.buttonID); // make it visibly unpressed
     }
 }
 
@@ -115,54 +166,36 @@ Button.prototype.constructor = Button;
 /*             Button Collection and Button Toggle Selection                  */
 /* -------------------------------------------------------------------------- */
 let buttonCollection = {
+<<<<<<< Updated upstream:scripts.js
     "shapes-button": new Button("shapes-button", false, 'shape-select', ["editor-button"]),
     "editor-button": new Button("editor-button", false, 'obj-editor', []),
     "toggle-grid": new Button("toggle-grid", false, null, [])
+=======
+    "shapes-button": new Button("shapes-button",false, 'shape-select', ["editor-button"], false),
+    "editor-button": new Button("editor-button",false, 'obj-editor', [], false),
+    "toggle-grid": new Button("toggle-grid", false, toggleGrid, [], false),
+    "rectangle-button": new Button("rectangle-button", false, createRect, [], true),
+    "circle-button": new Button("circle-button", false, createEllipse, [], true)
+}
+
+let buttonIMGPairs = {
+    "rectangle-button": ["square_icon.png", "square_icon_clicked.png"],
+    "circle-button": ["circle_icon.png", "circle_icon_clicked.png"]
+>>>>>>> Stashed changes:scripts/scripts.js
 }
 
 /**
  * Chooses the correct button to toggle based off the collection and parameter
  * @param buttonid argument
  */
-function toggle(buttonID) {
+async function toggle(buttonID) {
     let button = buttonCollection[buttonID];
-    button.toggleButton();
+    if (button.singleClickButton) {
+        button.purposeID();
+    } else {
+        button.toggleButton();
+    }
 }
-
-// old functionality
-
-// /**
-//  * Toggles the shape sidebar
-//  */
-// function toggleShapeSidebar() {
-//     if (shapeSideActive) { // turn off sidebar
-//         $('shape-select').classList.add('hidden');
-//         shapeSideActive = false;
-//         changeSideBarButtonColor(false, "shapes-button");
-//         //popStack("shapes-button", "editor-button"); // remove buttons from the stack
-//     } else { // turn on sidebar
-//         $('shape-select').classList.remove('hidden');
-//         shapeSideActive = true;
-//         changeSideBarButtonColor(true, "shapes-button");
-//         //pushStack("editor-button");
-//     }
-// }
-//
-// /**
-// * Toggles the edit sidebar
-// */
-// function toggleEditSidebar() {
-//     if (editSideActive) { // turn off sidebar
-//         $('obj-editor').classList.add('hidden');
-//         editSideActive = false;
-//         this.changeSideBarButtonColor(false, "editor-button");
-//         //popStack("editor-button", "");
-//     } else { // turn on sidebar
-//         $('obj-editor').classList.remove('hidden');
-//         editSideActive = true;
-//         this.changeSideBarButtonColor(true, "editor-button");
-//     }
-// }
 
 /* -------------------------------------------------------------------------- */
 /*                              Canvas Functions                              */

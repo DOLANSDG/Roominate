@@ -43,7 +43,11 @@
                 <input type="hidden" value="Object Editor"
                        class="sidebar-buttons" id="editor-button" onclick="toggle('editor-button');">
                 <input type="button" value="Toggle Grid"
+<<<<<<< Updated upstream
                        class="sidebar-buttons" id="toggle-grid" onclick="toggleGrid();">
+=======
+                       class="sidebar-buttons" id="toggle-grid" onclick="toggle('toggle-grid');">
+>>>>>>> Stashed changes
             </span>
         </div>
     </div>
@@ -92,9 +96,19 @@
         
         <!-- ---------------------------- Shape Sidebar ---------------------------- -->
         <div id="shape-select" class="hidden sidebar">
+<<<<<<< Updated upstream
             <img src="img\square_icon.png" class="shape-icon" onclick="createRect();">
             <img src="img\circle_icon.png" class="shape-icon" onclick="createEllipse();">
             <img src="img\poly_icon.png" class="shape-icon" onclick="createPoly();">
+=======
+            <input type="image" src="img\square_icon.png" class="shape-icon"
+                   id="rectangle-button" onclick="toggle('rectangle-button');">
+            <input type="image" src="img\circle_icon.png" class="shape-icon"
+                   id="circle-button" onclick="toggle('circle-button')">
+            <input type="image" src="img\poly_icon.png" class="shape-icon"
+                   id="polygon-mode">
+            <!-- <div id="room-icon">room icon</div> -->
+>>>>>>> Stashed changes
         </div>
     </div>
     
