@@ -3,10 +3,17 @@ let polyMode = false;        // boolean to track if polygon mode is active
 let polyButton = $('polygon-mode');
 var points = [];
 var lines = [];
+var texts = [];
 var lineCount = 0;
 var startCircle = null;
+var text = null;
 var x = 0;
 var y = 0;
+
+// Find midpoint
+var mid = function(x1, x2) {return (x1 + x2) / 2};
+// Find distance
+var dist = function (x1,x2,y1,y2) {return Math.sqrt(Math.pow(x2-x1,2)+Math.pow(y2-y1,2))};
 
 /**
  * Point class
@@ -96,6 +103,19 @@ canvas.on('mouse:down', function (options) {
                 canvas.add(startCircle);
             }
 
+            text = new fabric.Text ('test', {
+                left: x,
+                top: y,
+                width: 150,
+                fontSize: 18,
+                selectable: false,
+                hasBorders: false,
+                hasControls: false,
+                evented: false
+            });
+            texts.push(text);
+            canvas.add(texts[lineCount]);
+
             var point = [x,y,x,y];
             var line = new fabric.Line(point, {
                 strokeWidth: 4,
@@ -126,6 +146,22 @@ canvas.on('mouse:move', function (options) {
             x2: x,
             y2: y
         });
+
+        // Update text positon
+        var x1 = lines[lineCount - 1].x1;
+        var y1 = lines[lineCount - 1].y1;
+        var distance = dist(x1,x,y1,y);
+
+        texts[lineCount - 1].set({
+            left: mid(x1, x),
+            top: mid(y1, y)
+        });
+
+        // Update text
+        var ft = Math.floor(distance/60);
+        var inch = Math.floor(distance % 60 / 5);
+        texts[lineCount - 1].set('text', ft.toString() + "'" + inch.toString());
+
         canvas.renderAll();
     }
 });
@@ -141,6 +177,13 @@ function removePolyLines() {
     lines.forEach(function(line, index) {
         canvas.remove(line);
     });
+
+    // Remove each text
+    texts.forEach(function(text, index) {
+        canvas.remove(text);
+    });
+
+    // Remove circle
     canvas.remove(startCircle);
 
     // Reset vars
