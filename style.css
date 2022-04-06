@@ -10,7 +10,7 @@ html {
 }
 
 body {
-    overflow-y: hidden;
+    /* overflow-y: hidden; */
 }
 
 #canvas {
@@ -59,7 +59,7 @@ body {
     padding: 5px;
 }
 
-.sidebar-buttons-hover {
+.sidebar-buttons:hover {
     background-color: darkslategray;
     color: gray;
 }

@@ -31,6 +31,34 @@ function centerCoord(){
 /*                              Button Functions                              */
 /* -------------------------------------------------------------------------- */
 
+// Grid Creation - TODO: Implement unlimited grid functionality
+let gridCreator = function() {
+    let pixelDelta = 60;
+    let totalWidth = canvas.getWidth()*60;
+    let lineCount = (totalWidth / pixelDelta);
+    let lines = [];
+    for (let i = 0; i < (totalWidth / pixelDelta); i++) {
+        lines.push(new fabric.Line([i * pixelDelta, 0, i * pixelDelta, totalWidth], {stroke: '#000', selectable: false}));
+        lines.push(new fabric.Line([0, i * pixelDelta, totalWidth, i * pixelDelta], {stroke: '#000', selectable: false}));
+    }
+
+    return lines;
+};
+
+let grid = gridCreator();
+
+/**
+ * Enable or Disable the canvas grid
+ * In the future, implement this as a class
+ */
+function toggleGrid() {
+    for (let i = 0; i < grid.length; i++) {
+        gridActive ?  canvas.remove(grid[i]) : canvas.add(grid[i]);
+        if (!gridActive) canvas.sendToBack(grid[i]); // On grid creation, send to back to prevent object behind grid
+    }
+    gridActive = gridActive ? false : true;
+}
+
 /**
  * Helper function for changing button color
  *
@@ -99,7 +127,12 @@ Button.prototype = {
             //$(this.childrenButtons[0]).type = "hidden";
         } else { // turn on sidebar
             if (this.purposeID != null)
-                $(this.purposeID).classList.remove('hidden');
+                // Do the purpose id function or enable the html element string
+                if (typeof this.purposeID === 'string') {
+                    $(this.purposeID).classList.remove('hidden');
+                } else {
+                    this.purposeID();
+                }
             this.buttonActive = true;
             changeSideBarButtonColor(true, this.buttonID); // displays a button pressed
             for (let i = 0; i < this.childrenButtons.length; i++) {
@@ -117,7 +150,7 @@ Button.prototype.constructor = Button;
 let buttonCollection = {
     "shapes-button": new Button("shapes-button", false, 'shape-select', ["editor-button"]),
     "editor-button": new Button("editor-button", false, 'obj-editor', []),
-    "toggle-grid": new Button("toggle-grid", false, null, [])
+    "toggle-grid": new Button("toggle-grid", false, toggleGrid(), [])
 }
 
 /**
@@ -168,34 +201,6 @@ function toggle(buttonID) {
 /*                              Canvas Functions                              */
 /* -------------------------------------------------------------------------- */
 
-// Grid Creation - TODO: Implement unlimited grid functionality
-let gridCreator = function() {
-    let pixelDelta = 60;
-    let totalWidth = canvas.getWidth()*60;
-    let lineCount = (totalWidth / pixelDelta);
-    let lines = [];
-    for (let i = 0; i < (totalWidth / pixelDelta); i++) {
-        lines.push(new fabric.Line([i * pixelDelta, 0, i * pixelDelta, totalWidth], {stroke: '#000', selectable: false}));
-        lines.push(new fabric.Line([0, i * pixelDelta, totalWidth, i * pixelDelta], {stroke: '#000', selectable: false}));
-    }
-
-    return lines;
-};
-
-let grid = gridCreator();
-
-/**
- * Enable or Disable the canvas grid
- * In the future, implement this as a class
- */
-function toggleGrid() {
-    for (let i = 0; i < grid.length; i++) {
-        gridActive ?  canvas.remove(grid[i]) : canvas.add(grid[i]);
-        if (!gridActive) canvas.sendToBack(grid[i]); // On grid creation, send to back to prevent object behind grid
-    }
-    gridActive = gridActive ? false : true;
-}
-
 /**
 * Resizes the canvas  when brower size is adjusted, make the canvas fullscreen
 */
@@ -212,6 +217,9 @@ function toggleGrid() {
 })();
 
 /* -------------------------------------------------------------------------- */
+/*                               Shape Creation                               */
+/* -------------------------------------------------------------------------- */
+
 /**
 *  Creates Rectangle object and renders it onto the canvas
 */
@@ -249,24 +257,6 @@ function createEllipse() {
     canvas.setActiveObject(ellipse);
 }
 
-var points = [{x: 0, y: 0}, {x: 16, y: 0}, {x: 30, y: 15},  {x: 25, y: 55}, {x: 0, y: 44}];
-
-/**
-* Create Polygon
-*/
-function createPoly() {
-    var poly = new fabric.Polygon(points, {
-        fill: '#b291ff',
-        objectCaching: false,
-        stroke: 'black',
-        strokeWidth: 4,
-        top: centerCoord().y,
-        left : centerCoord().x
-    })
-    canvas.add(poly);
-    canvas.setActiveObject(poly);
-}
-
 /* -------------------------------------------------------------------------- */
 
 /**
@@ -301,6 +291,8 @@ lenFtInput.oninput = function() {
             aObject.set('height', currFt + (lenInInput.value * 5));
             break;
         case 'polygon':
+            aObject.set('height', currFt + (lenInInput.value * 5));
+            //aObject.scaleToHeight(currFt + (lenInInput.value * 5), true);
             break;
     }
     canvas.requestRenderAll();

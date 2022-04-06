@@ -25,9 +25,6 @@
             
             <input type="button" class="contactbar" value="About Us"
                     alt="getCreating" onclick="document.location='aboutPage.html'"/>
-            
-            
-  
         </div>
         <!-- ------------------------ Sidebar Selection Bar ---------------------------------------->
         <div id="sidebar-select">
@@ -37,7 +34,7 @@
                 <input type="hidden" value="Object Editor"
                        class="sidebar-buttons" id="editor-button" onclick="toggle('editor-button');">
                 <input type="button" value="Toggle Grid"
-                       class="sidebar-buttons" id="toggle-grid" onclick="toggleGrid();">
+                       class="sidebar-buttons" id="toggle-grid" onclick="toggle(toggleGrid());">
             </span>
         </div>
     </div>
@@ -88,7 +85,8 @@
         <div id="shape-select" class="hidden sidebar">
             <img src="img\square_icon.png" class="shape-icon" onclick="createRect();">
             <img src="img\circle_icon.png" class="shape-icon" onclick="createEllipse();">
-            <img src="img\poly_icon.png" class="shape-icon" onclick="createPoly();">
+            <img src="img\poly_icon.png" class="shape-icon" id="polygon-mode">
+            <!-- <div id="room-icon">room icon</div> -->
         </div>
     </div>
     
@@ -97,5 +95,6 @@
 
 <!-- ---------------------------- Link JS files ---------------------------- -->
 <script src="lib\fabric.min.js"></script> 
-<script src="scripts.js"></script>
+<script src="scripts\scripts.js"></script>
+<script src="scripts\polygon.js"></script>
 </html>
