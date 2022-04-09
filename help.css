@@ -26,9 +26,11 @@ body{
 .left {
     left: 0;
     padding: 20px 20px 20px 20px;
+    background-color: lavenderblush;
 }
 
 .right {
     right: 0;
     padding: 20px 20px 20px 20px;
+    background-color: mediumpurple;
 }
