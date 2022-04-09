@@ -31,17 +31,18 @@ function centerCoord(){
 /*                              Button Functions                              */
 /* -------------------------------------------------------------------------- */
 
+
 // Grid Creation - TODO: Implement unlimited grid functionality
 let gridCreator = function() {
     let pixelDelta = 60;
-    let totalWidth = canvas.getWidth()*60;
+    let totalWidth = canvas.getWidth()*15;
     let lineCount = (totalWidth / pixelDelta);
     let lines = [];
     for (let i = 0; i < (totalWidth / pixelDelta); i++) {
         lines.push(new fabric.Line([i * pixelDelta, 0, i * pixelDelta, totalWidth], {stroke: '#000', selectable: false}));
         lines.push(new fabric.Line([0, i * pixelDelta, totalWidth, i * pixelDelta], {stroke: '#000', selectable: false}));
     }
-
+    
     return lines;
 };
 
@@ -58,6 +59,13 @@ function toggleGrid() {
     }
     gridActive = gridActive ? false : true;
 }
+// var rect = new fabric.Rect({
+//     width: 4500,
+//     height:4500,
+//     fill: 'red'
+// });
+// canvas.add(rect);
+// canvas.sendToBack(rect);
 
 /**
  * Helper function for changing button color
@@ -461,6 +469,19 @@ canvas.on('mouse:wheel', function(opt) {
     canvas.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
     opt.e.preventDefault();
     opt.e.stopPropagation();
+
+    // Restict from panning outside the grid
+    var vpt = this.viewportTransform;
+    if (vpt[4] >= 0) {
+        vpt[4] = 0;
+    } else if (vpt[4] < canvas.getWidth() * zoom) {
+        vpt[4] = canvas.getWidth() - 4500 * zoom;
+    }
+    if (vpt[5] >= 0) {
+        vpt[5] = 0;
+      } else if (vpt[5] < canvas.getHeight() * zoom) {
+        vpt[5] = canvas.getHeight() - 4500 * zoom;
+      }
 });
 
 
@@ -473,12 +494,30 @@ canvas.on('mouse:down', function(opt) {
         this.lastPosY = evt.clientY;
     }
 });
+
+var maxSize = 4500;
+
+
+
 canvas.on('mouse:move', function(opt) {
     if (this.isDragging) {
         var e = opt.e;
         var vpt = this.viewportTransform;
         vpt[4] += e.clientX - this.lastPosX;
         vpt[5] += e.clientY - this.lastPosY;
+
+        if (this.viewportTransform[4] >=0) { // Restrict left pan
+            this.viewportTransform[4] = 0;
+        } if (this.viewportTransform[4] < -3200) {
+            this.viewportTransform[4] = -3200;
+        }
+
+        if (this.viewportTransform[5] >= 0) { // Restrict right pan
+            this.viewportTransform[5] = 0;
+        } if (this.viewportTransform[5] < -3200) {
+            this.viewportTransform[5] = -3200;
+        }
+
         this.requestRenderAll();
         this.lastPosX = e.clientX;
         this.lastPosY = e.clientY;
