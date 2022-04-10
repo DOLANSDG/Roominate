@@ -56,7 +56,8 @@ function createPoly(points) {
         fill: '#b291ff',
         objectCaching: false,
         stroke: 'black',
-        strokeWidth: 3,
+        strokeWidth: 2,
+        strokeUniform: true
     });
 
     if (roomMode) {

@@ -205,8 +205,9 @@ function createRect() {
         width: 200,
         height: 100,
         objectCaching: false,
-        // stroke: 'black',
-        // strokeWidth: 4,
+        stroke: 'black',
+        strokeWidth: 2,
+        strokeUniform: true,
         top: centerCoord().y,
         left : centerCoord().x
 
@@ -224,8 +225,9 @@ function createEllipse() {
         rx: 50,
         ry: 50,
         objectCaching: false,
-        // stroke: 'black',
-        // strokeWidth: 4,
+        stroke: 'black',
+        strokeWidth: 2,
+        strokeUniform: true,
         top: centerCoord().y,
         left : centerCoord().x
     })
@@ -329,6 +331,33 @@ function updateControls() {
     } else {
         colorInput.value = aObject.fill;
     }
+    
+    if (!aObject.hasControls) {
+        $('lock-icon').classList.remove('hidden');
+        $('unlock-icon').classList.add('hidden');
+    } else {
+        $('lock-icon').classList.add('hidden');
+        $('unlock-icon').classList.remove('hidden');
+    }
+}
+
+// Unlock object
+$('lock-icon').onclick = function() {
+    var aObject = canvas.getActiveObject();
+    $('lock-icon').classList.add('hidden');
+    $('unlock-icon').classList.remove('hidden');
+    aObject.hasControls = canvas.item(0).hasBorders = true;
+    canvas.renderAll();
+}
+
+// Lock object
+$('unlock-icon').onclick = function() {
+    var aObject = canvas.getActiveObject();
+    $('unlock-icon').classList.add('hidden');
+    $('lock-icon').classList.remove('hidden');
+    aObject.hasControls = false;
+    canvas.item(0).hasBorders = false;
+    canvas.renderAll();
 }
 
 /**
