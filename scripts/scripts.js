@@ -35,7 +35,7 @@ function centerCoord(){
 // Grid Creation - TODO: Implement unlimited grid functionality
 let gridCreator = function() {
     let pixelDelta = 60;
-    let totalWidth = canvas.getWidth()*15;
+    let totalWidth = canvas.getWidth()*10;
     let lineCount = (totalWidth / pixelDelta);
     let lines = [];
     for (let i = 0; i < lineCount; i++) {
@@ -180,9 +180,9 @@ async function toggle(buttonID) {
 /*                              Canvas Functions                              */
 /* -------------------------------------------------------------------------- */
 
-/**
- * Resizes the canvas  when brower size is adjusted, make the canvas fullscreen
- */
+// /**
+//  * Resizes the canvas  when brower size is adjusted, make the canvas fullscreen
+//  */
 (function() {
     // resize the canvas to fill browser window dynamically
     window.addEventListener('resize', resizeCanvas, false);
@@ -233,22 +233,80 @@ function createEllipse() {
     canvas.setActiveObject(ellipse);
 }
 
-var points = [{x: 0, y: 0}, {x: 16, y: 0}, {x: 30, y: 15},  {x: 25, y: 55}, {x: 0, y: 44}];
+/* ------------------------------ Object Icons ------------------------------ */
+
+
+// Set up remove icon
+var removeIcon = "img/remove_icon.png";
+var removeImg = document.createElement('img');
+removeImg.src = removeIcon;
+
+// Set up copy icon
+var cloneIcon = "img/clone_icon.png";
+var cloneImg = document.createElement('img');
+cloneImg.src = cloneIcon;
+
+// Render icons
+function renderIcon(icon) {
+    return function renderIcon(ctx, left, top, styleOverride, fabricObject) {
+        var size = this.cornerSize;
+        ctx.save();
+        ctx.translate(left, top);
+        ctx.rotate(fabric.util.degreesToRadians(fabricObject.angle));
+        ctx.drawImage(icon, -size/2, -size/2, size, size);
+        ctx.restore();
+    }
+}
+
+// Remove icon control
+fabric.Object.prototype.controls.removeControl = new fabric.Control({
+    x: 0.5,
+    y: -0.5,
+    offsetY: -16,
+    offsetX: 16,
+    cursorStyle: 'pointer',
+    mouseUpHandler: removeObject,
+    render: renderIcon(removeImg),
+    cornerSize: 24
+});
+
+// Clone icon control
+fabric.Object.prototype.controls.clone = new fabric.Control({
+    x: -0.5,
+    y: -0.5,
+    offsetY: -16,
+    offsetX: -16,
+    cursorStyle: 'pointer',
+    mouseUpHandler: cloneObject,
+    render: renderIcon(cloneImg),
+    cornerSize: 24
+});
 
 /**
- * Create Polygon
+ * Delete object from the canvas.  
+ * @param {*} eventData 
+ * @param {*} transform 
  */
-function createPoly() {
-    var poly = new fabric.Polygon(points, {
-        fill: '#b291ff',
-        objectCaching: false,
-        stroke: 'black',
-        strokeWidth: 4,
-        top: centerCoord().y,
-        left : centerCoord().x
-    })
-    canvas.add(poly);
-    canvas.setActiveObject(poly);
+function removeObject(eventData, transform) {
+    var target = transform.target;
+    var canvas = target.canvas;
+    canvas.remove(target);
+    canvas.requestRenderAll();
+}
+
+/**
+ * Clone object on the canvas.
+ * @param {*} eventData 
+ * @param {*} transform 
+ */
+function cloneObject(eventData, transform) {
+    var target = transform.target;
+    var canvas = target.canvas;
+    target.clone(function(cloned) {
+    cloned.left += 10;
+    cloned.top += 10;
+    canvas.add(cloned);
+    });
 }
 
 /* -------------------------------------------------------------------------- */
@@ -266,7 +324,11 @@ function updateControls() {
     widthFtInput.value = Math.floor(round((aObject.width * scale.scaleX) / 60));
     widthInInput.value = Math.floor((aObject.width * scale.scaleX) % 60 / 5); // Math to get inches from pixels
 
-    colorInput.value = aObject.fill;
+    if (aObject.fill == 'rgba(0,0,0,0)') {
+        colorInput.value = aObject.stroke;
+    } else {
+        colorInput.value = aObject.fill;
+    }
 }
 
 /**
@@ -283,8 +345,6 @@ lenFtInput.oninput = function() {
             break;
         case 'rect':
             aObject.set('height', currFt + (lenInInput.value * 5));
-            break;
-        case 'polygon':
             break;
     }
     canvas.requestRenderAll();
@@ -304,8 +364,6 @@ lenInInput.oninput = function() {
             break;
         case 'rect':
             aObject.set('height', currIn + (lenFtInput.value * 60));
-            break;
-        case 'polygon':
             break;
     }
     canvas.requestRenderAll();
@@ -355,7 +413,11 @@ widthInInput.oninput = function() {
 
 colorInput.oninput = function() {
     var aObject = canvas.getActiveObject();
-    aObject.set('fill', colorInput.value);
+    if (aObject.fill == 'rgba(0,0,0,0)') {
+        aObject.set('stroke', colorInput.value);
+    } else  {
+        aObject.set('fill', colorInput.value);
+    }
     canvas.requestRenderAll();
 }
 
@@ -380,15 +442,20 @@ canvas.on('mouse:wheel', function(opt) {
 
     // Restict from panning outside the grid
     var vpt = this.viewportTransform;
+    if (zoom < 400 / 1000) {
+        vpt[4] = 200 - 1000 * zoom / 2;
+        vpt[5] = 200 - 1000 * zoom / 2;
+    } else {
     if (vpt[4] >= 0) {
         vpt[4] = 0;
-    } else if (vpt[4] < canvas.getWidth() * zoom) {
-        vpt[4] = canvas.getWidth() - 4500 * zoom;
+    } else if (vpt[4] < canvas.getWidth() - 1000 * zoom) {
+        vpt[4] = canvas.getWidth() - 1000 * zoom;
     }
     if (vpt[5] >= 0) {
         vpt[5] = 0;
-      } else if (vpt[5] < canvas.getHeight() * zoom) {
-        vpt[5] = canvas.getHeight() - 4500 * zoom;
+    } else if (vpt[5] < canvas.getHeight() - 1000 * zoom) {
+        vpt[5] = canvas.getHeight() - 1000 * zoom;
+    }
     }
 });
 
@@ -416,8 +483,8 @@ canvas.on('mouse:move', function(opt) {
 
         if (this.viewportTransform[4] >=0) { // Restrict left pan
             this.viewportTransform[4] = 0;
-        } if (this.viewportTransform[4] < -3200) {
-            this.viewportTransform[4] = -3200;
+        } if (this.viewportTransform[4] < -1750) {
+            this.viewportTransform[4] = -1750;
         }
 
         if (this.viewportTransform[5] >= 0) { // Restrict right pan
