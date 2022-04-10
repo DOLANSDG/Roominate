@@ -209,8 +209,8 @@ function createRect() {
         strokeWidth: 2,
         strokeUniform: true,
         top: centerCoord().y,
-        left : centerCoord().x
-
+        left : centerCoord().x,
+        note: ""
     })
     canvas.add(rect);
     canvas.setActiveObject(rect);
@@ -229,7 +229,8 @@ function createEllipse() {
         strokeWidth: 2,
         strokeUniform: true,
         top: centerCoord().y,
-        left : centerCoord().x
+        left : centerCoord().x,
+        note: ""
     })
     canvas.add(ellipse);
     canvas.setActiveObject(ellipse);
@@ -326,12 +327,15 @@ function updateControls() {
     widthFtInput.value = Math.floor(round((aObject.width * scale.scaleX) / 60));
     widthInInput.value = Math.floor((aObject.width * scale.scaleX) % 60 / 5); // Math to get inches from pixels
 
+    $('notes').value = aObject.note;
+
     if (aObject.fill == 'rgba(0,0,0,0)') {
         colorInput.value = aObject.stroke;
     } else {
         colorInput.value = aObject.fill;
     }
     
+    // Update lock/unlock icon
     if (!aObject.hasControls) {
         $('lock-icon').classList.remove('hidden');
         $('unlock-icon').classList.add('hidden');
@@ -339,6 +343,11 @@ function updateControls() {
         $('lock-icon').classList.add('hidden');
         $('unlock-icon').classList.remove('hidden');
     }
+}
+
+$('notes').oninput = function() {
+    var aObject = canvas.getActiveObject();
+    aObject.note = $('notes').value;
 }
 
 // Unlock object

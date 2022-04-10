@@ -133,6 +133,14 @@ input[type=number] {
     font-size: 120%;
     padding-bottom: 4px;
 }
+
+#notes {
+    resize: none;
+    margin-top: 5px;
+    width: 158px;
+    height: 300px;
+    padding: 5px;
+}
 /* -------------------------- Navigation Bar at bottom home page ------------------------- */
  .navbar {
     overflow: hidden;
@@ -141,7 +149,7 @@ input[type=number] {
     bottom: 0;
     width: 100%;
  }
-      
+ 
  .navbar a {
     float: left;
     display: block;
