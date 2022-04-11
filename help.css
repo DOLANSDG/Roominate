@@ -2,19 +2,21 @@ body{
     margin:0 ;
     background-color: white;
     margin: 0;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color: white;
+    text-shadow: 2px 2px black;
 }
 
 
 #logo-home-button {
     display: inline;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 5px 5px 5px 5px;
-    align-items: center;
+    padding: 5px 5px;
+    top: 0;
+    right: 5px;
 }
 
 .split {
-    height: 65%;
+    height: 100%;
     width: 50%;
     position: fixed;
     z-index: 1;
@@ -26,11 +28,48 @@ body{
 .left {
     left: 0;
     padding: 20px 20px 20px 20px;
-    background-color: lavenderblush;
+    background-color: #bc96e6;
+    overflow: hidden;
+}
+
+.left-text {
+    width: 80%;
+    text-align: center;
 }
 
 .right {
     right: 0;
     padding: 20px 20px 20px 20px;
-    background-color: mediumpurple;
+    background-color: #731dd8;
+    overflow: hidden;
+}
+
+.answer {
+    margin: auto;
+    width: 70%;
+    padding: auto;
+}
+
+.faq-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.question {
+    cursor: pointer;
+    width: 80%;
+    transition: 0.6s;
+    margin: auto;
+}
+
+.active
+.answer:after {
+    font-size: 12px;
+    float: right;
+    margin-left: 5px;
+}
+
+.active:after {
+    content: "\2193"; /* Unicode for down arrow */
 }
