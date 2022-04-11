@@ -363,6 +363,11 @@ $('lock-icon').onclick = function() {
     aObject.lockMovementX = false;
     aObject.lockMovementY = false;
 
+    lenFtInput.disabled = false;
+    lenInInput.disabled = false;
+    widthFtInput.disabled = false;
+    widthInInput.disabled = false;
+
     canvas.renderAll();
 }
 
@@ -376,6 +381,11 @@ $('unlock-icon').onclick = function() {
 
     aObject.lockMovementX = true;
     aObject.lockMovementY = true;
+
+    lenFtInput.disabled = true;
+    lenInInput.disabled = true;
+    widthFtInput.disabled = true;
+    widthInInput.disabled = true;
 
     canvas.renderAll();
 }
@@ -400,7 +410,6 @@ lenFtInput.oninput = function() {
     var scale = aObject.getObjectScaling();
     var currFt = lenFtInput.value / scale.scaleY * 60;
 
-    if (!aObject.lockMovementX) {
         switch (aObject.type) {
             case 'ellipse':
                 aObject.set('ry', (currFt + (lenInInput.value * 5)) / 2); // Divide by 2 for diameter instead of radius
@@ -410,7 +419,6 @@ lenFtInput.oninput = function() {
                 break;
         }
         canvas.requestRenderAll();
-    }
 }
 
 /**
