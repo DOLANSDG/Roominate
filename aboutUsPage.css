@@ -68,6 +68,11 @@
     word-spacing: 2px;
   }
 
+  .mission-statement:hover {
+    text-shadow: 0 -1px 4px #FFF, 0 -2px 10px lightgrey, 0 -10px 20px lightslategray, 0 -18px 40px rgb(77, 77, 77);
+    transition: 0.6s ease, 0.6s ease;
+  }
+
   .photos {
     padding: 10px 10px;
     width: 50%; 
