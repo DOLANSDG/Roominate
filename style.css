@@ -93,6 +93,10 @@ body {
     padding-bottom: 10px;
 }
 
+.shape-icon:hover {
+    background-color: rgba(64, 56, 102, 0.63);
+}
+
 /* -------------------------- Object editor sidebar ------------------------- */
 #obj-editor {
     width: 180px;

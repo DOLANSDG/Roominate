@@ -13,6 +13,9 @@ var lenInInput = $('obj-len-in');
 var widthFtInput = $('obj-width-ft');
 var widthInInput = $('obj-width-in');
 
+var posX = $("obj-x");
+var posY = $("obj-y");
+
 var colorInput = $('obj-color');
 
 /**
@@ -155,12 +158,8 @@ let buttonCollection = {
     "editor-button": new Button("editor-button",false, 'obj-editor', [], false),
     "toggle-grid": new Button("toggle-grid", false, toggleGrid, [], false),
     "rectangle-button": new Button("rectangle-button", false, createRect, [], true),
-    "circle-button": new Button("circle-button", false, createEllipse, [], true)
-}
-
-let buttonIMGPairs = {
-    "rectangle-button": ["square_icon.png", "square_icon_clicked.png"],
-    "circle-button": ["circle_icon.png", "circle_icon_clicked.png"]
+    "circle-button": new Button("circle-button", false, createEllipse, [], true),
+    "lock-icon": new Button("lock-icon", false, changeLockOfObject, [], true)
 }
 
 /**
@@ -170,6 +169,7 @@ let buttonIMGPairs = {
 async function toggle(buttonID) {
     let button = buttonCollection[buttonID];
     if (button.singleClickButton) {
+        console.log("working");
         button.purposeID();
     } else {
         button.toggleButton();
@@ -327,6 +327,9 @@ function updateControls() {
     widthFtInput.value = Math.floor(round((aObject.width * scale.scaleX) / 60));
     widthInInput.value = Math.floor((aObject.width * scale.scaleX) % 60 / 5); // Math to get inches from pixels
 
+    posX.value = aObject.left + ((widthFtInput.value * 12) + widthInInput.value) / 4;
+    posY.value = aObject.top + ((lenFtInput.value * 12) + lenInInput.value) / 4;
+
     $('notes').value = aObject.note;
 
     if (aObject.fill == 'rgba(0,0,0,0)') {
@@ -336,13 +339,8 @@ function updateControls() {
     }
     
     // Update lock/unlock icon
-    if (!aObject.hasControls) {
-        $('lock-icon').classList.remove('hidden');
-        $('unlock-icon').classList.add('hidden');
-    } else {
-        $('lock-icon').classList.add('hidden');
-        $('unlock-icon').classList.remove('hidden');
-    }
+    let locked = (!aObject.hasControls) ? true : false;
+    $("lock-icon").src = locked ? "img/lock.svg" : "img/unlock.svg"
 }
 
 $('notes').oninput = function() {
@@ -350,22 +348,15 @@ $('notes').oninput = function() {
     aObject.note = $('notes').value;
 }
 
-// Unlock object
-$('lock-icon').onclick = function() {
+// Change the lock status of the object
+function changeLockOfObject() {
     var aObject = canvas.getActiveObject();
-    $('lock-icon').classList.add('hidden');
-    $('unlock-icon').classList.remove('hidden');
-    aObject.hasControls = canvas.item(0).hasBorders = true;
-    canvas.renderAll();
-}
-
-// Lock object
-$('unlock-icon').onclick = function() {
-    var aObject = canvas.getActiveObject();
-    $('unlock-icon').classList.add('hidden');
-    $('lock-icon').classList.remove('hidden');
-    aObject.hasControls = false;
-    canvas.item(0).hasBorders = false;
+    console.log(aObject.top);
+    console.log(aObject.left);
+    // All objects begin with hasControls = true, so it starts off at the unlock image
+    let locked = (aObject.hasControls = !aObject.hasControls) ? false : true;
+    $("lock-icon").src = locked ? "img/lock.svg" : "img/unlock.svg";
+    canvas.item(0).hasBorders = !canvas.item(0).hasBorders;
     canvas.renderAll();
 }
 
@@ -459,10 +450,23 @@ colorInput.oninput = function() {
     canvas.requestRenderAll();
 }
 
+posX.oninput = function() {
+    let aObject = canvas.getActiveObject();
+    aObject.left = posX.value - ((widthFtInput.value * 12) + widthInInput.value) / 4;
+    canvas.requestRenderAll();
+}
+
+posY.oninput = function() {
+    let aObject = canvas.getActiveObject();
+    aObject.top = posY.value - ((lenFtInput.value * 12) + lenInInput.value) / 4;
+    canvas.requestRenderAll();
+}
+
 canvas.on({
     'object:scaling': updateControls,
     'selection:updated': updateControls,
-    'selection:created': updateControls
+    'selection:created': updateControls,
+    'object:moving': updateControls
 });
 
 /* -------------------------------------------------------------------------- */
