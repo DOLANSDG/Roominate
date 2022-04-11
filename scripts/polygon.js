@@ -1,6 +1,8 @@
 var $ = function(id) { return document.getElementById(id)};
 let polyMode = false;        // boolean to track if polygon mode is active
+let roomMode = false;        // boolean to track if room mode is active
 let polyButton = $('polygon-mode');
+let roomButton = $('room-mode');
 var points = [];
 var lines = [];
 var texts = [];
@@ -54,8 +56,16 @@ function createPoly(points) {
         fill: '#b291ff',
         objectCaching: false,
         stroke: 'black',
-        strokeWidth: 4,
-    })
+        strokeWidth: 2,
+        strokeUniform: true,
+        note: ""
+    });
+
+    if (roomMode) {
+        poly.fill = 'rgba(0,0,0,0)';
+        poly.strokeWidth = 8;
+    }
+
     canvas.add(poly);
     canvas.setActiveObject(poly);
 }
@@ -69,8 +79,17 @@ polyButton.onclick = function () {
     }
 };
 
+roomButton.onclick = function () {
+    if (!roomMode) {
+        roomMode = true;
+    } else {
+        removePolyLines();
+        roomMode = false;
+    }
+}
+
 canvas.on('mouse:down', function (options) {
-    if (polyMode) {
+    if (polyMode || roomMode) {
         var canvasPoint = new Point(canvas.getPointer().x, canvas.getPointer().y);
         // If end and start points meet
         if (points.length != 0 && options.target && canvasPoint.isEqual(points[0])) {
@@ -129,6 +148,13 @@ canvas.on('mouse:down', function (options) {
                 hasControls: false,
                 evented: false
             });
+
+            if (roomMode) {
+                startCircle.fill = 'blue'
+                line.stroke = 'blue';
+                line.strokeWidth = 8;
+            }
+
             lines.push(line);
             canvas.add(lines[lineCount]);
             lineCount++;
@@ -140,7 +166,7 @@ canvas.on('mouse:down', function (options) {
 });
 
 canvas.on('mouse:move', function (options) {
-    if (lines[0] !== null && lines[0] !== undefined && polyMode) {
+    if (lines[0] !== null && lines[0] !== undefined && (polyMode || roomMode)) {
         setStartingPoint(options);
         lines[lineCount - 1].set({
             x2: x,
@@ -189,6 +215,8 @@ function removePolyLines() {
     // Reset vars
     points = [];
     lines = [];
+    texts = [];
     lineCount = 0;
     polyMode = false;
+    roomMode = false;
 }

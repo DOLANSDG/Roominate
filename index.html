@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css"> <!-- Link CSS file -->
     <title>ROOMinate</title>
 </head>
@@ -49,6 +52,8 @@
             <!-- ------------------------ Object Size Container ------------------------ -->
             <div class="obj-sidebar-size">
                 <span class="container-label">Size</span>
+                <input type="image" src="img/lock.svg" id="lock-icon" alt="lock" class="hidden">
+                <input type="image" src="img/unlock.svg" id="unlock-icon" alt="unlock">
                 <br>
                 <input type="number" id="obj-len-ft" min="0" name="obj-len-ft">
                 <span>'</span>
@@ -79,6 +84,13 @@
                 <span class="container-label">Color</span>
                 <input type="color" id="obj-color">
             </div>
+
+            <!-- ---------------------------- Object Notes ----------------------------- -->
+            <div class="obj-sidebar-size">
+                <span class="container-label">Notes</span>
+                <br>
+                <textarea id="notes" name="notes" wrao="soft"></textarea>
+            </div>
         </div>
         
         <!-- ---------------------------- Shape Sidebar ---------------------------- -->
@@ -89,6 +101,9 @@
                    id="circle-button" onclick="toggle('circle-button')">
             <input type="image" src="img\poly_icon.png" class="shape-icon"
                    id="polygon-mode">
+            <input type="image" src="img\room_icon.png" class="shape-icon"
+                   id="room-mode">
+            
             <!-- <div id="room-icon">room icon</div> -->
         </div>
     </div>
