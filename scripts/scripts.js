@@ -1,7 +1,9 @@
 // let editSideActive = false;  // Check whether editor sidebar is displayed
 // let shapeSideActive = false; // Check whether object sidebar is displayed
 let gridActive = false;      // boolean to track if the grid should be added or removed
-let canvas = new fabric.Canvas('canvas');
+let canvas = new fabric.Canvas('canvas', {
+    preserveObjectStacking: true
+});
 
 // Quick helper functions
 var $ = function(id) { return document.getElementById(id)};
@@ -345,6 +347,7 @@ function updateControls() {
     }
 }
 
+// Update notes on object
 $('notes').oninput = function() {
     var aObject = canvas.getActiveObject();
     aObject.note = $('notes').value;
@@ -367,6 +370,16 @@ $('unlock-icon').onclick = function() {
     aObject.hasControls = false;
     canvas.item(0).hasBorders = false;
     canvas.renderAll();
+}
+
+$('back-icon').onclick = function() {
+    var aObject = canvas.getActiveObject();
+    canvas.sendBackwards(aObject);
+}
+
+$('front-icon').onclick = function() {
+    var aObject = canvas.getActiveObject();
+    canvas.bringForward(aObject);
 }
 
 /**
