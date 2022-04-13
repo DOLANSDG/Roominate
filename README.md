@@ -1,4 +1,4 @@
-# [Roominate](https://dolansdg.github.io/Roominate/index.html)
+# [Roominate](https://dolansdg.github.io/Roominate/)
 
 ![logo](img/logo.png)
 
