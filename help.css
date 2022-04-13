@@ -4,16 +4,46 @@ body{
     margin: 0;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     color: white;
-    text-shadow: 2px 2px black;
 }
 
 
-#logo-home-button {
+.logo {
     display: inline;
-    padding: 5px 5px;
-    top: 0;
-    right: 5px;
-}
+    height: 70px;
+    width: 130px;
+    /* padding: 20px 20px; */
+    background-size: cover;
+  }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .drop-content {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    /* box-shadow: 0px 10px 15px 0px #ffffd2; */
+    min-width: 150px;
+    background-color: white;
+    color: #8f8f8e;
+  }
+
+  .drop-content a {
+    color: #929292;
+    padding: 10px 10px;
+    display: block;
+  }
+
+  .drop-content a:hover {
+    background-color: #ffffd2;
+    color: #ffdc67;
+  }
+
+  .dropdown:hover .drop-content {
+    display: block;
+  }
 
 .split {
     height: 100%;
@@ -27,7 +57,7 @@ body{
 
 .left {
     left: 0;
-    padding: 20px 20px 20px 20px;
+    padding: 10px 10px 10px 10px;
     background-color: #bc96e6;
     overflow: hidden;
     margin-right: auto;
@@ -37,6 +67,7 @@ body{
 .left-text {
     width: 80%;
     text-align: center;
+    text-shadow: 2px 2px black;
 }
 
 .video {
@@ -51,6 +82,7 @@ body{
     padding: 20px 20px 20px 20px;
     background-color: #731dd8;
     overflow: hidden;
+    text-shadow: 2px 2px black;
 }
 
 .answer {

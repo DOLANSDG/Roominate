@@ -1,11 +1,50 @@
 * {
     box-sizing: border-box;
   }
+
   html {
     padding: 0;
     margin: 0;
     background-color: #bc96e6;
   }
+ 
+  .logo {
+    display: inline;
+    height: 67px;
+    width: 120px;
+    background-image: url(img\logo.png);
+  }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .drop-content {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    /* box-shadow: 0px 10px 15px 0px #ffffd2; */
+    min-width: 150px;
+    background-color: white;
+    color: #8f8f8e;
+  }
+
+  .drop-content a {
+    color: #929292;
+    padding: 10px 10px;
+    display: block;
+  }
+
+  .drop-content a:hover {
+    background-color: #ffffd2;
+    color: #ffdc67;
+  }
+
+  .dropdown:hover .drop-content {
+    display: block;
+  }
+
   .names {
     float: left;
     padding: 10px;
@@ -14,6 +53,7 @@
     color: white;
     text-align: center;
   }
+
   .names:hover {
     -webkit-box-shadow: 0px 0px 50px 0px white;
     -moz-box-shadow: 0px 0px 50px 0px white;
@@ -38,20 +78,13 @@
     font-weight: bold;
     font-size: 30px;
     background-color: #731dd8;
-    text-shadow: 2px 3px 0 white;
+    /* text-shadow: 2px 3px 0 white; */
   }
 
 
   #container {
     background-color: #bc96e6;
     height: 100%;
-  }
-  
-  .logo {
-    display: inline;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 5px;
   }
 
   .mission-statement {
