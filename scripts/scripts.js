@@ -359,6 +359,15 @@ $('lock-icon').onclick = function() {
     $('lock-icon').classList.add('hidden');
     $('unlock-icon').classList.remove('hidden');
     aObject.hasControls = canvas.item(0).hasBorders = true;
+
+    aObject.lockMovementX = false;
+    aObject.lockMovementY = false;
+
+    lenFtInput.disabled = false;
+    lenInInput.disabled = false;
+    widthFtInput.disabled = false;
+    widthInInput.disabled = false;
+
     canvas.renderAll();
 }
 
@@ -369,14 +378,25 @@ $('unlock-icon').onclick = function() {
     $('lock-icon').classList.remove('hidden');
     aObject.hasControls = false;
     canvas.item(0).hasBorders = false;
+
+    aObject.lockMovementX = true;
+    aObject.lockMovementY = true;
+
+    lenFtInput.disabled = true;
+    lenInInput.disabled = true;
+    widthFtInput.disabled = true;
+    widthInInput.disabled = true;
+
     canvas.renderAll();
 }
 
+// Send active object backwards
 $('back-icon').onclick = function() {
     var aObject = canvas.getActiveObject();
     canvas.sendBackwards(aObject);
 }
 
+// Bring active object forward
 $('front-icon').onclick = function() {
     var aObject = canvas.getActiveObject();
     canvas.bringForward(aObject);
@@ -390,15 +410,15 @@ lenFtInput.oninput = function() {
     var scale = aObject.getObjectScaling();
     var currFt = lenFtInput.value / scale.scaleY * 60;
 
-    switch (aObject.type) {
-        case 'ellipse':
-            aObject.set('ry', (currFt + (lenInInput.value * 5)) / 2); // Divide by 2 for diameter instead of radius
-            break;
-        case 'rect':
-            aObject.set('height', currFt + (lenInInput.value * 5));
-            break;
-    }
-    canvas.requestRenderAll();
+        switch (aObject.type) {
+            case 'ellipse':
+                aObject.set('ry', (currFt + (lenInInput.value * 5)) / 2); // Divide by 2 for diameter instead of radius
+                break;
+            case 'rect':
+                aObject.set('height', currFt + (lenInInput.value * 5));
+                break;
+        }
+        canvas.requestRenderAll();
 }
 
 /**
