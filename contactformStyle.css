@@ -10,7 +10,7 @@
   [ RESTYLE TAG ]*/
   
   * {
-      background-color: #ffffd2;
+      background-color: #EFD9CE;
       margin: 0px; 
       padding: 0px; 
       box-sizing: border-box;
@@ -19,7 +19,7 @@
   body {
       height: 100%;
       font-family: Ubuntu-Bold;
-      background-color:#ffffd2;
+      background-color:#EFD9CE;
 
   }
   
@@ -67,8 +67,8 @@
   }
 
   .drop-content a:hover {
-    background-color: #ffffd2;
-    color: #ffdc67;
+    background-color: #EFD9CE;
+    color: #C6A795;
   }
 
   .dropdown:hover .drop-content {
@@ -79,11 +79,11 @@
   /*---------------------------------------------*/
   h1,h2,h3,h4,h5,h6 {
       margin: 0px;
-      background-color: #ffffd2;
+      background-color: #EFD9CE;
   }
 
   div {
-    background-color: #ffffd2;
+    background-color: #EFD9CE;
   }
   
   p {
@@ -92,7 +92,7 @@
       line-height: 1.7;
       color: #666666;
       margin: 0px;
-      background-color: #ffffd2;
+      background-color: #EFD9CE;
   }
   
   ul, li {
@@ -165,7 +165,7 @@
     align-items: center;
     padding: 15px;
     position: relative;
-    background-color: #ffffd2;
+    background-color: #EFD9CE;
   }
   
   .wrap-container {
@@ -188,7 +188,7 @@
     display: block;
     font-family: Ubuntu-Bold;
     font-size: 50px;
-    color: #403866;
+    color: #07144E;
     line-height: 1.2;
     text-transform: uppercase;
     text-align: center;
@@ -201,7 +201,7 @@
   
   .wrapinput {
     width: 100%;
-    background-color: #ffffd2;;
+    background-color: #EFD9CE;;
     border-radius: 31px;
     margin-bottom: 16px;
     position: relative;
@@ -334,7 +334,7 @@
     -o-transform: translateX(-50%);
     transform: translateX(-50%);
     border-radius: 31px;
-    background-color: #827ffe;
+    background-color: #731DD8;
     pointer-events: none;
     
     -webkit-transition: all 0.4s;
@@ -344,7 +344,7 @@
   }
   
   .contact100-form-btn:hover:before {
-    background-color: #403866;
+    background-color: #07144E;
     width: calc(100% + 20px);
   }
   
@@ -390,7 +390,7 @@
     content: "\2605";
     position: absolute;
     left: 0;
-    color: #FFD700;
+    color: #BC96E6;
   }
 
   .hide {

@@ -9,7 +9,6 @@
   }
  
   .logo {
-    display: inline;
     height: 67px;
     width: 120px;
     background-image: url(img\logo.png);
@@ -26,19 +25,19 @@
     z-index: 1;
     /* box-shadow: 0px 10px 15px 0px #ffffd2; */
     min-width: 150px;
-    background-color: white;
-    color: #8f8f8e;
+    background-color: #efd9ce;
+    color: #C6A795;
   }
 
   .drop-content a {
-    color: #929292;
+    color: #C6A795;
     padding: 10px 10px;
     display: block;
   }
 
   .drop-content a:hover {
-    background-color: #ffffd2;
-    color: #ffdc67;
+    background-color: #C6A795;
+    color: #efd9ce;
   }
 
   .dropdown:hover .drop-content {
@@ -74,7 +73,7 @@
     text-align: center;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     letter-spacing: 2px;
-    color: #bc96e6;
+    color: #07144e;
     font-weight: bold;
     font-size: 30px;
     background-color: #731dd8;
@@ -94,7 +93,7 @@
     letter-spacing: 2.6px;
     font-style: italic;
     color: white;
-    text-shadow: 2px 1px 6px grey;
+    /* text-shadow: 1px 1px 4px #EFD9CE; */
     padding: 20px 50px ;
     height: 50%;
     line-height: 1.5;
@@ -123,7 +122,7 @@
     text-align: center;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     letter-spacing: 2px;
-    color: #731dd8;
+    color: #07144e;
     font-weight: bold;
     font-size: 30px;
     background-color: #bc96e6;

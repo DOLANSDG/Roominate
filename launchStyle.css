@@ -2,11 +2,11 @@
 body {
     height: 100%;
     font-family: Ubuntu-Bold;
-    background-color:#fff2ac;
+    background-color: #efd9ce;
 
 }
 .button {
-    background-color: #fff2ac;
+    background-color: #efd9ce;
     border: none;
     color: rgb(22, 21, 21);
     padding: 15px 32px;
@@ -38,7 +38,7 @@ body {
 }
 
 .button:active {
-    background: #bc96e6; 
+    background: #07144e; 
 }
 
 .button:after {
