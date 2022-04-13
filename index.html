@@ -1,111 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css"> <!-- Link CSS file -->
-    <title>ROOMinate</title>
-</head>
-<body>
-    <!-- ----------------------------------------------------------------------- -->
-    <!--                           Topbar/Logo  will put buttons on launch page  -->
-    <!-- ----------------------------------------------------------------------- -->
-    <div id="topbar">
-        <div id="logobar">         
-          <button class="button" onclick="document.location='helpPage.html'"><span>Help</span></button>
-          <button class="button" onclick="document.location='contactusform.html'"><span>Contact Us</span></button>
-          <button class="button" onclick="document.location='aboutPage.html'"><span>About Us</span></button>
-          <button class="button" onclick="document.location='index.html'"><span>Get Creating!</span></button>
-        </div>
-        <!-- ------------------------ Sidebar Selection Bar ---------------------------------------->
-        <div id="sidebar-select">
-            <span>
-                <input type="button" value="Shape Select"
-                       class="sidebar-buttons" id="shapes-button" onclick="toggle('shapes-button');">
-                <input type="hidden" value="Object Editor"
-                       class="sidebar-buttons" id="editor-button" onclick="toggle('editor-button');">
-                <input type="button" value="Toggle Grid"
-                       class="sidebar-buttons" id="toggle-grid" onclick="toggle('toggle-grid');">
-            </span>
-        </div>
-    </div>
-    
-    <!-- ----------------------------------------------------------------------- -->
-    <!--                                 Sidebar                                 -->
-    <!-- ----------------------------------------------------------------------- -->
-    <div id="sidebar-container">
-        <!-- ------------------------ Object Editor Sidebar ------------------------ -->
-        <div id="obj-editor" class="hidden sidebar">
-            <div class="container-title">Object Properties</div>
-            <!-- ------------------------ Object Size Container ------------------------ -->
-            <div class="obj-sidebar-size">
-                <span class="container-label">Size</span>
-                <input type="image" src="img/lock.svg" id="lock-icon" alt="lock" class="hidden">
-                <input type="image" src="img/unlock.svg" id="unlock-icon" alt="unlock">
-                <br>
-                <input type="number" id="obj-len-ft" min="0" name="obj-len-ft">
-                <span>'</span>
-                <input type="number" id="obj-len-in" max="11" min="0" name="obj-len-inch">
-                <input type="number" id="obj-width-ft" min="0" name="obj-width-ft">
-                <span>'</span>
-                <input type="number" id="obj-width-in" max="11" min="0" name="obj-width-in">
-                <div id="size-labels" style="display:block; padding-bottom: 5px;">
-                    <label for="obj-len" style="padding-right: 35px;">Length</label>
-                    <label for="obj-width" style="padding-right: 5px;">Width</label>
-                </div>
-            </div>
-            
-            <!-- ---------------------- Object Position Container ---------------------- -->
-            <div class="obj-sidebar-size">
-                <span class="container-label">Position</span>
-                <input type="image" src="img/bring_back.svg" id="back-icon" alt="bring to back">
-                <input type="image" src="img/bring_front.svg" id="front-icon" alt="bring to front">
-                <br>
-                <input type="number" id="obj-x" name="obj-x">
-                <input type="number" id="obj-y" name="obj-y">
-                <div id="size-labels" style="display:block">
-                    <label for="obj-len" style="padding-right: 20px;">X-axis</label>
-                    <label for="obj-width" style="padding-right: 5px;">Y-axis</label>
-                </div>
-            </div>
-            
-            <!-- ----------------------- Object Color Container ------------------------ -->
-            <div class="obj-sidebar-size">
-                <span class="container-label">Color</span>
-                <input type="color" id="obj-color">
-            </div>
+  <head>
+    <title>Title of the document</title>
+    <link rel="stylesheet" type="text/css" href="launchStyle.css">
+  </head>
+  <body>
 
-            <!-- ---------------------------- Object Notes ----------------------------- -->
-            <div class="obj-sidebar-size">
-                <span class="container-label">Notes</span>
-                <br>
-                <textarea id="notes" name="notes" wrao="soft"></textarea>
-            </div>
-        </div>
-        
-        <!-- ---------------------------- Shape Sidebar ---------------------------- -->
-        <div id="shape-select" class="hidden sidebar">
-            <input type="image" src="img\square_icon.png" class="shape-icon"
-                   id="rectangle-button" onclick="toggle('rectangle-button');">
-            <input type="image" src="img\circle_icon.png" class="shape-icon"
-                   id="circle-button" onclick="toggle('circle-button')">
-            <input type="image" src="img\poly_icon.png" class="shape-icon"
-                   id="polygon-mode">
-            <input type="image" src="img\room_icon.png" class="shape-icon"
-                   id="room-mode">
-            
-            <!-- <div id="room-icon">room icon</div> -->
-        </div>
-    </div>
-    
-    <canvas id="canvas"></canvas> <!-- Canvas-->
-</body>
+    <button class="button" onclick="document.location='helpPage.html'"><span>Help</span></button>
+    <button class="button" onclick="document.location='contactusform.html'"><span>Contact Us</span></button>
+    <button class="button" onclick="document.location='aboutPage.html'"><span>About Us</span></button>
+    <button class="button" onclick="document.location='canvas.html'"><span>Get Creating!</span></button>
 
-<!-- ---------------------------- Link JS files ---------------------------- -->
-<script src="lib\fabric.min.js"></script> 
-<script src="scripts\scripts.js"></script>
-<script src="scripts\polygon.js"></script>
+  </body>
 </html>
