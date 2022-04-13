@@ -2,11 +2,11 @@
 body {
     height: 100%;
     font-family: Ubuntu-Bold;
-    background-color:#ffffd2;
+    background-color:#fff2ac;
 
 }
 .button {
-    background-color: #ffffd2;
+    background-color: #fff2ac;
     border: none;
     color: rgb(22, 21, 21);
     padding: 15px 32px;
@@ -38,7 +38,7 @@ body {
 }
 
 .button:active {
-    background: #144E75; 
+    background: #bc96e6; 
 }
 
 .button:after {
@@ -48,15 +48,12 @@ body {
     top: 0;
     height: 470%;
     width: 140%;
-    background: #2e1fb7;
+    background: #bc96e6;
     -webkit-transition: all .5s ease-in-out;
     transition: all .5s ease-in-out;
     -webkit-transform: translateX(-100%) translateY(-25%) rotate(45deg);
     transform: translateX(-100%) translateY(-25%) rotate(45deg);
   }
-
-
-
 
 .container {
     position: absolute;

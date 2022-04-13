@@ -1,7 +1,3 @@
-
-
-
-
 /*//////////////////////////////////////////////////////////////////
 [ FONT ]*/
 
@@ -9,9 +5,7 @@
     font-family: Ubuntu-Bold;
     src: url('../fonts/ubuntu/Ubuntu-Bold.ttf'); 
   }
-  
-  
-  
+
   /*//////////////////////////////////////////////////////////////////
   [ RESTYLE TAG ]*/
   
@@ -69,6 +63,7 @@
     color: #929292;
     padding: 10px 10px;
     display: block;
+    font-size: 20px;
   }
 
   .drop-content a:hover {
