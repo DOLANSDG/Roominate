@@ -320,7 +320,7 @@ function cloneObject(eventData, transform) {
  * Update input box when object changes
  */
 function updateControls() {
-    var aObject = canvas.getActiveObject();
+    var aObject = canvas.getActiveObjects()[0];
     var scale = aObject.getObjectScaling();
 
     lenFtInput.value = Math.floor(round((aObject.height * scale.scaleY) / 60));
@@ -355,38 +355,40 @@ $('notes').oninput = function() {
 
 // Unlock object
 $('lock-icon').onclick = function() {
-    var aObject = canvas.getActiveObject();
     $('lock-icon').classList.add('hidden');
     $('unlock-icon').classList.remove('hidden');
-    aObject.hasControls = canvas.item(0).hasBorders = true;
+    var aObjects = canvas.getActiveObjects();
+    for (var aObject of aObjects) {
+        aObject.hasControls = canvas.item(0).hasBorders = true;
 
-    aObject.lockMovementX = false;
-    aObject.lockMovementY = false;
+        aObject.lockMovementX = false;
+        aObject.lockMovementY = false;
 
-    lenFtInput.disabled = false;
-    lenInInput.disabled = false;
-    widthFtInput.disabled = false;
-    widthInInput.disabled = false;
-
+        lenFtInput.disabled = false;
+        lenInInput.disabled = false;
+        widthFtInput.disabled = false;
+        widthInInput.disabled = false;
+    }
     canvas.renderAll();
 }
 
 // Lock object
 $('unlock-icon').onclick = function() {
-    var aObject = canvas.getActiveObject();
     $('unlock-icon').classList.add('hidden');
     $('lock-icon').classList.remove('hidden');
-    aObject.hasControls = false;
-    canvas.item(0).hasBorders = false;
+    var aObjects = canvas.getActiveObjects();
+    for (var aObject of aObjects) {
+        aObject.hasControls = false;
+        canvas.item(0).hasBorders = false;
+        
+        aObject.lockMovementX = true;
+        aObject.lockMovementY = true;
 
-    aObject.lockMovementX = true;
-    aObject.lockMovementY = true;
-
-    lenFtInput.disabled = true;
-    lenInInput.disabled = true;
-    widthFtInput.disabled = true;
-    widthInInput.disabled = true;
-
+        lenFtInput.disabled = true;
+        lenInInput.disabled = true;
+        widthFtInput.disabled = true;
+        widthInInput.disabled = true;
+    }
     canvas.renderAll();
 }
 
@@ -483,14 +485,34 @@ widthInInput.oninput = function() {
 }
 
 colorInput.oninput = function() {
-    var aObject = canvas.getActiveObject();
-    if (aObject.fill == 'rgba(0,0,0,0)') {
-        aObject.set('stroke', colorInput.value);
-    } else  {
-        aObject.set('fill', colorInput.value);
+    var aObjects = canvas.getActiveObjects();
+    for (var aObject of aObjects) {
+        if (aObject.fill == 'rgba(0,0,0,0)') {
+            aObject.set('stroke', colorInput.value);
+        } else  {
+            aObject.set('fill', colorInput.value);
+        }
     }
     canvas.requestRenderAll();
 }
+
+// Ensures that locked objects aren't moved
+canvas.on('selection:created', function() {
+    if (!canvas.getActiveObject() || (canvas.getActiveObject().type !== 'activeSelection')) {
+        return;
+    }
+    
+    var aGroup = canvas.getActiveObject().toGroup();
+    for (var i = 0; i < aGroup.size(); i++) {
+        if (aGroup.item(i).lockMovementX) {
+            //aGroup.removeWithUpdate(aGroup.item(i));
+            canvas.add(aGroup.item(i));
+            aGroup.removeWithUpdate(aGroup.item(i));
+        }
+    }
+    canvas.getActiveObject().toActiveSelection();
+    canvas.requestRenderAll();
+});
 
 canvas.on({
     'object:scaling': updateControls,
