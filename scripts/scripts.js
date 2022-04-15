@@ -21,18 +21,62 @@ var colorInput = $('obj-color');
  * Get center of the viewport
  */
 function centerCoord(){
-    var zoom=canvas.getZoom()
-
-    return{
+    var zoom = canvas.getZoom()
+    return {
         x: fabric.util.invertTransform(canvas.viewportTransform)[4]+(canvas.width/zoom)/2,
         y: fabric.util.invertTransform(canvas.viewportTransform)[5]+(canvas.height/zoom)/2
+    }
+}
+
+/* -------------------------------- Download/Import-------------------------- */
+
+// Download and serialize canvas
+$('download-button').onclick = function() {
+    if (gridActive) {
+        var gridWasActive = true;
+        toggleGrid(); // Remove grid so it is not serialized
+    }
+
+    var canvasJson = JSON.stringify(canvas.toJSON(['lockMovementX', 'lockMovementY', 'note', 'hasControls', 'hasBorders']));
+    var filename = "floorplan.json";
+    
+    //creating an invisible element
+    var element = document.createElement('a');
+    element.setAttribute('href', 
+    'data:text/plain;charset=utf-8, '
+    + encodeURIComponent(canvasJson));
+    element.setAttribute('download', filename);
+    document.body.appendChild(element);
+    
+    // trigger invisible element
+    element.click();
+    
+    document.body.removeChild(element);
+    if (gridWasActive) {
+        toggleGrid(); // Remove grid so it is not serialized
+    }
+};
+
+// Hidden file upload button
+$('uploadHidden').onchange = function() {
+    var fileVal = document.getElementById("uploadHidden").files[0];
+    if (fileVal != null) {
+            var reader = new FileReader();
+            reader.readAsText(fileVal);
+            reader.onload = function() {
+                try {
+                    var jsonContent = reader.result;
+                    canvas.loadFromJSON(jsonContent);
+                } catch (error) {
+                    alert("Invalid file. Please upload a valid JSON file.");
+                }
+            }
     }
 }
 
 /* -------------------------------------------------------------------------- */
 /*                              Button Functions                              */
 /* -------------------------------------------------------------------------- */
-
 
 // Grid Creation - TODO: Implement unlimited grid functionality
 let gridCreator = function() {

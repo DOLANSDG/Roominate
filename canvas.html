@@ -15,23 +15,27 @@
     <!-- ----------------------------------------------------------------------- -->
     <div id="topbar">
         <div id="logobar">         
-          <button class="button" onclick="document.location='helpPage.html'"><span>Help</span></button>
-          <button class="button" onclick="document.location='contactusform.html'"><span>Contact Us</span></button>
-          <button class="button" onclick="document.location='aboutPage.html'"><span>About Us</span></button>
-          <button class="button" onclick="document.location='index.html'"><span>Get Creating!</span></button>
+            <button class="button" onclick="document.location='helpPage.html'"><span>Help</span></button>
+            <button class="button" onclick="document.location='contactusform.html'"><span>Contact Us</span></button>
+            <button class="button" onclick="document.location='aboutPage.html'"><span>About Us</span></button>
+            <button class="button" onclick="document.location='index.html'"><span>Get Creating!</span></button>
         </div>
         <!-- ------------------------ Sidebar Selection Bar ---------------------------------------->
         <div id="sidebar-select">
             <span>
                 <input type="button" value="Shape Select"
-                       class="sidebar-buttons" id="shapes-button" onclick="toggle('shapes-button');">
+                class="sidebar-buttons" id="shapes-button" onclick="toggle('shapes-button');">
                 <input type="hidden" value="Object Editor"
-                       class="sidebar-buttons" id="editor-button" onclick="toggle('editor-button');">
+                class="sidebar-buttons" id="editor-button" onclick="toggle('editor-button');">
                 <input type="button" value="Toggle Grid"
-                       class="sidebar-buttons" id="toggle-grid" onclick="toggle('toggle-grid');">
-                <!-- <input type="button" value="Download"
-                       class="sidebar-buttons" id="download-button"> -->
-                <input type="image" class="sidebar-buttons" alt="download-button" id="download-button" src="/img/download.svg" style="height:18px;transform: translate(0%, 32%);">
+                class="sidebar-buttons" id="toggle-grid" onclick="toggle('toggle-grid');">
+                
+                <!-- -------------------------------- Icons -------------------------------- -->
+                <input type="image" class="sidebar-buttons" alt="download" id="download-button" 
+                src="/img/download.svg" style="height:18px;transform: translate(0%, 32%);">
+                <input id="uploadHidden" type="file" accept=".json" required="true" hidden/>
+                <input type="image" class="sidebar-buttons" alt="upload" id="upload-button" 
+                src="/img/upload.svg" style="height:18px;transform: translate(0%, 32%);" onclick="$('uploadHidden').click();">
             </span>
         </div>
     </div>
@@ -80,25 +84,25 @@
                 <span class="container-label">Color</span>
                 <input type="color" id="obj-color">
             </div>
-
+            
             <!-- ---------------------------- Object Notes ----------------------------- -->
             <div class="obj-sidebar-size">
                 <span class="container-label">Notes</span>
                 <br>
-                <textarea id="notes" name="notes" wrao="soft"></textarea>
+                <textarea id="notes" name="notes" wrap="soft"></textarea>
             </div>
         </div>
         
         <!-- ---------------------------- Shape Sidebar ---------------------------- -->
         <div id="shape-select" class="hidden sidebar">
             <input type="image" src="img\square_icon.png" class="shape-icon"
-                   id="rectangle-button" onclick="toggle('rectangle-button');">
+            id="rectangle-button" onclick="toggle('rectangle-button');">
             <input type="image" src="img\circle_icon.png" class="shape-icon"
-                   id="circle-button" onclick="toggle('circle-button')">
+            id="circle-button" onclick="toggle('circle-button')">
             <input type="image" src="img\poly_icon.png" class="shape-icon"
-                   id="polygon-mode">
+            id="polygon-mode">
             <input type="image" src="img\room_icon.png" class="shape-icon"
-                   id="room-mode">
+            id="room-mode">
             
             <!-- <div id="room-icon">room icon</div> -->
         </div>
