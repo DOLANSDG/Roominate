@@ -1,26 +1,25 @@
-// let editSideActive = false;  // Check whether editor sidebar is displayed
-// let shapeSideActive = false; // Check whether object sidebar is displayed
-let gridActive = false;      // boolean to track if the grid should be added or removed
-let canvas = new fabric.Canvas('canvas', {
-    preserveObjectStacking: true
-});
-
 // Quick helper functions
 var $ = function(id) { return document.getElementById(id)};
-var round = function(num) {return +(Math.round(num + "e+2")  + "e-2")};
+var round = function(num) { return +(Math.round(num + "e+2")  + "e-2")};
 
-var lenFtInput = $('obj-len-ft');
-var lenInInput = $('obj-len-in');
+let gridActive = false;      // Boolean to track if the grid should be added or removed
+let canvas = new fabric.Canvas('canvas', { // Init canvas
+    preserveObjectStacking: true
+});
+// Init frequently used inputs
+let lenInInput = $('obj-len-in');
+let lenFtInput = $('obj-len-ft');
+let widthFtInput = $('obj-width-ft');
+let widthInInput = $('obj-width-in');
+let colorInput = $('obj-color');
+let notesInput = $('notes');
 
-var widthFtInput = $('obj-width-ft');
-var widthInInput = $('obj-width-in');
-
-var colorInput = $('obj-color');
 
 /**
- * Get center of the viewport
+ * Get center of the canvas
+ * @returns x,y tuple representing middle coordinates of canvas
  */
-function centerCoord(){
+function centerCoord() {
     var zoom = canvas.getZoom()
     return {
         x: fabric.util.invertTransform(canvas.viewportTransform)[4]+(canvas.width/zoom)/2,
@@ -30,17 +29,17 @@ function centerCoord(){
 
 /* -------------------------------- Download/Import-------------------------- */
 
-// Download and serialize canvas
+// Download and serialize canvas as JSON
 $('download-button').onclick = function() {
     if (gridActive) {
         var gridWasActive = true;
-        toggleGrid(); // Remove grid so it is not serialized
+        $('toggle-grid').click(); // Remove grid so it is not serialized
     }
 
     var canvasJson = JSON.stringify(canvas.toJSON(['lockMovementX', 'lockMovementY', 'note', 'hasControls', 'hasBorders']));
     var filename = "floorplan.json";
     
-    //creating an invisible element
+    // creating an invisible element
     var element = document.createElement('a');
     element.setAttribute('href', 
     'data:text/plain;charset=utf-8, '
@@ -53,24 +52,28 @@ $('download-button').onclick = function() {
     
     document.body.removeChild(element);
     if (gridWasActive) {
-        toggleGrid(); // Remove grid so it is not serialized
+        $('toggle-grid').click(); // Bring grid back
     }
 };
 
-// Hidden file upload button
-$('uploadHidden').onchange = function() {
-    var fileVal = document.getElementById("uploadHidden").files[0];
+// Upload JSON file and render to canvas
+$('upload-hidden').onchange = function() {
+    var fileVal = document.getElementById("upload-hidden").files[0];
     if (fileVal != null) {
-            var reader = new FileReader();
-            reader.readAsText(fileVal);
-            reader.onload = function() {
-                try {
-                    var jsonContent = reader.result;
-                    canvas.loadFromJSON(jsonContent);
-                } catch (error) {
-                    alert("Invalid file. Please upload a valid JSON file.");
-                }
+        var reader = new FileReader();
+        reader.readAsText(fileVal);
+        reader.onload = function() {
+            try { // Handle invalid file inputs
+                var jsonContent = reader.result;
+                canvas.loadFromJSON(jsonContent);
+            } catch (error) {
+                alert("Invalid file. Please upload a valid JSON file.");
             }
+        }
+
+        if (gridActive) {
+            toggleGrid();
+        }
     }
 }
 
@@ -364,16 +367,28 @@ function cloneObject(eventData, transform) {
  * Update input box when object changes
  */
 function updateControls() {
-    var aObject = canvas.getActiveObjects()[0];
+    var aObjects = canvas.getActiveObjects();
+    var aObject = aObjects[0];
     var scale = aObject.getObjectScaling();
+    if (aObjects.length != 1) {
+        var inputs = [lenFtInput, lenInInput, widthFtInput, widthInInput];
+        for (target of inputs) {
+            target.disabled = true;
+        }
+        // enable batch editing of color and notes
+        colorInput.disabled = false;
+        notesInput.disabled = false;
+    } else {
+        enableInputs(true);
+    }
 
     lenFtInput.value = Math.floor(round((aObject.height * scale.scaleY) / 60));
     lenInInput.value = Math.floor((aObject.height * scale.scaleY) % 60 / 5); // Math to get inches from pixels
 
     widthFtInput.value = Math.floor(round((aObject.width * scale.scaleX) / 60));
     widthInInput.value = Math.floor((aObject.width * scale.scaleX) % 60 / 5); // Math to get inches from pixels
-
-    $('notes').value = aObject.note;
+    
+    notesInput.value = aObject.note;
 
     if (aObject.fill == 'rgba(0,0,0,0)') {
         colorInput.value = aObject.stroke;
@@ -391,10 +406,31 @@ function updateControls() {
     }
 }
 
+/**
+ * Toggle object inputs.
+ * @param {boolean} toggle enable/disable object inputs 
+ */
+function enableInputs(toggle) {
+    var inputs = [lenFtInput, lenInInput, widthFtInput, widthInInput, colorInput, notesInput];
+    if (toggle) {
+        for (target of inputs) {
+            target.disabled = false;
+        }
+
+    } else {
+        for (target of inputs) {
+            target.disabled = true;
+            target.value = target ==  colorInput ? "#ffffff" : "";
+        }
+    }
+}
+
 // Update notes on object
-$('notes').oninput = function() {
-    var aObject = canvas.getActiveObject();
-    aObject.note = $('notes').value;
+notesInput.oninput = function() {
+    var aObjects = canvas.getActiveObjects();
+    for (var aObject of aObjects) {
+        aObject.note = notesInput.value;
+    }
 }
 
 // Unlock object
@@ -407,11 +443,7 @@ $('lock-icon').onclick = function() {
 
         aObject.lockMovementX = false;
         aObject.lockMovementY = false;
-
-        lenFtInput.disabled = false;
-        lenInInput.disabled = false;
-        widthFtInput.disabled = false;
-        widthInInput.disabled = false;
+        enableInputs(true);
     }
     canvas.renderAll();
 }
@@ -427,11 +459,7 @@ $('unlock-icon').onclick = function() {
         
         aObject.lockMovementX = true;
         aObject.lockMovementY = true;
-
-        lenFtInput.disabled = true;
-        lenInInput.disabled = true;
-        widthFtInput.disabled = true;
-        widthInInput.disabled = true;
+        enableInputs(false);
     }
     canvas.renderAll();
 }
@@ -558,13 +586,18 @@ canvas.on('selection:created', function() {
     canvas.requestRenderAll();
 });
 
+canvas.on('selection:cleared', function() {
+    enableInputs(false);
+
+});
+
 canvas.on({
     'object:scaling': updateControls,
     'selection:updated': updateControls,
     'selection:created': updateControls
 });
 
-/* -------------------------------------------------------------------------- */
+/* ----------------------- Main Canvas/Viewport events ---------------------- */
 
 // Canvas Zoom and Pan
 canvas.on('mouse:wheel', function(opt) {
@@ -609,8 +642,6 @@ canvas.on('mouse:down', function(opt) {
 
 var maxSize = 4500;
 
-
-
 canvas.on('mouse:move', function(opt) {
     if (this.isDragging) {
         var e = opt.e;
@@ -641,4 +672,20 @@ canvas.on('mouse:up', function(opt) {
     this.setViewportTransform(this.viewportTransform);
     this.isDragging = false;
     this.selection = true;
+});
+
+/* --------------------------------- HotKeys -------------------------------- */
+
+document.addEventListener('keydown', e => {
+    if (e.target.nodeName == "INPUT" || e.target.nodeName == "TEXTAREA") {
+        return;
+    }
+    if (e.key === 'Delete') {
+        var objects = canvas.getActiveObjects();
+        for (target of objects) {
+            canvas.remove(target);
+        }
+        canvas.discardActiveObject();
+        canvas.requestRenderAll();
+    }
 });
