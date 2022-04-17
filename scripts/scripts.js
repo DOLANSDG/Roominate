@@ -59,6 +59,8 @@ $('download-button').onclick = function() {
 // Upload JSON file and render to canvas
 $('upload-hidden').onchange = function() {
     var fileVal = document.getElementById("upload-hidden").files[0];
+    var gridWasActive = gridActive;
+    gridActive = false;
     if (fileVal != null) {
         var reader = new FileReader();
         reader.readAsText(fileVal);
@@ -66,14 +68,15 @@ $('upload-hidden').onchange = function() {
             try { // Handle invalid file inputs
                 var jsonContent = reader.result;
                 canvas.loadFromJSON(jsonContent);
+                if (gridWasActive) {
+                    toggleGrid();
+                    canvas.requestRenderAll();
+                }
             } catch (error) {
                 alert("Invalid file. Please upload a valid JSON file.");
             }
         }
 
-        if (gridActive) {
-            toggleGrid();
-        }
     }
 }
 
@@ -88,8 +91,8 @@ let gridCreator = function() {
     let lineCount = (totalWidth / pixelDelta);
     let lines = [];
     for (let i = 0; i < lineCount; i++) {
-        lines.push(new fabric.Line([i * pixelDelta, 0, i * pixelDelta, totalWidth], {stroke: '#000', selectable: false}));
-        lines.push(new fabric.Line([0, i * pixelDelta, totalWidth, i * pixelDelta], {stroke: '#000', selectable: false}));
+        lines.push(new fabric.Line([i * pixelDelta, 0, i * pixelDelta, totalWidth], {stroke: '#000', selectable: false, hasControls: false}));
+        lines.push(new fabric.Line([0, i * pixelDelta, totalWidth, i * pixelDelta], {stroke: '#000', selectable: false, hasControls: false}));
     }
     
     return lines;
@@ -443,8 +446,8 @@ $('lock-icon').onclick = function() {
 
         aObject.lockMovementX = false;
         aObject.lockMovementY = false;
-        enableInputs(true);
     }
+    enableInputs(true);
     canvas.renderAll();
 }
 
@@ -459,8 +462,8 @@ $('unlock-icon').onclick = function() {
         
         aObject.lockMovementX = true;
         aObject.lockMovementY = true;
-        enableInputs(false);
     }
+    enableInputs(false);
     canvas.renderAll();
 }
 
@@ -568,6 +571,7 @@ colorInput.oninput = function() {
     canvas.requestRenderAll();
 }
 
+// Discard locked objects from active selection
 // Ensures that locked objects aren't moved
 canvas.on('selection:created', function() {
     if (!canvas.getActiveObject() || (canvas.getActiveObject().type !== 'activeSelection')) {
@@ -577,7 +581,6 @@ canvas.on('selection:created', function() {
     var aGroup = canvas.getActiveObject().toGroup();
     for (var i = 0; i < aGroup.size(); i++) {
         if (aGroup.item(i).lockMovementX) {
-            //aGroup.removeWithUpdate(aGroup.item(i));
             canvas.add(aGroup.item(i));
             aGroup.removeWithUpdate(aGroup.item(i));
         }
@@ -595,6 +598,17 @@ canvas.on({
     'object:scaling': updateControls,
     'selection:updated': updateControls,
     'selection:created': updateControls
+});
+
+canvas.on('selection:cleared', function() {
+    enableInputs(false);
+
+});
+
+canvas.on({
+    'object:scaling': updateControls,
+    'selection:updated': updateControls,
+    'selection:created': updateControls,
 });
 
 /* ----------------------- Main Canvas/Viewport events ---------------------- */
@@ -686,6 +700,19 @@ document.addEventListener('keydown', e => {
             canvas.remove(target);
         }
         canvas.discardActiveObject();
+        canvas.requestRenderAll();
+    }
+    // Select all unlocked objects
+    if (e.ctrlKey && e.key === 'a') {
+        canvas.discardActiveObject();
+        // Array of all objects excluding locked and gridlines
+        allObj = canvas._objects.filter(
+            obj => obj.hasControls === true
+        );
+        var sel = new fabric.ActiveSelection(allObj, {
+            canvas: canvas,
+        });
+        canvas.setActiveObject(sel);
         canvas.requestRenderAll();
     }
 });
