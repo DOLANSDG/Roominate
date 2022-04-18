@@ -2,12 +2,6 @@
 // let shapeSideActive = false; // Check whether object sidebar is displayed
 let gridActive = false;      // boolean to track if the grid should be added or removed
 let canvas = new fabric.Canvas('canvas');
-let shapeCanvas = new fabric.Canvas('shape-canvas', {
-    "height":1000,
-    "width":80
-});
-
-canvas
 
 // Quick helper functions
 var $ = function(id) { return document.getElementById(id)};
