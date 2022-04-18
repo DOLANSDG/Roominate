@@ -258,7 +258,7 @@ function createRect() {
         height: 100,
         objectCaching: false,
         stroke: 'black',
-        strokeWidth: 1,
+        strokeWidth: 2,
         strokeUniform: true,
         top: centerCoord().y,
         left : centerCoord().x,
