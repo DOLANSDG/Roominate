@@ -11,6 +11,8 @@ let lenInInput = $('obj-len-in');
 let lenFtInput = $('obj-len-ft');
 let widthFtInput = $('obj-width-ft');
 let widthInInput = $('obj-width-in');
+var posX = $("obj-x");
+var posY = $("obj-y");
 let colorInput = $('obj-color');
 let notesInput = $('notes');
 
@@ -391,6 +393,9 @@ function updateControls() {
     widthFtInput.value = Math.floor(round((aObject.width * scale.scaleX) / 60));
     widthInInput.value = Math.floor((aObject.width * scale.scaleX) % 60 / 5); // Math to get inches from pixels
     
+    posX.value = aObject.left + ((widthFtInput.value * 12) + widthInInput.value) / 4;
+    posY.value = aObject.top + ((lenFtInput.value * 12) + lenInInput.value) / 4; // update position coordinates
+    
     notesInput.value = aObject.note;
 
     if (aObject.fill == 'rgba(0,0,0,0)') {
@@ -400,13 +405,8 @@ function updateControls() {
     }
     
     // Update lock/unlock icon
-    if (!aObject.hasControls) {
-        $('lock-icon').classList.remove('hidden');
-        $('unlock-icon').classList.add('hidden');
-    } else {
-        $('lock-icon').classList.add('hidden');
-        $('unlock-icon').classList.remove('hidden');
-    }
+    let locked = (!aObject.hasControls) ? true : false;
+    $("lock-icon").src = locked ? "img/lock.svg" : "img/unlock.svg"
 }
 
 /**
@@ -428,34 +428,15 @@ notesInput.oninput = function() {
     }
 }
 
-// Unlock object
-$('lock-icon').onclick = function() {
-    $('lock-icon').classList.add('hidden');
-    $('unlock-icon').classList.remove('hidden');
-    var aObjects = canvas.getActiveObjects();
-    for (var aObject of aObjects) {
-        aObject.hasControls = canvas.item(0).hasBorders = true;
-
-        aObject.lockMovementX = false;
-        aObject.lockMovementY = false;
-    }
-    enableInputs(true);
-    canvas.renderAll();
-}
-
-// Lock object
-$('unlock-icon').onclick = function() {
-    $('unlock-icon').classList.add('hidden');
-    $('lock-icon').classList.remove('hidden');
-    var aObjects = canvas.getActiveObjects();
-    for (var aObject of aObjects) {
-        aObject.hasControls = false;
-        canvas.item(0).hasBorders = false;
-        
-        aObject.lockMovementX = true;
-        aObject.lockMovementY = true;
-    }
-    enableInputs(false);
+// Change the lock status of the object
+function changeLockOfObject() {
+    var aObject = canvas.getActiveObject();
+    console.log(aObject.top);
+    console.log(aObject.left);
+    // All objects begin with hasControls = true, so it starts off at the unlock image
+    let locked = (aObject.hasControls = !aObject.hasControls) ? false : true;
+    $("lock-icon").src = locked ? "img/lock.svg" : "img/unlock.svg";
+    canvas.item(0).hasBorders = !canvas.item(0).hasBorders;
     canvas.renderAll();
 }
 
@@ -605,6 +586,7 @@ canvas.on({
     'object:scaling': updateControls,
     'selection:updated': updateControls,
     'selection:created': updateControls,
+    'object:moving': updateControls
 });
 
 /* ----------------------- Main Canvas/Viewport events ---------------------- */
