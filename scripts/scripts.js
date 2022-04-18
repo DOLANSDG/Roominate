@@ -393,8 +393,8 @@ function updateControls() {
     widthFtInput.value = Math.floor(round((aObject.width * scale.scaleX) / 60));
     widthInInput.value = Math.floor((aObject.width * scale.scaleX) % 60 / 5); // Math to get inches from pixels
     
-    posX.value = aObject.left + ((widthFtInput.value * 12) + widthInInput.value) / 4;
-    posY.value = aObject.top + ((lenFtInput.value * 12) + lenInInput.value) / 4; // update position coordinates
+    posX.value = aObject.oCoords.mt.x; // coordinates
+    posY.value = aObject.oCoords.ml.y;
     
     notesInput.value = aObject.note;
 
