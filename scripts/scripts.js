@@ -431,8 +431,6 @@ notesInput.oninput = function() {
 // Change the lock status of the object
 function changeLockOfObject() {
     var aObject = canvas.getActiveObject();
-    console.log(aObject.top);
-    console.log(aObject.left);
     // All objects begin with hasControls = true, so it starts off at the unlock image
     let locked = (aObject.hasControls = !aObject.hasControls) ? false : true;
     $("lock-icon").src = locked ? "img/lock.svg" : "img/unlock.svg";
