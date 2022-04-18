@@ -169,7 +169,6 @@ let buttonCollection = {
 async function toggle(buttonID) {
     let button = buttonCollection[buttonID];
     if (button.singleClickButton) {
-        console.log("working");
         button.purposeID();
     } else {
         button.toggleButton();
