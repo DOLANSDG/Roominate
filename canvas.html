@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css"> <!-- Link CSS file -->
     <title>ROOMinate</title>
 </head>
@@ -15,10 +15,10 @@
     <!-- ----------------------------------------------------------------------- -->
     <div id="topbar">
         <div id="logobar">         
-            <button class="button" onclick="document.location='helpPage.html'"><span>Help</span></button>
-            <button class="button" onclick="document.location='contactusform.html'"><span>Contact Us</span></button>
-            <button class="button" onclick="document.location='aboutPage.html'"><span>About Us</span></button>
-            <button class="button" onclick="document.location='index.html'"><span>Get Creating!</span></button>
+            <span class="top-button" onclick="document.location='helpPage.html'">Help</span>
+            <span class="top-button" onclick="document.location='contactusform.html'">Contact Us</span>
+            <span class="top-button" onclick="document.location='aboutPage.html'">About Us</span>
+            <span class="top-button" onclick="document.location='index.html'">Get Creating!</span>
         </div>
         <!-- ------------------------ Sidebar Selection Bar ---------------------------------------->
         <div id="sidebar-select">
@@ -112,7 +112,8 @@
 </body>
 
 <!-- ---------------------------- Link JS files ---------------------------- -->
-<script src="lib\fabric.min.js"></script> 
+<script src="lib\fabric.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="scripts\scripts.js"></script>
 <script src="scripts\polygon.js"></script>
 </html>

@@ -91,8 +91,8 @@ let gridCreator = function() {
     let lineCount = (totalWidth / pixelDelta);
     let lines = [];
     for (let i = 0; i < lineCount; i++) {
-        lines.push(new fabric.Line([i * pixelDelta, 0, i * pixelDelta, totalWidth], {stroke: '#000', selectable: false, hasControls: false}));
-        lines.push(new fabric.Line([0, i * pixelDelta, totalWidth, i * pixelDelta], {stroke: '#000', selectable: false, hasControls: false}));
+        lines.push(new fabric.Line([i * pixelDelta, 0, i * pixelDelta, totalWidth], {stroke: '#dadce0', selectable: false, hasControls: false}));
+        lines.push(new fabric.Line([0, i * pixelDelta, totalWidth, i * pixelDelta], {stroke: '#dadce0', selectable: false, hasControls: false}));
     }
     
     return lines;
@@ -123,10 +123,10 @@ function changeSideBarButtonColor(turnedOn, button) {
     let backgroundColor;
     if (turnedOn) {
         textColor = "rgb(0, 0, 0)";
-        backgroundColor = "rgb(125,125,125)";
+        backgroundColor = "rgb(168, 168, 168)";
     } else {
-        textColor = "rgb(255, 255, 255)";
-        backgroundColor = "rgb(141, 93, 187)";
+        textColor = null;
+        backgroundColor = null;
     }
     id.style.color = textColor;
     id.style.backgroundColor = backgroundColor;
@@ -253,12 +253,12 @@ async function toggle(buttonID) {
  */
 function createRect() {
     var rect = new fabric.Rect( {
-        fill: '#b291ff',
+        fill: '#bc96e6',
         width: 200,
         height: 100,
         objectCaching: false,
         stroke: 'black',
-        strokeWidth: 2,
+        strokeWidth: 1,
         strokeUniform: true,
         top: centerCoord().y,
         left : centerCoord().x,
@@ -373,7 +373,7 @@ function updateControls() {
     var aObjects = canvas.getActiveObjects();
     var aObject = aObjects[0];
     var scale = aObject.getObjectScaling();
-    if (aObjects.length != 1) {
+    if (aObjects.length != 1 || !aObject.hasControls) {
         var inputs = [lenFtInput, lenInInput, widthFtInput, widthInInput];
         for (target of inputs) {
             target.disabled = true;
@@ -414,18 +414,10 @@ function updateControls() {
  * @param {boolean} toggle enable/disable object inputs 
  */
 function enableInputs(toggle) {
-    var inputs = [lenFtInput, lenInInput, widthFtInput, widthInInput, colorInput, notesInput];
-    if (toggle) {
-        for (target of inputs) {
-            target.disabled = false;
-        }
-
-    } else {
-        for (target of inputs) {
-            target.disabled = true;
-            target.value = target ==  colorInput ? "#ffffff" : "";
-        }
-    }
+    var inputs = document.querySelectorAll('input[type=number], input[type=color]');
+    for (target of inputs) {
+        target.disabled = !toggle;
+    }   
 }
 
 // Update notes on object
@@ -483,6 +475,9 @@ $('front-icon').onclick = function() {
  * Update object when length ft input box changes
  */
 lenFtInput.oninput = function() {
+    if (!canvas.getActiveObject()) {
+        return;
+    }
     var aObject = canvas.getActiveObject();
     var scale = aObject.getObjectScaling();
     var currFt = lenFtInput.value / scale.scaleY * 60;
@@ -502,6 +497,9 @@ lenFtInput.oninput = function() {
  * Update object in when length inch input box changes
  */
 lenInInput.oninput = function() {
+    if (!canvas.getActiveObject()) {
+        return;
+    }
     var aObject = canvas.getActiveObject();
     var scale = aObject.getObjectScaling();
     var currIn = lenInInput.value / scale.scaleY * 5;
@@ -521,6 +519,9 @@ lenInInput.oninput = function() {
  * Update object when width ft input box changes
  */
 widthFtInput.oninput = function() {
+    if (!canvas.getActiveObject()) {
+        return;
+    }
     var aObject = canvas.getActiveObject();
     var scale = aObject.getObjectScaling();
     var currFt = widthFtInput.value / scale.scaleX * 60;
@@ -542,6 +543,9 @@ widthFtInput.oninput = function() {
  * Update object when width inch input box changes
  */
 widthInInput.oninput = function() {
+    if (!canvas.getActiveObject()) {
+        return;
+    }
     var aObject = canvas.getActiveObject();
     var scale = aObject.getObjectScaling();
     var currIn = widthInInput.value / scale.scaleY * 5;
@@ -560,6 +564,9 @@ widthInInput.oninput = function() {
 }
 
 colorInput.oninput = function() {
+    if (!canvas.getActiveObject()) {
+        return;
+    }
     var aObjects = canvas.getActiveObjects();
     for (var aObject of aObjects) {
         if (aObject.fill == 'rgba(0,0,0,0)') {
@@ -587,17 +594,6 @@ canvas.on('selection:created', function() {
     }
     canvas.getActiveObject().toActiveSelection();
     canvas.requestRenderAll();
-});
-
-canvas.on('selection:cleared', function() {
-    enableInputs(false);
-
-});
-
-canvas.on({
-    'object:scaling': updateControls,
-    'selection:updated': updateControls,
-    'selection:created': updateControls
 });
 
 canvas.on('selection:cleared', function() {
@@ -694,6 +690,7 @@ document.addEventListener('keydown', e => {
     if (e.target.nodeName == "INPUT" || e.target.nodeName == "TEXTAREA") {
         return;
     }
+    // Delete object
     if (e.key === 'Delete') {
         var objects = canvas.getActiveObjects();
         for (target of objects) {
