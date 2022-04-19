@@ -412,6 +412,12 @@ function updateControls() {
     // Update lock/unlock icon
     let locked = (!aObject.hasControls) ? true : false;
     $("lock-icon").src = locked ? "img/svg_icons/lock.svg" : "img/svg_icons/unlock.svg"
+  
+    // Update the peer client
+    if (conn) {
+        let canvasJSON = JSON.stringify(canvas.toJSON(['lockMovementX', 'lockMovementY', 'note', 'hasControls', 'hasBorders']))
+        conn.send(canvasJSON);
+    }
 }
 
 /**
@@ -584,7 +590,6 @@ canvas.on('selection:created', function() {
 
 canvas.on('selection:cleared', function() {
     enableInputs(false);
-
 });
 
 canvas.on({
@@ -593,7 +598,6 @@ canvas.on({
     'selection:created': updateControls,
     'object:moving': updateControls,
     'after:render': updateControls
-
 });
 
 /* ----------------------- Main Canvas/Viewport events ---------------------- */
