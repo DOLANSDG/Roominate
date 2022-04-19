@@ -73,7 +73,7 @@ body {
 
 .sidebar-buttons {
     display: inline-block;
-    outline: 0;
+    /* outline: 0; */
     border: none;
     cursor: pointer;
     /* font-weight: 600; */
@@ -83,11 +83,12 @@ body {
     background-color: #9749f0;
     color: white;
     padding: 5px 10px;
-    transition: background-color 100ms ease-in-out;
+    transition: all 100ms ease-in-out;
 }
 
 .sidebar-buttons:hover {
     background-color: #731DD8;
+    border: 2px solid rgb(178, 237, 77);
 }
 
 #sidebar-container {
@@ -116,6 +117,10 @@ body {
 .shape-icon {
     width: inherit;
     padding-bottom: 10px;
+}
+
+.shape-icon:hover {
+    background-color: #dec1ff;
 }
 
 /* -------------------------- Object editor sidebar ------------------------- */
@@ -187,4 +192,12 @@ input:disabled {
     font-weight: bold;
     font-size: 120%;
     padding-bottom: 4px;
+}
+
+input[type=image] {
+    transition: all 100ms ease-out;
+}
+
+input[type=image]:hover {
+    transform: scale(1.2);
 }
