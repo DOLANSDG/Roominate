@@ -209,7 +209,9 @@ let buttonCollection = {
     "editor-button": new Button("editor-button",false, 'obj-editor', [], false),
     "toggle-grid": new Button("toggle-grid", false, toggleGrid, [], false),
     "rectangle-button": new Button("rectangle-button", false, createRect, [], true),
-    "circle-button": new Button("circle-button", false, createEllipse, [], true)
+    "circle-button": new Button("circle-button", false, createEllipse, [], true),
+    "lock-icon": new Button("lock-icon", false, changeLockOfObject, [], true),
+    
 }
 
 let buttonIMGPairs = {
@@ -372,6 +374,9 @@ function cloneObject(eventData, transform) {
  * Update input box when object changes
  */
 function updateControls() {
+    if (!canvas.getActiveObject()) {
+        return;
+    }
     var aObjects = canvas.getActiveObjects();
     var aObject = aObjects[0];
     var scale = aObject.getObjectScaling();
@@ -393,8 +398,8 @@ function updateControls() {
     widthFtInput.value = Math.floor(round((aObject.width * scale.scaleX) / 60));
     widthInInput.value = Math.floor((aObject.width * scale.scaleX) % 60 / 5); // Math to get inches from pixels
     
-    posX.value = aObject.left + ((widthFtInput.value * 12) + widthInInput.value) / 4;
-    posY.value = aObject.top + ((lenFtInput.value * 12) + lenInInput.value) / 4; // update position coordinates
+    posX.value = round(aObject.oCoords.mt.x);
+    posY.value = round(aObject.oCoords.ml.y); // update position coordinates
     
     notesInput.value = aObject.note;
 
@@ -406,7 +411,7 @@ function updateControls() {
     
     // Update lock/unlock icon
     let locked = (!aObject.hasControls) ? true : false;
-    $("lock-icon").src = locked ? "img/lock.svg" : "img/unlock.svg"
+    $("lock-icon").src = locked ? "img/svg_icons/lock.svg" : "img/svg_icons/unlock.svg"
 }
 
 /**
@@ -431,11 +436,11 @@ notesInput.oninput = function() {
 // Change the lock status of the object
 function changeLockOfObject() {
     var aObject = canvas.getActiveObject();
-    console.log(aObject.top);
-    console.log(aObject.left);
     // All objects begin with hasControls = true, so it starts off at the unlock image
     let locked = (aObject.hasControls = !aObject.hasControls) ? false : true;
-    $("lock-icon").src = locked ? "img/lock.svg" : "img/unlock.svg";
+    aObject.lockMovementX = locked;
+    aObject.lockMovementY = locked;
+    $("lock-icon").src = locked ? "img/svg_icons/lock.svg" : "img/svg_icons/unlock.svg";
     canvas.item(0).hasBorders = !canvas.item(0).hasBorders;
     canvas.renderAll();
 }
@@ -586,7 +591,9 @@ canvas.on({
     'object:scaling': updateControls,
     'selection:updated': updateControls,
     'selection:created': updateControls,
-    'object:moving': updateControls
+    'object:moving': updateControls,
+    'after:render': updateControls
+
 });
 
 /* ----------------------- Main Canvas/Viewport events ---------------------- */
@@ -679,7 +686,6 @@ document.addEventListener('keydown', e => {
             canvas.remove(target);
         }
         canvas.discardActiveObject();
-        canvas.requestRenderAll();
     }
     // Select all unlocked objects
     if (e.ctrlKey && e.key === 'a') {
@@ -692,6 +698,34 @@ document.addEventListener('keydown', e => {
             canvas: canvas,
         });
         canvas.setActiveObject(sel);
-        canvas.requestRenderAll();
     }
+
+    var aObject = canvas.getActiveObject();
+    if (e.key === 'ArrowLeft' && !e.shiftKey) {
+        aObject.left -= 5;
+    }
+    if (e.key === 'ArrowRight' && !e.shiftKey) {
+        aObject.left += 5;
+    }
+    if (e.key === 'ArrowUp' && !e.shiftKey) {
+        aObject.top -= 5;
+    }
+    if (e.key === 'ArrowDown' && !e.shiftKey) {
+        aObject.top += 5;
+    }
+
+    if(e.key === 'ArrowLeft' && e.shiftKey) {
+        aObject.rotate(aObject.angle-5);
+    }
+    if(e.key === 'ArrowRight' && e.shiftKey) {
+        aObject.rotate(aObject.angle+5);
+    }
+    if(e.key === 'ArrowDown' || e.key === 'ArrowUp' && e.shiftKey) {
+        aObject.rotate(aObject.angle+180);
+    }
+
+    if (e.key === 'c' && e.ctrlKey) {
+        cloneObject(null, aObject);
+    }
+    canvas.requestRenderAll();
 });
