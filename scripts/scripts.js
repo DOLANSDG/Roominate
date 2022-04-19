@@ -407,6 +407,12 @@ function updateControls() {
         $('lock-icon').classList.add('hidden');
         $('unlock-icon').classList.remove('hidden');
     }
+
+    // Update the peer client
+    if (conn) {
+        let canvasJSON = JSON.stringify(canvas.toJSON(['lockMovementX', 'lockMovementY', 'note', 'hasControls', 'hasBorders']))
+        conn.send(canvasJSON);
+    }
 }
 
 /**
@@ -598,13 +604,13 @@ canvas.on('selection:created', function() {
 
 canvas.on('selection:cleared', function() {
     enableInputs(false);
-
 });
 
 canvas.on({
     'object:scaling': updateControls,
     'selection:updated': updateControls,
     'selection:created': updateControls,
+    'object:moving': updateControls
 });
 
 /* ----------------------- Main Canvas/Viewport events ---------------------- */

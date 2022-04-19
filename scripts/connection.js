@@ -5,42 +5,101 @@ var stat = document.getElementById("status");
 var connectButton = document.getElementById("connect-button");
 
 const peer = new Peer();
+
+// enabling peer-to-peer porting
 peer.on("open", function (id) {
     if (peer.id === null) {
         console.log("Received null id from peer open");
+        peer.id = lastPeerId;
+    } else {
+        lastPeerId = peer.id;
     }
     console.log("ID: " + peer.id);
 });
 
+// Connection of own peer uid through receiving a connection
 peer.on('connection', function (c) {
     conn = c;
-    console.log("connected to: " + conn.peer);
+    console.log("Received and Established a connection to UID: " + conn.peer);
     stat.value = "Connected";
+
+    // Only handles bidirectional information travel (1-to-1 only)
+    conn.on('data', function (data) {
+        // Load json onto page
+        console.log("Peer moved Objects; Replacing canvas");
+
+        // clear page
+        canvas.clear();
+
+        try { // check for an invalid data
+            currentJSON = data;
+            canvas.loadFromJSON(data);
+        } catch (error) {
+            alert("Invalid Data sent from your peer client.");
+        }
+    });
 });
 
-connectButton.onclick = function() {
-    var peerId = recvIdInput.value;
-    conn = peer.connect(recvIdInput.value, {
+// Setting disconnection from own peer uid
+peer.on("disconnected", function () {
+    stat.innerHTML = "Connection lost. Please reconnect";
+    console.log('Connection lost. Please reconnect');
+
+    // Reconnecting from previous peerid
+    peer.id = lastPeerId;
+    peer._lastServerId = lastPeerId;
+    peer.reconnect();
+});
+
+// on a closed peer-to-peer connection (due to connected peer)
+peer.on('close', function() {
+    conn = null;
+    stat.innerHTML = "Connection destroyed. Please refresh";
+    console.log('Connection destroyed');
+});
+
+peer.on('error', function (err) {
+    console.log(err);
+    alert('' + err);
+});
+
+let currentJSON = null;
+
+// Only needed for starting connection
+connectButton.addEventListener('click', function() {
+    if (conn) { // connection status is valid
+        conn.close();
+    }
+
+    let connUID = recvIdInput.value;
+    conn = peer.connect(connUID, {
         reliable: true
     });
-    
+
     conn.on('open', function () {
-        stat.innerHTML = "Connected to: " + conn.peer;
-        console.log("Connected to: " + conn.peer);
-        
-        conn.send('hello');
+        stat.innerHTML = "Connected to requested UID: " + conn.peer;
+        console.log("Connected to requested UID: " + conn.peer);
+
+        // Put here URL params for style stuff if needed
+        // conn.send('hello');
     });
-    
-    peer.on('close', function() {
-        conn = null;
-        stat.innerHTML = "Connection destroyed. Please refresh";
-        console.log('Connection destroyed');
+
+    // Only handles bidirectional information travel (1-to-1 only)
+    conn.on('data', function (data) {
+        // Load json onto page
+        console.log("Peer moved Objects; Replacing canvas");
+
+        // clear page
+        canvas.clear();
+
+        try { // check for an invalid data
+            currentJSON = data;
+            canvas.loadFromJSON(data);
+        } catch (error) {
+            alert("Invalid Data sent from your peer client.");
+        }
     });
-    peer.on('error', function (err) {
-        console.log(err);
-        alert('' + err);
-    });
-}
+});
 
 
 
