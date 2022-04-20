@@ -16,8 +16,6 @@ var posY = $("obj-y");
 let colorInput = $('obj-color');
 let notesInput = $('notes');
 
-let sending = true;
-
 /**
  * Get center of the canvas
  * @returns x,y tuple representing middle coordinates of canvas
@@ -398,9 +396,6 @@ function updateControls() {
     widthFtInput.value = Math.floor(round((aObject.width * scale.scaleX) / 60));
     widthInInput.value = Math.floor((aObject.width * scale.scaleX) % 60 / 5); // Math to get inches from pixels
     
-    posX.value = round(aObject.oCoords.mt.x);
-    posY.value = round(aObject.oCoords.ml.y); // update position coordinates
-    
     notesInput.value = aObject.note;
 
     if (aObject.fill == 'rgba(0,0,0,0)') {
@@ -412,14 +407,6 @@ function updateControls() {
     // Update lock/unlock icon
     let locked = (!aObject.hasControls) ? true : false;
     $("lock-icon").src = locked ? "img/svg_icons/lock.svg" : "img/svg_icons/unlock.svg"
-  
-    // Update the peer client
-    if (conn) {
-        if (sending) {
-            let canvasJSON = JSON.stringify(canvas.toJSON(['lockMovementX', 'lockMovementY', 'note', 'hasControls', 'hasBorders']))
-            conn.send(canvasJSON);
-        }
-    }
 }
 
 /**
@@ -594,17 +581,26 @@ canvas.on('selection:cleared', function() {
     enableInputs(false);
 });
 
-// necessary peerjs function to allow synchronization
-function updateControlsWrapper() {
-    sending = true;
-    updateControls();
+function sendData() {
+    // Update the peer client
+    if (conn) {
+        let canvasJSON = JSON.stringify(canvas.toJSON(['lockMovementX', 'lockMovementY', 'note', 'hasControls', 'hasBorders']))
+        conn.send(canvasJSON);
+    }
+}
+
+function updateCoord() {
+    var aObject = canvas.getActiveObjects();
+    posX.value = round(aObject.oCoords.mt.x);
+    posY.value = round(aObject.oCoords.ml.y); // update position coordinates
 }
 
 canvas.on({
+    'object:modified': sendData,
     'object:scaling': updateControls,
     'selection:updated': updateControls,
     'selection:created': updateControls,
-    'object:moving': updateControlsWrapper,
+    'object:moving': updateCoord,
     'after:render': updateControls
 });
 
