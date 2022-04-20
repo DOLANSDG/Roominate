@@ -48,7 +48,7 @@ body {
 #logobar {
     width: 100%;
     margin-top: 10px;
-    background-color: #fdfaff;
+    background-color: white;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -56,7 +56,7 @@ body {
 }
 
 #logobar > span {
-    color:#000000;
+    color:#07144e;
     font-size: 18px;
     font-weight: 700;
     margin: 0px 25px;

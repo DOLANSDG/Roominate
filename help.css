@@ -9,7 +9,7 @@ body{
 .logo {
     display: inline;
     height: 80px;
-    width: 170px;
+    width: 150px;
     background-image: url("img/logo.png");
     background-size: cover;
   }
@@ -57,7 +57,7 @@ body{
 .left {
     left: 0;
     padding: 10px 10px 10px 10px;
-    background-color: #bd96e6;
+    background-color: #d6bff0;
     overflow: hidden;
     margin-right: auto;
     margin-left: auto;
@@ -67,7 +67,7 @@ body{
 .left-text {
     width: 80%;
     text-align: center;
-    text-shadow: 2px 2px #C6A795;
+    text-shadow: 1px 1px #07144e;
 }
 
 .video {
@@ -80,9 +80,9 @@ body{
 .right {
     right: 0;
     padding: 20px 20px 20px 20px;
-    background-color: #dabeae;
+    background-color: #e7d7ce;
     overflow: hidden;
-    text-shadow: 2px 2px #07144e;
+    /* text-shadow: 2px 2px #07144e50; */
 }
 
 .faq-container {
@@ -98,7 +98,7 @@ body{
     margin: left;
     border: none;
     outline: none;
-    background-color: #C6A795;
+    background-color: #07144e;
     text-align: left;
     color: white;
     -webkit-border-radius: 10px 10px 0px 0px;
@@ -107,7 +107,7 @@ body{
 }
 
 .active, .question:hover {
-    background-color: #07144e;
+    background-color: #324286;
     color: white;
 }
 
