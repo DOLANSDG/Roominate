@@ -36,7 +36,7 @@
                 <input id="upload-hidden" type="file" accept=".json" required="true" hidden/>
                 <input type="image" class="sidebar-buttons" alt="upload" id="upload-button" 
                 src="img/svg_icons/upload.svg" style="height:18px;transform: translate(0%, 32%);" onclick="$('upload-hidden').click();">
-                <a class="sidebar-buttons" href="#overlay" style="height:18px;transform: translate(0%, 15%);">
+                <a class="sidebar-buttons" href="#overlay" style="height:18px;transform: translate(0%, 15%);" id="peer-button">
                     <img src="img/svg_icons/connect_icon.svg" style="height:18px;">
                 </a>
             </span>
@@ -64,7 +64,8 @@
                 <div class="content" id="sender">
                         <input type="text" id="receiver-id-input" class="id-box" placeholder="Enter a Host ID" autocomplete="off"> <br>
                         <div id="join-status" class="status">Awaiting connection...</div>
-                    <button id="connect-button" class="sidebar-buttons round-button">Connect</button>
+                    <input type="button" id="connect-button" value="Connect"
+                           class="sidebar-buttons round-button" onclick="toggle('initializeConnection()')">
                 </div>
             </div>
             <a class="close" href="#">&times;</a>
@@ -136,7 +137,7 @@
             id="room-mode">
         </div>
     </div>
-    <canvas id="canvas"></canvas> Canvas
+    <canvas id="canvas"></canvas>
 </body>
 
 <!-- ---------------------------- Link JS files ---------------------------- -->
