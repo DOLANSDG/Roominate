@@ -415,6 +415,7 @@ function updateControls() {
   
     // Update the peer client
     if (conn) {
+
         let canvasJSON = JSON.stringify(canvas.toJSON(['lockMovementX', 'lockMovementY', 'note', 'hasControls', 'hasBorders']))
         conn.send(canvasJSON);
     }
