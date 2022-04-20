@@ -370,6 +370,7 @@ function cloneObject(eventData, transform) {
 
 /* -------------------------------------------------------------------------- */
 
+let delay = 0;
 /**
  * Update input box when object changes
  */
@@ -415,10 +416,13 @@ function updateControls() {
   
     // Update the peer client
     if (conn) {
-
-        let canvasJSON = JSON.stringify(canvas.toJSON(['lockMovementX', 'lockMovementY', 'note', 'hasControls', 'hasBorders']))
-        conn.send(canvasJSON);
+        if (delay == 10) {
+            let canvasJSON = JSON.stringify(canvas.toJSON(['lockMovementX', 'lockMovementY', 'note', 'hasControls', 'hasBorders']))
+            conn.send(canvasJSON);
+            delay = -1;
+        }
     }
+    delay++;
 }
 
 /**
