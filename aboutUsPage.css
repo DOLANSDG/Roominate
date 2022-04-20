@@ -9,9 +9,11 @@
   }
  
   .logo {
-    height: 67px;
-    width: 120px;
-    background-image: url(img\logo.png);
+    height: 80px;
+    width: 160px;
+    background-image: url(img/logo.png);
+    background-size: cover;
+    display:inline-flexbox;
   }
 
   .dropdown {
@@ -70,7 +72,7 @@
   }
 
   #about-page {
-    text-align: center;
+    /* text-align: center; */
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     letter-spacing: 2px;
     color: #07144e;
