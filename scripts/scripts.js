@@ -589,21 +589,11 @@ function sendData() {
     }
 }
 
-function updateCoord() {
-    var aObject = canvas.getActiveObjects();
-    if (aObject) {
-        posX.value = round(aObject.oCoords.mt.x);
-        posY.value = round(aObject.oCoords.ml.y); // update position coordinates
-    }
-
-}
-
 canvas.on({
     'object:modified': sendData,
     'object:scaling': updateControls,
     'selection:updated': updateControls,
     'selection:created': updateControls,
-    'object:moving': updateCoord,
     'after:render': updateControls
 });
 
