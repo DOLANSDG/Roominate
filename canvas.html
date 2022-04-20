@@ -8,6 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css"> <!-- Link CSS file -->
     <title>ROOMinate</title>
+
+    <script src="./lib/svg-inject.min.js"></script>
 </head>
 <body class="preload">
     <!-- ----------------------------------------------------------------------- -->
@@ -32,11 +34,18 @@
                 
                 <!-- -------------------------------- Icons -------------------------------- -->
                 <input type="image" class="sidebar-buttons" alt="download" id="download-button" 
-                src="img/svg_icons/download.svg" style="height:18px;transform: translate(0%, 32%);">
+                src="img/svg_icons/download.svg" style="height:18px;transform: translate(0%, 32%);" title="Download your current room">
                 <input id="upload-hidden" type="file" accept=".json" required="true" hidden/>
-                <input type="image" class="sidebar-buttons" alt="upload" id="upload-button" 
-                src="img/svg_icons/upload.svg" style="height:18px;transform: translate(0%, 32%);" onclick="$('upload-hidden').click();">
-                <a class="sidebar-buttons" href="#overlay" style="height:18px;transform: translate(0%, 15%);">
+<!--                <button class="sidebar-buttons" alt="upload" id="upload-button" src="img/svg_icons/upload.svg"-->
+<!--                        style="height:18px;transform: translate(0%, 32%);" onclick="$('upload-hidden').click();"-->
+<!--                        title="Upload your saved rooms">-->
+<!--                    <img src="img/svg_icons/upload.svg" onload="SVGInject(this)" id="upload-icon">-->
+<!--                </button>-->
+
+                <input type="image" class="sidebar-buttons" alt="upload" id="upload-button"
+                src="img/svg_icons/upload.svg" style="height:18px;transform: translate(0%, 32%);" onclick="$('upload-hidden').click();"
+                title="Upload your saved rooms">
+                <a class="sidebar-buttons" href="#overlay" style="height:18px;transform: translate(0%, 15%);" id="peer-button" title="Connect to a friends canvas!">
                     <img src="img/svg_icons/connect_icon.svg" style="height:18px;">
                 </a>
             </span>
@@ -135,6 +144,11 @@
         
         <!-- ---------------------------- Shape Sidebar ---------------------------- -->
         <div id="shape-select" class="hidden sidebar">
+            <button class="shape-icon" id="rectangle-button" src="img/svg_icons/square_icon.svg"
+                    style="height:18px;transform: translate(0%, 32%);" onclick="$('rectangle-button').click();"
+                    title="Upload your saved rooms">
+                <img src="img/svg_icons/upload.svg" onload="SVGInject(this)" id="upload-icon">
+            </button>
             <input type="image" src="img\square_icon.png" class="shape-icon"
             id="rectangle-button" onclick="toggle('rectangle-button');">
             <input type="image" src="img\circle_icon.png" class="shape-icon"

@@ -9,6 +9,28 @@ var copyButton = document.getElementById("copy-button");
 
 const peer = new Peer();
 
+// Asynchronous data and function for making it noticable that you are connected'
+colors = ["2px solid #FF797990", "2px solid #FF545490", "2px solid #FF242490", "2px solid #FF545490", "2px solid #FF797990"];
+$("peer-button").transition = "outline 100ms ease-in-out"
+function switchColor(index) {
+    setColor = colors[index];
+    return new Promise((resolve) => {
+        setTimeout(function() {
+            $("peer-button").style.outline = setColor;
+            resolve(setColor);
+        }, 200);
+    });
+}
+
+async function notifyConnectionEnabled() {
+    let index = 0;
+    while (conn){
+        await switchColor(index);
+        index = (index + 1) % colors.length;
+    }
+
+};
+
 // enabling peer-to-peer porting
 peer.on("open", function (id) {
     if (peer.id === null) {
@@ -27,6 +49,8 @@ peer.on('connection', function (c) {
     conn = c;
     console.log("Received and Established a connection to UID: " + conn.peer);
     hostStat.innerHTML = "Connected to " + conn.peer;
+
+    notifyConnectionEnabled();
 
     // Only handles bidirectional information travel (1-to-1 only)
     conn.on('data', function (data) {
@@ -61,6 +85,7 @@ peer.on('close', function() {
     conn = null;
     hostStat.innerHTML = "Connection destroyed. Please refresh";
     console.log('Connection destroyed');
+
 });
 
 peer.on('error', function (err) {
@@ -87,6 +112,7 @@ connectButton.addEventListener('click', function() {
 
         // Put here URL params for style stuff if needed
         // conn.send('hello');
+        notifyConnectionEnabled();
     });
 
     // Only handles bidirectional information travel (1-to-1 only)

@@ -414,10 +414,12 @@ function updateControls() {
     $("lock-icon").src = locked ? "img/svg_icons/lock.svg" : "img/svg_icons/unlock.svg"
   
     // Update the peer client
-    // if (conn) {
-    //     let canvasJSON = JSON.stringify(canvas.toJSON(['lockMovementX', 'lockMovementY', 'note', 'hasControls', 'hasBorders']))
-    //     conn.send(canvasJSON);
-    // }
+
+    if (conn) {
+
+        let canvasJSON = JSON.stringify(canvas.toJSON(['lockMovementX', 'lockMovementY', 'note', 'hasControls', 'hasBorders']))
+        conn.send(canvasJSON);
+    }
 }
 
 /**
