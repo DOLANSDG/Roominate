@@ -553,9 +553,6 @@ colorInput.oninput = function() {
     }
     let color = colorInput.value; // just done to prevent unneeded back and forth scoping
 
-    let squareSVG = $("square-svg");
-    let circleSVG = $( "circle-svg");
-    let polygonSVG = $("polygon-svg");
     var aObjects = canvas.getActiveObjects();
     for (var aObject of aObjects) {
         if (aObject.fill == 'rgba(0,0,0,0)') {
