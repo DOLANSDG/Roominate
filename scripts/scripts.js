@@ -210,12 +210,6 @@ let buttonCollection = {
     "rectangle-button": new Button("rectangle-button", false, createRect, [], true),
     "circle-button": new Button("circle-button", false, createEllipse, [], true),
     "lock-icon": new Button("lock-icon", false, changeLockOfObject, [], true),
-    
-}
-
-let buttonIMGPairs = {
-    "rectangle-button": ["square_icon.png", "square_icon_clicked.png"],
-    "circle-button": ["circle_icon.png", "circle_icon_clicked.png"]
 }
 
 /**
@@ -589,11 +583,20 @@ function sendData() {
     }
 }
 
+function updateCoord() {
+    var aObject = canvas.getActiveObjects();
+    if (aObject) {
+        posX.value = round(aObject.oCoords.mt.x);
+        posY.value = round(aObject.oCoords.ml.y); // update position coordinates
+    }
+}
+
 canvas.on({
     'object:modified': sendData,
     'object:scaling': updateControls,
     'selection:updated': updateControls,
     'selection:created': updateControls,
+    'object:moving': updateCoord,
     'after:render': updateControls
 });
 
