@@ -8,9 +8,9 @@ body{
 
 .logo {
     display: inline;
-    height: 70px;
-    width: 130px;
-    /* padding: 20px 20px; */
+    height: 80px;
+    width: 170px;
+    background-image: url("img/logo.png");
     background-size: cover;
   }
 
@@ -57,17 +57,17 @@ body{
 .left {
     left: 0;
     padding: 10px 10px 10px 10px;
-    background-color: #bc96e6;
+    background-color: #bd96e6;
     overflow: hidden;
     margin-right: auto;
     margin-left: auto;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-family: Verdana, Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
 .left-text {
     width: 80%;
     text-align: center;
-    text-shadow: 2px 2px black;
+    text-shadow: 2px 2px #C6A795;
 }
 
 .video {
@@ -80,8 +80,9 @@ body{
 .right {
     right: 0;
     padding: 20px 20px 20px 20px;
-    background-color: #C6A795;
+    background-color: #dabeae;
     overflow: hidden;
+    text-shadow: 2px 2px #07144e;
 }
 
 .faq-container {
