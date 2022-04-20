@@ -132,6 +132,10 @@ body {
     background-color: #dec1ff;
 }
 
+.shape-fill {
+    fill: #9749f0;
+}
+
 /* -------------------------- Object editor sidebar ------------------------- */
 #obj-editor {
     width: 180px;
