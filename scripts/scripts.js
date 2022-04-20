@@ -548,10 +548,17 @@ widthInInput.oninput = function() {
 }
 
 colorInput.oninput = function() {
+    let color = colorInput.value; // just done to prevent unneeded back and forth scoping
+    var shapeFills = document.getElementsByClassName('shape-fill');
+    for (let shape in shapeFills) {
+        if (shapeFills.hasOwnProperty(shape)) {
+            shapeFills[shape].style.fill = color;
+        }
+    }
+
     if (!canvas.getActiveObject()) {
         return;
     }
-    let color = colorInput.value; // just done to prevent unneeded back and forth scoping
 
     let squareSVG = $("square-svg");
     let circleSVG = $( "circle-svg");
@@ -562,10 +569,6 @@ colorInput.oninput = function() {
             aObject.set('stroke', color);
         } else  {
             aObject.set('fill', color);
-            $("square-fill--inject-1", squareSVG).style.fill = color;
-            $("circle-fill--inject-2", circleSVG).style.fill = color;
-            $("polygon-fill1--inject-3", polygonSVG).style.fill = color;
-            $("polygon-fill2--inject-3", polygonSVG).style.fill = color;
         }
     }
     canvas.requestRenderAll();
