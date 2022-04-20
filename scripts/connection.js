@@ -124,6 +124,7 @@ connectButton.addEventListener('click', function() {
         canvas.clear();
 
         try { // check for an invalid data
+            sending = false;
             currentJSON = data;
             canvas.loadFromJSON(data);
         } catch (error) {

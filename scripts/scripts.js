@@ -16,6 +16,7 @@ var posY = $("obj-y");
 let colorInput = $('obj-color');
 let notesInput = $('notes');
 
+let sending = true;
 
 /**
  * Get center of the canvas
@@ -369,8 +370,6 @@ function cloneObject(eventData, transform) {
 }
 
 /* -------------------------------------------------------------------------- */
-
-let delay = 0;
 /**
  * Update input box when object changes
  */
@@ -416,13 +415,11 @@ function updateControls() {
   
     // Update the peer client
     if (conn) {
-        if (delay == 10) {
+        if (sending) {
             let canvasJSON = JSON.stringify(canvas.toJSON(['lockMovementX', 'lockMovementY', 'note', 'hasControls', 'hasBorders']))
             conn.send(canvasJSON);
             delay = -1;
-        }
     }
-    delay++;
 }
 
 /**
@@ -597,11 +594,17 @@ canvas.on('selection:cleared', function() {
     enableInputs(false);
 });
 
+// necessary peerjs function to allow synchronization
+function updateControlsWrapper() {
+    sending = true;
+    updateControls();
+}
+
 canvas.on({
     'object:scaling': updateControls,
     'selection:updated': updateControls,
     'selection:created': updateControls,
-    'object:moving': updateControls,
+    'object:moving': updateControlsWrapper,
     'after:render': updateControls
 });
 
