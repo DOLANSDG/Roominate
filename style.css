@@ -117,7 +117,9 @@ body {
 
 .shape-icon {
     width: inherit;
-    padding-bottom: 10px;
+    border: none;
+    background-color:transparent;
+    outline:none;
 }
 
 .shape-icon:hover {
@@ -201,6 +203,12 @@ input[type=image] {
 
 input[type=image]:hover {
     transform: scale(1.2);
+}
+
+button:hover {
+    transition: all 200ms ease-in-out;
+    transform: scale(1.2);
+
 }
 
 /* ------------------------------- Connection ------------------------------- */

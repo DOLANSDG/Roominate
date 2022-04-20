@@ -39,12 +39,6 @@
                 <input type="image" class="sidebar-buttons" alt="download" id="download-button" 
                 src="img/svg_icons/download.svg" style="height:18px;transform: translate(0%, 32%);" title="Download your current room">
                 <input id="upload-hidden" type="file" accept=".json" required="true" hidden/>
-<!--                <button class="sidebar-buttons" alt="upload" id="upload-button" src="img/svg_icons/upload.svg"-->
-<!--                        style="height:18px;transform: translate(0%, 32%);" onclick="$('upload-hidden').click();"-->
-<!--                        title="Upload your saved rooms">-->
-<!--                    <img src="img/svg_icons/upload.svg" onload="SVGInject(this)" id="upload-icon">-->
-<!--                </button>-->
-
                 <input type="image" class="sidebar-buttons" alt="upload" id="upload-button"
                 src="img/svg_icons/upload.svg" style="height:18px;transform: translate(0%, 32%);" onclick="$('upload-hidden').click();"
                 title="Upload your saved rooms">
@@ -139,17 +133,17 @@
         
         <!-- ---------------------------- Shape Sidebar ---------------------------- -->
         <div id="shape-select" class="hidden sidebar">
-            <button class="shape-icon" id="rectangle-button" src="img/svg_icons/square_icon.svg"
-                    style="height:18px;transform: translate(0%, 32%);" onclick="$('rectangle-button').click();"
-                    title="Upload your saved rooms">
-                <img src="img/svg_icons/upload.svg" onload="SVGInject(this)" id="upload-icon">
+            <button class="shape-icon" id="rectangle-button"
+                    onclick="toggle('rectangle-button');">
+                <img src="img/svg_icons/square.svg" onload="SVGInject(this)" id="square-svg">
             </button>
-            <input type="image" src="img\square_icon.png" class="shape-icon"
-            id="rectangle-button" onclick="toggle('rectangle-button');">
-            <input type="image" src="img\circle_icon.png" class="shape-icon"
-            id="circle-button" onclick="toggle('circle-button')">
-            <input type="image" src="img\poly_icon.png" class="shape-icon"
-            id="polygon-mode">
+            <button class="shape-icon" id="circle-button"
+                    onclick="toggle('circle-button');">
+                <img src="img/svg_icons/circle.svg" onload="SVGInject(this)" id="circle-svg">
+            </button>
+            <button class="shape-icon" id="polygon-mode">
+                <img src="img/svg_icons/polygon.svg" onload="SVGInject(this)" id="polygon-svg">
+            </button>
             <input type="image" src="img\room_icon.png" class="shape-icon"
             id="room-mode">
         </div>

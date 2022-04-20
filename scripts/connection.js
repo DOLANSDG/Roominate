@@ -85,7 +85,6 @@ peer.on('close', function() {
     conn = null;
     hostStat.innerHTML = "Connection destroyed. Please refresh";
     console.log('Connection destroyed');
-
 });
 
 peer.on('error', function (err) {
