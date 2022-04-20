@@ -9,6 +9,10 @@ html {
     height: 100%;
 }
 
+.preload * {
+    transition: none !important;
+}
+
 body {
     overflow-y: hidden;
     /* Disable ctrl+a select all */
@@ -18,6 +22,8 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+        transition: none !important;
+
 }
 
 #canvas {
@@ -311,7 +317,8 @@ input[type=image]:hover {
 }
 
 #host-tab:checked ~ .content-container > .content:nth-of-type(1),
-#join-tab:checked ~ .content-container > .content:nth-of-type(2) {
+#join-tab:checked ~ .content-container > .content:nth-of-type(2),
+#profile-tab:checked ~ .content-container > .content:nth-of-type(3) {
     opacity: 1;
     z-index: 1;
 }
@@ -319,8 +326,12 @@ input[type=image]:hover {
 .round-button {
     border-radius: 20px;
     font-size: 15px;
-    width: 100px;
+    width: 120px;
     height:35px;
+}
+
+#profile-tab:checked ~ .content {
+    height:120%;
 }
 
 #status {

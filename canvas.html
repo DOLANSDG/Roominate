@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="style.css"> <!-- Link CSS file -->
     <title>ROOMinate</title>
 </head>
-<body>
+<body class="preload">
     <!-- ----------------------------------------------------------------------- -->
     <!--                           Topbar/Logo  will put buttons on launch page  -->
     <!-- ----------------------------------------------------------------------- -->
@@ -52,6 +52,9 @@
             
             <input type="radio" id="join-tab" name="tab">
             <label for="join-tab">Join</label>
+
+            <input type="radio" id="profile-tab" name="tab">
+            <label for="profile-tab">Profile</label>
             <!-- ---------------------------- Tab contents ----------------------------- -->
             <!-- <br> -->
             <div class="content-container">
@@ -62,9 +65,15 @@
                 </div>
                 
                 <div class="content" id="sender">
-                        <input type="text" id="receiver-id-input" class="id-box" placeholder="Enter a Host ID" autocomplete="off"> <br>
-                        <div id="join-status" class="status">Awaiting connection...</div>
+                    <input type="text" id="receiver-id-input" class="id-box" placeholder="Enter a Host ID" autocomplete="off"> <br>
+                    <div id="join-status" class="status">Awaiting connection...</div>
                     <button id="connect-button" class="sidebar-buttons round-button">Connect</button>
+                </div>
+
+                <div class="content" id="profile">
+                    <input type="text" id="receiver-id-input" class="id-box" placeholder="Enter a Host ID" autocomplete="off"> <br>
+                    <div id="join-status" class="status">Awaiting connection...</div>
+                    <button id="disconnect-button" class="sidebar-buttons round-button">Disconnect</button>
                 </div>
             </div>
             <a class="close" href="#">&times;</a>
@@ -136,7 +145,7 @@
             id="room-mode">
         </div>
     </div>
-    <canvas id="canvas"></canvas> Canvas
+    <canvas id="canvas"></canvas>
 </body>
 
 <!-- ---------------------------- Link JS files ---------------------------- -->

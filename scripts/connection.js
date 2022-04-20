@@ -106,6 +106,16 @@ connectButton.addEventListener('click', function() {
     });
 });
 
+canvas.on('object:modified', function() {
+    sendCanvas();
+});
+
+function sendCanvas() {
+    if (conn && conn.open) {
+        conn.send(canvas.toJSON(['lockMovementX', 'lockMovementY', 'note', 'hasControls', 'hasBorders']));
+    }
+}
+
 copyButton.onclick = function () {
     navigator.clipboard.writeText(peer.id);
     copyButton.value = "Copied!";
