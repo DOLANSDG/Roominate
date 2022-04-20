@@ -418,7 +418,7 @@ function updateControls() {
         if (sending) {
             let canvasJSON = JSON.stringify(canvas.toJSON(['lockMovementX', 'lockMovementY', 'note', 'hasControls', 'hasBorders']))
             conn.send(canvasJSON);
-            delay = -1;
+        }
     }
 }
 
