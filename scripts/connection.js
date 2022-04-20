@@ -10,8 +10,8 @@ var copyButton = document.getElementById("copy-button");
 const peer = new Peer();
 
 // Asynchronous data and function for making it noticable that you are connected'
-colors = ["2px solid #FF797990", "2px solid #FF545490", "2px solid #FF242490", "2px solid #FF545490", "2px solid #FF797990"];
-$("peer-button").transition = "outline 100ms ease-in-out"
+colors = ["2px solid #06D85F", "2px solid #19a855", "2px solid #1a964e", "2px solid #19a855", "2px solid #06D85F"];
+$("peer-button").transition = "outline 200ms ease-in-out"
 function switchColor(index) {
     setColor = colors[index];
     return new Promise((resolve) => {
@@ -130,6 +130,16 @@ connectButton.addEventListener('click', function() {
         }
     });
 });
+
+canvas.on('object:modified', function() {
+    sendCanvas();
+});
+
+function sendCanvas() {
+    if (conn && conn.open) {
+        conn.send(canvas.toJSON(['lockMovementX', 'lockMovementY', 'note', 'hasControls', 'hasBorders']));
+    }
+}
 
 copyButton.onclick = function () {
     navigator.clipboard.writeText(peer.id);
