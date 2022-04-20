@@ -389,7 +389,10 @@ function updateControls() {
 
     widthFtInput.value = Math.floor(round((aObject.width * scale.scaleX) / 60));
     widthInInput.value = Math.floor((aObject.width * scale.scaleX) % 60 / 5); // Math to get inches from pixels
-    
+
+    posX.value = round(aObject.oCoords.mt.x);
+    posY.value = round(aObject.oCoords.ml.y); // update position coordinates
+
     notesInput.value = aObject.note;
 
     if (aObject.fill == 'rgba(0,0,0,0)') {
@@ -403,15 +406,10 @@ function updateControls() {
     $("lock-icon").src = locked ? "img/svg_icons/lock.svg" : "img/svg_icons/unlock.svg"
 
     // Update the peer client
-
     if (conn) {
-        if (delay == 10) {
-            let canvasJSON = JSON.stringify(canvas.toJSON(['lockMovementX', 'lockMovementY', 'note', 'hasControls', 'hasBorders']))
-            conn.send(canvasJSON);
-            delay = -1;
-        }
+        let canvasJSON = JSON.stringify(canvas.toJSON(['lockMovementX', 'lockMovementY', 'note', 'hasControls', 'hasBorders']))
+        conn.send(canvasJSON);
     }
-    delay++;
 }
 
 /**
@@ -553,12 +551,21 @@ colorInput.oninput = function() {
     if (!canvas.getActiveObject()) {
         return;
     }
+    let color = colorInput.value; // just done to prevent unneeded back and forth scoping
+
+    let squareSVG = $("square-svg");
+    let circleSVG = $( "circle-svg");
+    let polygonSVG = $("polygon-svg");
     var aObjects = canvas.getActiveObjects();
     for (var aObject of aObjects) {
         if (aObject.fill == 'rgba(0,0,0,0)') {
-            aObject.set('stroke', colorInput.value);
+            aObject.set('stroke', color);
         } else  {
-            aObject.set('fill', colorInput.value);
+            aObject.set('fill', color);
+            $("square-fill--inject-1", squareSVG).style.fill = color;
+            $("circle-fill--inject-2", circleSVG).style.fill = color;
+            $("polygon-fill1--inject-3", polygonSVG).style.fill = color;
+            $("polygon-fill2--inject-3", polygonSVG).style.fill = color;
         }
     }
     canvas.requestRenderAll();
@@ -586,28 +593,11 @@ canvas.on('selection:cleared', function() {
     enableInputs(false);
 });
 
-function sendData() {
-    // Update the peer client
-    if (conn) {
-        let canvasJSON = JSON.stringify(canvas.toJSON(['lockMovementX', 'lockMovementY', 'note', 'hasControls', 'hasBorders']))
-        conn.send(canvasJSON);
-    }
-}
-
-function updateCoord() {
-    var aObject = canvas.getActiveObjects();
-    if (aObject) {
-        posX.value = round(aObject.oCoords.mt.x);
-        posY.value = round(aObject.oCoords.ml.y); // update position coordinates
-    }
-}
-
 canvas.on({
-    'object:modified': sendData,
     'object:scaling': updateControls,
     'selection:updated': updateControls,
     'selection:created': updateControls,
-    'object:moving': updateCoord,
+    'object:moving': updateControls,
     'after:render': updateControls
 });
 
