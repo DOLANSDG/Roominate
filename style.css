@@ -21,7 +21,7 @@ body {
 }
 
 #canvas {
-    z-index: -1;
+    z-index: -20;;
     height: 100%;
     background: rgb(255, 255, 255);
     padding: 0;
@@ -67,7 +67,7 @@ body {
     background-color: #ffffff;
     display: inline;
     padding-left: 5px;
-    padding-bottom: 5px;
+    padding: 5px;
     border-bottom: 2px solid #dadce0;
 }
 
@@ -83,12 +83,13 @@ body {
     background-color: #9749f0;
     color: white;
     padding: 5px 10px;
-    transition: all 100ms ease-in-out;
+    margin-right: 4px;
+    transition: all 200ms ease-in-out;
 }
 
 .sidebar-buttons:hover {
     background-color: #731DD8;
-    border: 2px solid rgb(178, 237, 77);
+    outline: 2px solid rgb(169, 211, 97);
 }
 
 #sidebar-container {
@@ -148,18 +149,18 @@ input[type=number] {
     right:0;
 }
 
-input[type=number], textarea, input[type=color] {
+input[type=number],input[type=text], textarea, input[type=color] {
     transition: box-shadow 200ms ease-in, border 200ms ease-in, background-color 200ms ease-in;
     border: 2px solid #fff;
     color: rgb(14, 14, 16);
     background-color: #fff;    
 }
 
-input[type=number]:hover, textarea:hover, input[type=color]:hover {
+input[type=number]:hover, input[type=text]:hover, textarea:hover, input[type=color]:hover {
     border-color: #919191;
 }
 
-input[type=number]:focus, textarea:focus, input[type=color]:focus {
+input[type=number]:focus, input[type=text]:focus, textarea:focus, input[type=color]:focus {
     outline: none;
     border-color: #9749f0;
 }
@@ -200,4 +201,144 @@ input[type=image] {
 
 input[type=image]:hover {
     transform: scale(1.2);
+}
+
+/* ------------------------------- Connection ------------------------------- */
+#overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(9, 0, 20, 0.7);
+    transition: opacity 200ms ease-in-out;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 2;
+    width: 100%;
+}
+
+#overlay:target {
+    visibility: visible;
+    opacity: 1;
+}
+
+#connection-popup {
+    z-index: 1;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: none;
+    border-radius: 6px;
+    width: 500px;
+    position: fixed;
+    transition: all 200ms ease-in-out;
+}
+
+#connection-popup .close {
+    position: absolute;
+    top: 45px;
+    right: 10px;
+    transition: all 200ms;
+    font-size: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+}
+#connection-popup .close:hover {
+    color: #06D85F;
+}
+
+
+/* ------------------------------- Popup Tabs ------------------------------- */
+#connection-popup > input {
+    display: none;
+}
+#connection-popup > label {
+    display: block;
+    position: relative;
+    float: left;
+    padding: 12px 50px;
+    cursor: pointer;
+    transition: all .3s;
+    color: rgb(0, 0, 0);
+    border-radius: 6px 6px 0px 0px;
+    margin-right:5px;
+    font-weight: 600;
+    font-size: 18px;
+    background-color: rgba(255, 255, 255, 0.479);
+
+}
+
+#connection-popup > label:hover {
+    color: #9749f0;
+}
+
+#connection-popup > input:checked + label {
+    background: #9749f0;
+    color: #fff;
+}
+
+.content-container {
+    position: static;
+    clear: both;
+    perspective: 600px;
+    border: 3px solid #9749f0;
+    background-color: rgb(255, 255, 255);
+    height: 150px;
+    border-radius: 0px 6px 6px 6px;
+    z-index: 5;
+}
+
+.content {
+    position: absolute;
+    opacity: 0;
+    transition: opacity .4s ease-in-out;
+    background-color: #ffffff;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    text-align: center;
+    /* display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly; */
+}
+
+.content > * {
+    margin-top: 10px;
+}
+
+#host-tab:checked ~ .content-container > .content:nth-of-type(1),
+#join-tab:checked ~ .content-container > .content:nth-of-type(2) {
+    opacity: 1;
+    z-index: 1;
+}
+
+.round-button {
+    border-radius: 20px;
+    font-size: 15px;
+    width: 100px;
+    height:35px;
+}
+
+#status {
+    color:#9749f0;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+#sender > div > span {
+    font-size: 20px;
+}
+
+.id-box {
+    width: 87%;
+    height: 20px;
+    background-color: #e4e4e4;
+    border-radius: 6px;
+    padding: 8px;
+    font-size: 20px;
+    text-align: center;
 }

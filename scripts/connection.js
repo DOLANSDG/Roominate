@@ -1,8 +1,11 @@
 var lastPeerId = null;
 var conn = null;
+var yourId = document.getElementById('receiver-id');
 var recvIdInput = document.getElementById("receiver-id-input");
-var stat = document.getElementById("status");
+var hostStat = document.getElementById("host-status");
+var joinStat = document.getElementById("join-status");
 var connectButton = document.getElementById("connect-button");
+var copyButton = document.getElementById("copy-button");
 
 const peer = new Peer();
 
@@ -15,13 +18,15 @@ peer.on("open", function (id) {
         lastPeerId = peer.id;
     }
     console.log("ID: " + peer.id);
+    yourId.value = peer.id;
+    hostStat.innerHTML = "Awaiting connection...";
 });
 
 // Connection of own peer uid through receiving a connection
 peer.on('connection', function (c) {
     conn = c;
     console.log("Received and Established a connection to UID: " + conn.peer);
-    stat.value = "Connected";
+    hostStat.innerHTML = "Connected to " + conn.peer;
 
     // Only handles bidirectional information travel (1-to-1 only)
     conn.on('data', function (data) {
@@ -42,7 +47,7 @@ peer.on('connection', function (c) {
 
 // Setting disconnection from own peer uid
 peer.on("disconnected", function () {
-    stat.innerHTML = "Connection lost. Please reconnect";
+    hostStat.innerHTML = "Connection lost. Please reconnect";
     console.log('Connection lost. Please reconnect');
 
     // Reconnecting from previous peerid
@@ -54,13 +59,13 @@ peer.on("disconnected", function () {
 // on a closed peer-to-peer connection (due to connected peer)
 peer.on('close', function() {
     conn = null;
-    stat.innerHTML = "Connection destroyed. Please refresh";
+    hostStat.innerHTML = "Connection destroyed. Please refresh";
     console.log('Connection destroyed');
 });
 
 peer.on('error', function (err) {
     console.log(err);
-    alert('' + err);
+    joinStat.innerHTML = ('' + err);
 });
 
 let currentJSON = null;
@@ -77,7 +82,7 @@ connectButton.addEventListener('click', function() {
     });
 
     conn.on('open', function () {
-        stat.innerHTML = "Connected to requested UID: " + conn.peer;
+        joinStat.innerHTML = "Connected to : " + conn.peer;
         console.log("Connected to requested UID: " + conn.peer);
 
         // Put here URL params for style stuff if needed
@@ -101,122 +106,10 @@ connectButton.addEventListener('click', function() {
     });
 });
 
-
-
-// function initSendPeer() {
-//     // Create own peer object with connection to shared PeerJS server
-//     peer = new Peer(null, {
-//         debug: 2
-//     });
-
-//     peer.on('open', function (id) {
-//         // Workaround for peer.reconnect deleting previous id
-//         if (peer.id === null) {
-//             console.log('Received null id from peer open');
-//             peer.id = lastPeerId;
-//         } else {
-//             lastPeerId = peer.id;
-//         }
-
-//         console.log('ID: ' + peer.id);
-//     });
-//     peer.on('connection', function (c) {
-//         // Disallow incoming connections
-//         c.on('open', function() {
-//             c.send("Sender does not accept incoming connections");
-//             setTimeout(function() { c.close(); }, 500);
-//         });
-//     });
-//     peer.on('disconnected', function () {
-//         status.innerHTML = "Connection lost. Please reconnect";
-//         console.log('Connection lost. Please reconnect');
-
-//         // Workaround for peer.reconnect deleting previous id
-//         peer.id = lastPeerId;
-//         peer._lastServerId = lastPeerId;
-//         peer.reconnect();
-//     });
-//     peer.on('close', function() {
-//         conn = null;
-//         status.innerHTML = "Connection destroyed. Please refresh";
-//         console.log('Connection destroyed');
-//     });
-//     peer.on('error', function (err) {
-//         console.log(err);
-//         alert('' + err);
-//     });
-// };
-// /**
-// * Create the connection between the two Peers.
-// *
-// * Sets up callbacks that handle any events related to the
-// * connection and data received on it.
-// */
-// function join() {
-//     // Close old connection
-//     if (conn) {
-//         conn.close();
-//     }
-
-//     // Create connection to destination peer specified in the input field
-//     conn = peer.connect(recvIdInput.value, {
-//         reliable: true
-//     });
-
-//     conn.on('open', function () {
-//         status.innerHTML = "Connected to: " + conn.peer;
-//         console.log("Connected to: " + conn.peer);
-
-//         // Check URL params for comamnds that should be sent immediately
-//         var command = getUrlParam("command");
-//         if (command)
-//         conn.send(command);
-//     });
-//     // Handle incoming data (messages only since this is the signal sender)
-//     conn.on('data', function (data) {
-//         addMessage("<span class=\"peerMsg\">Peer:</span> " + data);
-//     });
-//     conn.on('close', function () {
-//         status.innerHTML = "Connection closed";
-//     });
-// };
-
-// /**
-// * Get first "GET style" parameter from href.
-// * This enables delivering an initial command upon page load.
-// *
-// * Would have been easier to use location.hash.
-// */
-// function getUrlParam(name) {
-//     name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
-//     var regexS = "[\\?&]" + name + "=([^&#]*)";
-//     var regex = new RegExp(regexS);
-//     var results = regex.exec(window.location.href);
-//     if (results == null)
-//     return null;
-//     else
-//     return results[1];
-// };
-
-// /**
-// * Send a signal via the peer connection and add it to the log.
-// * This will only occur if the connection is still alive.
-// */
-// function signal(sigName) {
-//     if (conn && conn.open) {
-//         conn.send(sigName);
-//         console.log(sigName + " signal sent");
-//         addMessage(cueString + sigName);
-//     } else {
-//         console.log('Connection is closed');
-//     }
-// }
-
-// connectButton.onclick = function() {
-//     join();
-//     console.log('button clicked');
-// }
-// connectButton.addEventListener('click', join);
-
-// // Since all our callbacks are setup, start the process of obtaining an ID
-// // initialize();
+copyButton.onclick = function () {
+    navigator.clipboard.writeText(peer.id);
+    copyButton.value = "Copied!";
+    setTimeout(function() {
+        copyButton.value = "Copy ID";
+    }, 1500);
+};
