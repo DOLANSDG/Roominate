@@ -365,6 +365,7 @@ function cloneObject(eventData, transform) {
 /**
  * Update input box when object changes
  */
+let intervalTime = new Date().getTime();
 function updateControls() {
     if (!canvas.getActiveObject()) {
         return;
@@ -407,8 +408,12 @@ function updateControls() {
 
     // Update the peer client
     if (conn) {
-        let canvasJSON = JSON.stringify(canvas.toJSON(['lockMovementX', 'lockMovementY', 'note', 'hasControls', 'hasBorders']))
-        conn.send(canvasJSON);
+        let currTime = new Date().getTime();
+        if (currTime - intervalTime >= 1000) {
+            let canvasJSON = JSON.stringify(canvas.toJSON(['lockMovementX', 'lockMovementY', 'note', 'hasControls', 'hasBorders']));
+            conn.send(canvasJSON);
+            intervalTime = new Date().getTime();
+        }
     }
 }
 
