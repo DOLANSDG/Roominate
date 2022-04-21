@@ -409,7 +409,7 @@ function updateControls() {
     // Update the peer client
     if (conn) {
         let currTime = new Date().getTime();
-        if (currTime - intervalTime >= 1000) {
+        if (currTime - intervalTime >= 200) {
             let canvasJSON = JSON.stringify(canvas.toJSON(['lockMovementX', 'lockMovementY', 'note', 'hasControls', 'hasBorders']));
             conn.send(canvasJSON);
             intervalTime = new Date().getTime();
