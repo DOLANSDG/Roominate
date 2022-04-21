@@ -407,6 +407,17 @@ function updateControls() {
     $("lock-icon").src = locked ? "img/svg_icons/lock.svg" : "img/svg_icons/unlock.svg"
 
     // Update the peer client
+    /**
+     * To maintain a good latency, the latency was adjusted in accorddance to the time taken for the following function calls
+     *
+     // let start = performance.now();
+     // let canvasJSON = JSON.stringify(canvas.toJSON(['lockMovementX', 'lockMovementY', 'note', 'hasControls', 'hasBorders']));
+     // conn.send(canvasJSON);
+     // canvas.loadFromJSON(canvasJSON);
+     // let end = performance.now();
+     //
+     // end-start;
+     */
     if (conn) {
         let currTime = new Date().getTime();
         if (currTime - intervalTime >= 25) {
@@ -430,7 +441,7 @@ function enableInputs(toggle) {
 
 // Update notes on object
 notesInput.oninput = function() {
-    var aObjects = canvas.getActiveObjects();
+    let aObjects = canvas.getActiveObjects();
     for (var aObject of aObjects) {
         aObject.note = notesInput.value;
     }
@@ -438,7 +449,7 @@ notesInput.oninput = function() {
 
 // Change the lock status of the object
 function changeLockOfObject() {
-    var aObject = canvas.getActiveObject();
+    let aObject = canvas.getActiveObject();
     // All objects begin with hasControls = true, so it starts off at the unlock image
     let locked = (aObject.hasControls = !aObject.hasControls) ? false : true;
     aObject.lockMovementX = locked;
