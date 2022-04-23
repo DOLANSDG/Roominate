@@ -251,7 +251,7 @@ async function toggle(buttonID) {
  */
 function createRect() {
     var rect = new fabric.Rect( {
-        fill: '#bc96e6',
+        fill: '#e6d2f8e8',
         width: 200,
         height: 100,
         objectCaching: false,
@@ -271,7 +271,7 @@ function createRect() {
  */
 function createEllipse() {
     var ellipse = new fabric.Ellipse({
-        fill: '#b291ff',
+        fill: '#e6d2f8e8',
         rx: 50,
         ry: 50,
         objectCaching: false,

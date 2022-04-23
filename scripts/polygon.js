@@ -53,7 +53,7 @@ class Point {
  */
 function createPoly(points) {
     var poly = new fabric.Polygon(points, {
-        fill: '#b291ff',
+        fill: '#e6d2f8e8',
         objectCaching: false,
         stroke: 'black',
         strokeWidth: 2,
@@ -182,6 +182,7 @@ canvas.on('mouse:move', function (options) {
             left: mid(x1, x),
             top: mid(y1, y)
         });
+        canvas.bringToFront(texts[lineCount - 1]);
 
         // Update text
         var ft = Math.floor(distance/60);
