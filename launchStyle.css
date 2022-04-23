@@ -5,54 +5,6 @@ body {
     background-color:#EFD9CE;
 
 }
-.button {
-    background-color: #EFD9CE;
-    border: none;
-    color: #C6A795;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration:solid;
-    display: -ms-inline-flexbox;
-    font-size: 20px;
-    padding: 15px 50px;
-    margin: 0 auto;
-    cursor: pointer;
-    outline: none;
-    overflow: hidden;
-    position: relative;
- 
-}
-
-.button span {
-    position: relative;
-    z-index: 1;
-  }
-
-.button:hover {
-    cursor: pointer;
-}
-
-.button:hover:after {
-    -webkit-transform: translateX(-3%) translateY(-15%) rotate(45deg);
-    transform: translateX(-3%) translateY(-15%) rotate(45deg);
-}
-
-
-.button:after {
-    content: "";
-    position: absolute;
-    text-align: center;
-    left: 0;
-    top: 0;
-    height: 290%;
-    width: 175%;
-    background-color: #C6A795;
-    color: #EFD9CE;
-    -webkit-transition: all .5s ease-in-out;
-    transition: all .5s ease-in-out;
-    -webkit-transform: translateX(-200%) translateY(-15%) rotate(45deg);
-    transform: translateX(-200%) translateY(-15%) rotate(45deg);
-  }
 
 
 .center {
@@ -79,10 +31,6 @@ body {
     padding: 20px;
 }
 
-/*navbar menu*/
-.menu {
-    background-color:#EFD9CE;
-}
 
 hr.rounded {
     border-top: 4px solid #C6A795;
@@ -130,7 +78,7 @@ hr.rounded {
     color: #07144e;
     font-size: 65px;
     text-decoration: solid;
-    padding-top: 200px;
+    padding-top: 65px;
     padding-left: 70px;
     text-align:justify;
     text-shadow: 0 -1px 10px #FFF, 0 -20px 80px rgb(255, 230, 0), 0 -20px 100px #ff8800, 0 -50px 250px #F00;
@@ -145,6 +93,44 @@ hr.rounded {
     padding-left: 150px;
     text-shadow: 0 -1px 10px #FFF, 0 -20px 80px rgb(255, 230, 0), 0 -20px 100px #ff8800, 0 -50px 250px #F00;
 }
+
+
+.button {
+    background-color: #c6a795; 
+    border: none;
+    color: #EFD9CE;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 30px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.b1 {
+    background-color: #EFD9CE; 
+    color: #07144e; 
+  }
+  
+.b1:hover {
+    background-color: #c6a795;
+    color: #EFD9CE;
+}
+.para {
+    color: #07144e;
+    font-size: 20px;
+    text-decoration: solid;
+    padding-left: 60px;
+    padding-top: 10px;
+    
+}
+
+.imgbutton {
+    text-align: right;
+}
+
 
   
 
