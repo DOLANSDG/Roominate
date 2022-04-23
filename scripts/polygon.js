@@ -53,7 +53,7 @@ class Point {
  */
 function createPoly(points) {
     var poly = new fabric.Polygon(points, {
-        fill: '#e6d2f8e8',
+        fill: '#ffffff',
         objectCaching: false,
         stroke: 'black',
         strokeWidth: 2,

@@ -94,7 +94,7 @@ body {
 
 .sidebar-buttons:hover {
     background-color: #731DD8;
-    outline: 2px solid rgb(169, 211, 97);
+    outline: 2px solid #a9d361;
 }
 
 #sidebar-container {
@@ -122,11 +122,15 @@ body {
 
 .shape-icon {
     width: inherit;
-    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border: none;
+    background-color: #e6d2f8e8;
+    transition: all 100ms ease-out;
 }
 
 .shape-icon:hover {
-    background-color: #dec1ff;
+    background-color: #c8b1dde8;
+    transform: scale(1.1);
 }
 
 /* -------------------------- Object editor sidebar ------------------------- */
@@ -198,14 +202,6 @@ input:disabled {
     font-weight: bold;
     font-size: 120%;
     padding-bottom: 4px;
-}
-
-input[type=image] {
-    transition: all 100ms ease-out;
-}
-
-input[type=image]:hover {
-    transform: scale(1.2);
 }
 
 /* ------------------------------- Connection ------------------------------- */
