@@ -23,7 +23,6 @@ body {
     -ms-user-select: none;
     user-select: none;
         transition: none !important;
-
 }
 
 #canvas {
@@ -48,7 +47,7 @@ body {
 #logobar {
     width: 100%;
     margin-top: 10px;
-    background-color: white;
+    background-color: #fdfaff;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -56,7 +55,7 @@ body {
 }
 
 #logobar > span {
-    color:#07144e;
+    color:#000000;
     font-size: 18px;
     font-weight: 700;
     margin: 0px 25px;
@@ -72,7 +71,7 @@ body {
     width: 100%;
     background-color: #ffffff;
     display: inline;
-    padding-left: 5px;
+    padding-left: 7px;
     padding: 5px;
     border-bottom: 2px solid #dadce0;
 }
@@ -90,7 +89,7 @@ body {
     color: white;
     padding: 5px 10px;
     margin-right: 4px;
-    transition: all 200ms ease-in-out;
+    transition: all 150ms ease-in-out;
 }
 
 .sidebar-buttons:hover {
@@ -123,17 +122,11 @@ body {
 
 .shape-icon {
     width: inherit;
-    border: none;
-    background-color:transparent;
-    outline:none;
+    padding-bottom: 10px;
 }
 
 .shape-icon:hover {
     background-color: #dec1ff;
-}
-
-.shape-fill {
-    fill: #9749f0;
 }
 
 /* -------------------------- Object editor sidebar ------------------------- */
@@ -215,12 +208,6 @@ input[type=image]:hover {
     transform: scale(1.2);
 }
 
-button:hover {
-    transition: all 200ms ease-in-out;
-    transform: scale(1.2);
-
-}
-
 /* ------------------------------- Connection ------------------------------- */
 #overlay {
     position: absolute;
@@ -264,7 +251,7 @@ button:hover {
     color: #333;
 }
 #connection-popup .close:hover {
-    color: #06D85F;
+    color: #1a964e;
 }
 
 
@@ -358,6 +345,20 @@ button:hover {
 
 .id-box {
     width: 87%;
+    height: 20px;
+    background-color: #e4e4e4;
+    border-radius: 6px;
+    padding: 8px;
+    font-size: 20px;
+    text-align: center;
+}
+
+#name-box {
+    display: block;
+}
+
+#name-id {
+    width: 55%;
     height: 20px;
     background-color: #e4e4e4;
     border-radius: 6px;

@@ -4,7 +4,8 @@ var round = function(num) { return +(Math.round(num + "e+2")  + "e-2")};
 
 let gridActive = false;      // Boolean to track if the grid should be added or removed
 let canvas = new fabric.Canvas('canvas', { // Init canvas
-    preserveObjectStacking: true
+    preserveObjectStacking: true,
+    backgroundColor: '#fff'
 });
 // Init frequently used inputs
 let lenInInput = $('obj-len-in');
@@ -753,4 +754,19 @@ document.addEventListener('keydown', e => {
 
 window.onload = function() {
     document.body.classList.remove("preload");
+}
+
+async function save(){
+    let dataURL = canvas.toDataURL({
+        format: 'png',
+        multiplier: 2,
+    })
+    const blob = await fetch(dataURL).then(r => r.blob());
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.download = "my_floorplan.png"
+    a.href = url;
+    a.click();
+    URL.revokeObjectURL(url);
+    a.remove();
 }
