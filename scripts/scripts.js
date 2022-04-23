@@ -411,7 +411,7 @@ function updateControls() {
     posX.value = round(aObject.oCoords.mt.x);
     posY.value = round(aObject.oCoords.ml.y); // update position coordinates
     
-    notesInput.value = aObject.note;
+    notesInput.value = aObject.note == null ? "" : aObject.note;
     
     if (aObject.fill == 'rgba(0,0,0,0)') {
         colorInput.value = aObject.stroke;
