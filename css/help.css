@@ -1,0 +1,124 @@
+body{
+    margin:0 ;
+    background-color: white;
+    margin: 0;
+    color: white;
+}
+
+
+.logo {
+    display: inline;
+    height: 80px;
+    width: 150px;
+    background-image: url("img/logo.png");
+    background-size: cover;
+  }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .drop-content {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    /* box-shadow: 0px 10px 15px 0px #ffffd2; */
+    min-width: 150px;
+    background-color: #efd9ce;
+    color: #C6A795;
+  }
+
+  .drop-content a {
+    color: #C6A795;
+    padding: 10px 10px;
+    display: block;
+  }
+
+  .drop-content a:hover {
+    background-color: #C6A795;
+    color: #efd9ce;
+  }
+
+  .dropdown:hover .drop-content {
+    display: block;
+  }
+
+.split {
+    height: 100%;
+    width: 50%;
+    position: fixed;
+    z-index: 1;
+    top: 150;
+    overflow-x: hidden;
+    padding-top: 100px;
+}
+
+.left {
+    left: 0;
+    padding: 10px 10px 10px 10px;
+    background-color: #d6bff0;
+    overflow: hidden;
+    margin-right: auto;
+    margin-left: auto;
+    font-family: Verdana, Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.left-text {
+    width: 80%;
+    text-align: center;
+    text-shadow: 1px 1px #07144e;
+}
+
+.video {
+    width: 100%;
+    height: 100%;
+    align-content: center;
+    padding: 40px;
+}
+
+.right {
+    right: 0;
+    padding: 20px 20px 20px 20px;
+    background-color: #e7d7ce;
+    overflow: hidden;
+    /* text-shadow: 2px 2px #07144e50; */
+}
+
+.faq-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.question {
+    cursor: pointer;
+    width: 100%;
+    transition: 0.6s;
+    margin: left;
+    border: none;
+    outline: none;
+    background-color: #07144e;
+    text-align: left;
+    color: white;
+    -webkit-border-radius: 10px 10px 0px 0px;
+    border-radius: 10px 10px 0px 0px;
+    padding: 10px 0px 0px 10px;
+}
+
+.active, .question:hover {
+    background-color: #324286;
+    color: white;
+}
+
+.answer {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: white;
+  color: #797979;
+  width: auto;
+  font-family: 'Arial Narrow Bold', sans-serif;
+  -webkit-border-radius: 0px 0px 10px 10px;
+  border-radius: 0px 0px 10px 10px;
+}

@@ -1,0 +1,68 @@
+
+body {
+    height: 100%;
+    font-family: Ubuntu-Bold;
+    background-color: #efd9ce;
+
+}
+.button {
+    background-color: #efd9ce;
+    border: none;
+    color: rgb(22, 21, 21);
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    padding: 15px 50px;
+    margin: 0 auto;
+    cursor: pointer;
+    outline: none;
+    overflow: hidden;
+    position: relative;
+ 
+}
+
+.button span {
+    position: relative;
+    z-index: 1;
+  }
+
+.button:hover {
+    cursor: pointer;
+}
+
+.button:hover:after {
+    -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
+    transform: translateX(-9%) translateY(-25%) rotate(45deg);
+}
+
+.button:active {
+    background: #07144e; 
+}
+
+.button:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 470%;
+    width: 140%;
+    background: #bc96e6;
+    -webkit-transition: all .5s ease-in-out;
+    transition: all .5s ease-in-out;
+    -webkit-transform: translateX(-100%) translateY(-25%) rotate(45deg);
+    transform: translateX(-100%) translateY(-25%) rotate(45deg);
+  }
+
+.container {
+    position: absolute;
+    top: 10%;
+  }
+
+  
+
+
+
+
+
