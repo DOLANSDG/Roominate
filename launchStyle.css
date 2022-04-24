@@ -71,7 +71,7 @@ hr.rounded {
 .social {
     justify-content:end;
     align-items: center;
-    padding-left: 730px;
+    padding-left: 790px;
     padding-top: 10px;
 }
 
@@ -80,7 +80,7 @@ hr.rounded {
     font-size: 65px;
     text-decoration: solid;
     padding-top: 65px;
-    padding-left: 510px;
+    padding-left: 600px;
     text-align:justify;
     text-shadow: 0 -1px 10px #FFF, 0 -20px 80px rgb(255, 230, 0), 0 -20px 100px #ff8800, 0 -50px 250px #F00;
     }
