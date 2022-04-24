@@ -1,15 +1,85 @@
 <!DOCTYPE html>
-<html lang="en">
   <head>
     <title>Home</title>
     <link rel="stylesheet" type="text/css" href="css/launchStyle.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
   <body>
+    <div class="logo">
+      <img src="img\logo.png" alt="logo" class="logo" style="width: 130px; height: 80px">
+    </div>
 
-    <button class="button" onclick="document.location='helpPage.html'"><span>Help</span></button>
-    <button class="button" onclick="document.location='contactusform.html'"><span>Contact Us</span></button>
-    <button class="button" onclick="document.location='aboutPage.html'"><span>About Us</span></button>
-    <button class="button" onclick="document.location='canvas.html'"><span>Get Creating!</span></button>
+    <div class="logoanother">
+      <img src="img\jmulogo.png" alt="logo" class="logo" style="width: 200px; height: 100px">
+    </div>
+    <nav class="navbar">
+ 
+
+      <div class="menu">
+        <span class="button b1" onclick="document.location='helpPage.html'">Help</span>
+        <span class="button b1" onclick="document.location='contactusform.html'">Contact Us</span>
+        <span class="button b1" onclick="document.location='aboutPage.html'">About Us</span>
+      </div>
+
+    </nav>
+    <hr class="rounded">
+
+    <div id="demotext">Create Your Own</div>
+    <div id="demotextlarger">Sanctuary</div>
+
+      <div class="social">
+        <a href="https://www.youtube.com/channel/UCBoX6c8-qcfvhLwuem6Gqjg" class="fa fa-youtube"></a>
+        <a href="https://www.instagram.com/jmu_roominate/" class="fa fa-instagram"></a>
+      </div>
+
+    <div class="para">
+       <p>
+          Do you want to create your ultimate dream space? <br>
+          ROOMinate can help with that! <br>
+          ROOMinate allows for google docs like collaboration, <br>
+          customizable color pallet, personalized room dimension creation, <br>
+          color picker to help you decided the best room and furniture color, <br>
+          and so much more! <br>
+          <br>
+      </p>
+    </div>
+
+        <a href="https://dolansdg.github.io/Roominate/canvas.html" class="imga">
+          <img src="img\CreateButton.png" alt="canvas button" style="width:400px;height:200px;">
+        </a>
+
+        <div class="paraanother">
+          <p>
+             Ready to Get Creating? Click the Image Above to Get Started! <br>
+             <br>
+         </p>
+       </div>
+
+
+      <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+
+      <script>
+        //Get the button
+        var mybutton = document.getElementById("myBtn");
+        
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            mybutton.style.display = "block";
+          } else {
+            mybutton.style.display = "none";
+          }
+        }
+        
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+        </script>
 
   </body>
-</html>
+

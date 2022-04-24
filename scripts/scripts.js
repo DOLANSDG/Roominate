@@ -4,7 +4,8 @@ var round = function(num) { return +(Math.round(num + "e+2")  + "e-2")};
 
 let gridActive = false;      // Boolean to track if the grid should be added or removed
 let canvas = new fabric.Canvas('canvas', { // Init canvas
-    preserveObjectStacking: true
+    preserveObjectStacking: true,
+    backgroundColor: '#fff'
 });
 // Init frequently used inputs
 let lenInInput = $('obj-len-in');
@@ -17,9 +18,9 @@ let colorInput = $('obj-color');
 let notesInput = $('notes');
 
 /**
- * Get center of the canvas
- * @returns x,y tuple representing middle coordinates of canvas
- */
+* Get center of the canvas
+* @returns x,y tuple representing middle coordinates of canvas
+*/
 function centerCoord() {
     var zoom = canvas.getZoom()
     return {
@@ -36,7 +37,7 @@ $('download-button').onclick = function() {
         var gridWasActive = true;
         $('toggle-grid').click(); // Remove grid so it is not serialized
     }
-
+    
     var canvasJson = JSON.stringify(canvas.toJSON(['lockMovementX', 'lockMovementY', 'note', 'hasControls', 'hasBorders']));
     var filename = "floorplan.json";
     
@@ -77,8 +78,24 @@ $('upload-hidden').onchange = function() {
                 alert("Invalid file. Please upload a valid JSON file.");
             }
         }
-
+        
     }
+}
+
+// Save canvas as PNG
+async function save() {
+    let dataURL = canvas.toDataURL({
+        format: 'png',
+        multiplier: 2,
+    })
+    const blob = await fetch(dataURL).then(r => r.blob());
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.download = "my_floorplan.png"
+    a.href = url;
+    a.click();
+    URL.revokeObjectURL(url);
+    a.remove();
 }
 
 /* -------------------------------------------------------------------------- */
@@ -102,9 +119,9 @@ let gridCreator = function() {
 let grid = gridCreator();
 
 /**
- * Enable or Disable the canvas grid
- * In the future, implement this as a class
- */
+* Enable or Disable the canvas grid
+* In the future, implement this as a class
+*/
 function toggleGrid() {
     for (let i = 0; i < grid.length; i++) {
         gridActive ? canvas.remove(grid[i]) : canvas.add(grid[i]);
@@ -113,11 +130,11 @@ function toggleGrid() {
     gridActive = !gridActive;
 }
 /**
- * Helper function for changing button color
- *
- * @param turnedOn turn on or off button colors
- * @param button   button object that is being changed
- */
+* Helper function for changing button color
+*
+* @param turnedOn turn on or off button colors
+* @param button   button object that is being changed
+*/
 function changeSideBarButtonColor(turnedOn, button) {
     let id = $(button);
     let textColor;
@@ -134,18 +151,18 @@ function changeSideBarButtonColor(turnedOn, button) {
 }
 
 /**
- * removes children buttons
- */
+* removes children buttons
+*/
 function removeChildrenButtons(childrenButtons) {
     // proceed if children are not null
     if (childrenButtons != null) {
         for (let i = 0; i < childrenButtons.length; i++) {
             let childButton = buttonCollection[childrenButtons[i]];
             removeChildrenButtons(childButton.childrenButtons);
-
+            
             // turn off functionality
             $(childButton.purposeID).classList.add('hidden');
-
+            
             // reset the display of the button
             $(childButton.buttonID).type = "hidden";
             childButton.active = false;
@@ -155,14 +172,14 @@ function removeChildrenButtons(childrenButtons) {
 }
 
 /**
- * Button Constructor
- *
- * @param buttonID     button id
- * @param active       state
- * @param purposeID    ID for the css id used when clicked
- * @param childrenButtons list of buttons that are enabled when clicked
- * @param singleClickButton Necessary field for checking if the button needs to just do a simple task
- */
+* Button Constructor
+*
+* @param buttonID     button id
+* @param active       state
+* @param purposeID    ID for the css id used when clicked
+* @param childrenButtons list of buttons that are enabled when clicked
+* @param singleClickButton Necessary field for checking if the button needs to just do a simple task
+*/
 function Button(buttonID, active, purposeID, childrenButtons = [], singleClickButton = false) {
     this.buttonID = buttonID;
     this.active = active;
@@ -192,7 +209,7 @@ Button.prototype = {
                 $(this.childrenButtons[i]).type = "button"; // enable the visibility from hidden to button
             }
         }
-
+        
         this.active = !this.active;
         changeSideBarButtonColor(this.active, this.buttonID); // make it visibly unpressed
     }
@@ -213,9 +230,9 @@ let buttonCollection = {
 }
 
 /**
- * Chooses the correct button to toggle based off the collection and parameter
- * @param buttonid argument
- */
+* Chooses the correct button to toggle based off the collection and parameter
+* @param buttonid argument
+*/
 async function toggle(buttonID) {
     let button = buttonCollection[buttonID];
     if (button.singleClickButton) {
@@ -240,17 +257,17 @@ async function toggle(buttonID) {
         canvas.setHeight(window.innerHeight);
         canvas.renderAll();
     }
-
+    
     resizeCanvas();
 })();
 
 /* -------------------------------------------------------------------------- */
 /**
- *  Creates Rectangle object and renders it onto the canvas
- */
+*  Creates Rectangle object and renders it onto the canvas
+*/
 function createRect() {
     var rect = new fabric.Rect( {
-        fill: '#bc96e6',
+        fill: '#ffffff',
         width: 200,
         height: 100,
         objectCaching: false,
@@ -266,11 +283,11 @@ function createRect() {
 }
 
 /**
- * Creates Circle object and renders it onto the canvas
- */
+* Creates Circle object and renders it onto the canvas
+*/
 function createEllipse() {
     var ellipse = new fabric.Ellipse({
-        fill: '#b291ff',
+        fill: '#ffffff',
         rx: 50,
         ry: 50,
         objectCaching: false,
@@ -335,10 +352,10 @@ fabric.Object.prototype.controls.clone = new fabric.Control({
 });
 
 /**
- * Delete object from the canvas.  
- * @param {*} eventData 
- * @param {*} transform 
- */
+* Delete object from the canvas.  
+* @param {*} eventData 
+* @param {*} transform 
+*/
 function removeObject(eventData, transform) {
     var target = transform.target;
     var canvas = target.canvas;
@@ -347,24 +364,24 @@ function removeObject(eventData, transform) {
 }
 
 /**
- * Clone object on the canvas.
- * @param {*} eventData 
- * @param {*} transform 
- */
+* Clone object on the canvas.
+* @param {*} eventData 
+* @param {*} transform 
+*/
 function cloneObject(eventData, transform) {
     var target = transform.target;
     var canvas = target.canvas;
     target.clone(function(cloned) {
-    cloned.left += 10;
-    cloned.top += 10;
-    canvas.add(cloned);
+        cloned.left += 10;
+        cloned.top += 10;
+        canvas.add(cloned);
     });
 }
 
 /* -------------------------------------------------------------------------- */
 /**
- * Update input box when object changes
- */
+* Update input box when object changes
+*/
 let intervalTime = new Date().getTime();
 function updateControls() {
     if (!canvas.getActiveObject()) {
@@ -384,40 +401,41 @@ function updateControls() {
     } else {
         enableInputs(true);
     }
-
+    
     lenFtInput.value = Math.floor(round((aObject.height * scale.scaleY) / 60));
     lenInInput.value = Math.floor((aObject.height * scale.scaleY) % 60 / 5); // Math to get inches from pixels
-
+    
     widthFtInput.value = Math.floor(round((aObject.width * scale.scaleX) / 60));
     widthInInput.value = Math.floor((aObject.width * scale.scaleX) % 60 / 5); // Math to get inches from pixels
-
+    
     posX.value = round(aObject.oCoords.mt.x);
     posY.value = round(aObject.oCoords.ml.y); // update position coordinates
-
-    notesInput.value = aObject.note;
-
+    
+    notesInput.value = aObject.note == null ? "" : aObject.note;
+    
     if (aObject.fill == 'rgba(0,0,0,0)') {
         colorInput.value = aObject.stroke;
     } else {
         colorInput.value = aObject.fill;
+        updateSVGColor(aObject.fill);
     }
     
     // Update lock/unlock icon
     let locked = (!aObject.hasControls) ? true : false;
     $("lock-icon").src = locked ? "img/svg_icons/lock.svg" : "img/svg_icons/unlock.svg"
-
+    
     // Update the peer client
     /**
-     * To maintain a good latency, the latency was adjusted in accorddance to the time taken for the following function calls
-     *
-     // let start = performance.now();
-     // let canvasJSON = JSON.stringify(canvas.toJSON(['lockMovementX', 'lockMovementY', 'note', 'hasControls', 'hasBorders']));
-     // conn.send(canvasJSON);
-     // canvas.loadFromJSON(canvasJSON);
-     // let end = performance.now();
-     //
-     // end-start;
-     */
+    * To maintain a good latency, the latency was adjusted in accorddance to the time taken for the following function calls
+    *
+    // let start = performance.now();
+    // let canvasJSON = JSON.stringify(canvas.toJSON(['lockMovementX', 'lockMovementY', 'note', 'hasControls', 'hasBorders']));
+    // conn.send(canvasJSON);
+    // canvas.loadFromJSON(canvasJSON);
+    // let end = performance.now();
+    //
+    // end-start;
+    */
     if (conn) {
         let currTime = new Date().getTime();
         if (currTime - intervalTime >= 25) {
@@ -429,9 +447,9 @@ function updateControls() {
 }
 
 /**
- * Toggle object inputs.
- * @param {boolean} toggle enable/disable object inputs 
- */
+* Toggle object inputs.
+* @param {boolean} toggle enable/disable object inputs 
+*/
 function enableInputs(toggle) {
     var inputs = document.querySelectorAll('input[type=number], input[type=color]');
     for (target of inputs) {
@@ -472,8 +490,8 @@ $('front-icon').onclick = function() {
 }
 
 /**
- * Update object when length ft input box changes
- */
+* Update object when length ft input box changes
+*/
 lenFtInput.oninput = function() {
     if (!canvas.getActiveObject()) {
         return;
@@ -481,21 +499,21 @@ lenFtInput.oninput = function() {
     var aObject = canvas.getActiveObject();
     var scale = aObject.getObjectScaling();
     var currFt = lenFtInput.value / scale.scaleY * 60;
-
-        switch (aObject.type) {
-            case 'ellipse':
-                aObject.set('ry', (currFt + (lenInInput.value * 5)) / 2); // Divide by 2 for diameter instead of radius
-                break;
-            case 'rect':
-                aObject.set('height', currFt + (lenInInput.value * 5));
-                break;
-        }
-        canvas.requestRenderAll();
+    
+    switch (aObject.type) {
+        case 'ellipse':
+        aObject.set('ry', (currFt + (lenInInput.value * 5)) / 2); // Divide by 2 for diameter instead of radius
+        break;
+        case 'rect':
+        aObject.set('height', currFt + (lenInInput.value * 5));
+        break;
+    }
+    canvas.requestRenderAll();
 }
 
 /**
- * Update object in when length inch input box changes
- */
+* Update object in when length inch input box changes
+*/
 lenInInput.oninput = function() {
     if (!canvas.getActiveObject()) {
         return;
@@ -503,21 +521,21 @@ lenInInput.oninput = function() {
     var aObject = canvas.getActiveObject();
     var scale = aObject.getObjectScaling();
     var currIn = lenInInput.value / scale.scaleY * 5;
-
+    
     switch (aObject.type) {
         case 'ellipse':
-            aObject.set('ry', (currIn + (lenFtInput.value * 60)) / 2); // Divide by 2 for diameter instead of radius
-            break;
+        aObject.set('ry', (currIn + (lenFtInput.value * 60)) / 2); // Divide by 2 for diameter instead of radius
+        break;
         case 'rect':
-            aObject.set('height', currIn + (lenFtInput.value * 60));
-            break;
+        aObject.set('height', currIn + (lenFtInput.value * 60));
+        break;
     }
     canvas.requestRenderAll();
 }
 
 /**
- * Update object when width ft input box changes
- */
+* Update object when width ft input box changes
+*/
 widthFtInput.oninput = function() {
     if (!canvas.getActiveObject()) {
         return;
@@ -525,23 +543,23 @@ widthFtInput.oninput = function() {
     var aObject = canvas.getActiveObject();
     var scale = aObject.getObjectScaling();
     var currFt = widthFtInput.value / scale.scaleX * 60;
-
+    
     switch (aObject.type) {
         case 'ellipse':
-            aObject.set('rx', (currFt + (widthInInput.value * 5)) / 2); // Divide by 2 for diameter instead of radius
-            break;
+        aObject.set('rx', (currFt + (widthInInput.value * 5)) / 2); // Divide by 2 for diameter instead of radius
+        break;
         case 'rect':
-            aObject.set('width', currFt + (widthInInput.value * 5));
-            break;
+        aObject.set('width', currFt + (widthInInput.value * 5));
+        break;
         case 'polygon':
-            break;
+        break;
     }
     canvas.requestRenderAll();
 }
 
 /**
- * Update object when width inch input box changes
- */
+* Update object when width inch input box changes
+*/
 widthInInput.oninput = function() {
     if (!canvas.getActiveObject()) {
         return;
@@ -549,33 +567,36 @@ widthInInput.oninput = function() {
     var aObject = canvas.getActiveObject();
     var scale = aObject.getObjectScaling();
     var currIn = widthInInput.value / scale.scaleY * 5;
-
+    
     switch (aObject.type) {
         case 'ellipse':
-            aObject.set('ry', (currIn + (widthFtInput.value * 60)) / 2); // Divide by 2 for diameter instead of radius
-            break;
+        aObject.set('ry', (currIn + (widthFtInput.value * 60)) / 2); // Divide by 2 for diameter instead of radius
+        break;
         case 'rect':
-            aObject.set('width', currIn + (widthFtInput.value * 60));
-            break;
+        aObject.set('width', currIn + (widthFtInput.value * 60));
+        break;
         case 'polygon':
-            break;
+        break;
     }
     canvas.requestRenderAll();
 }
 
-colorInput.oninput = function() {
-    let color = colorInput.value; // just done to prevent unneeded back and forth scoping
+function updateSVGColor(color) {
     var shapeFills = document.getElementsByClassName('shape-fill');
     for (let shape in shapeFills) {
         if (shapeFills.hasOwnProperty(shape)) {
             shapeFills[shape].style.fill = color;
         }
     }
+}
 
+colorInput.oninput = function() {
+    let color = colorInput.value; // just done to prevent unneeded back and forth scoping
+    updateSVGColor(color);
     if (!canvas.getActiveObject()) {
         return;
     }
-
+    
     var aObjects = canvas.getActiveObjects();
     for (var aObject of aObjects) {
         if (aObject.fill == 'rgba(0,0,0,0)') {
@@ -629,23 +650,23 @@ canvas.on('mouse:wheel', function(opt) {
     canvas.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
     opt.e.preventDefault();
     opt.e.stopPropagation();
-
+    
     // Restict from panning outside the grid
     var vpt = this.viewportTransform;
     if (zoom < 400 / 1000) {
         vpt[4] = 200 - 1000 * zoom / 2;
         vpt[5] = 200 - 1000 * zoom / 2;
     } else {
-    if (vpt[4] >= 0) {
-        vpt[4] = 0;
-    } else if (vpt[4] < canvas.getWidth() - 1000 * zoom) {
-        vpt[4] = canvas.getWidth() - 1000 * zoom;
-    }
-    if (vpt[5] >= 0) {
-        vpt[5] = 0;
-    } else if (vpt[5] < canvas.getHeight() - 1000 * zoom) {
-        vpt[5] = canvas.getHeight() - 1000 * zoom;
-    }
+        if (vpt[4] >= 0) {
+            vpt[4] = 0;
+        } else if (vpt[4] < canvas.getWidth() - 1000 * zoom) {
+            vpt[4] = canvas.getWidth() - 1000 * zoom;
+        }
+        if (vpt[5] >= 0) {
+            vpt[5] = 0;
+        } else if (vpt[5] < canvas.getHeight() - 1000 * zoom) {
+            vpt[5] = canvas.getHeight() - 1000 * zoom;
+        }
     }
 });
 
@@ -668,19 +689,19 @@ canvas.on('mouse:move', function(opt) {
         var vpt = this.viewportTransform;
         vpt[4] += e.clientX - this.lastPosX;
         vpt[5] += e.clientY - this.lastPosY;
-
+        
         if (this.viewportTransform[4] >=0) { // Restrict left pan
             this.viewportTransform[4] = 0;
         } if (this.viewportTransform[4] < -1750) {
             this.viewportTransform[4] = -1750;
         }
-
+        
         if (this.viewportTransform[5] >= 0) { // Restrict right pan
             this.viewportTransform[5] = 0;
         } if (this.viewportTransform[5] < -3200) {
             this.viewportTransform[5] = -3200;
         }
-
+        
         this.requestRenderAll();
         this.lastPosX = e.clientX;
         this.lastPosY = e.clientY;
@@ -714,43 +735,43 @@ document.addEventListener('keydown', e => {
         // Array of all objects excluding locked and gridlines
         allObj = canvas._objects.filter(
             obj => obj.hasControls === true
-        );
-        var sel = new fabric.ActiveSelection(allObj, {
-            canvas: canvas,
-        });
-        canvas.setActiveObject(sel);
+            );
+            var sel = new fabric.ActiveSelection(allObj, {
+                canvas: canvas,
+            });
+            canvas.setActiveObject(sel);
+        }
+        
+        var aObject = canvas.getActiveObject();
+        if (e.key === 'ArrowLeft' && !e.shiftKey) {
+            aObject.left -= 5;
+        }
+        if (e.key === 'ArrowRight' && !e.shiftKey) {
+            aObject.left += 5;
+        }
+        if (e.key === 'ArrowUp' && !e.shiftKey) {
+            aObject.top -= 5;
+        }
+        if (e.key === 'ArrowDown' && !e.shiftKey) {
+            aObject.top += 5;
+        }
+        
+        if(e.key === 'ArrowLeft' && e.shiftKey) {
+            aObject.rotate(aObject.angle-5);
+        }
+        if(e.key === 'ArrowRight' && e.shiftKey) {
+            aObject.rotate(aObject.angle+5);
+        }
+        if(e.key === 'ArrowDown' && e.shiftKey || e.key === 'ArrowUp' && e.shiftKey) {
+            aObject.rotate(aObject.angle+180);
+        }
+        
+        if (e.key === 'c' && e.ctrlKey) {
+            cloneObject(null, aObject);
+        }
+        canvas.requestRenderAll();
+    });
+    
+    window.onload = function() {
+        document.body.classList.remove("preload");
     }
-
-    var aObject = canvas.getActiveObject();
-    if (e.key === 'ArrowLeft' && !e.shiftKey) {
-        aObject.left -= 5;
-    }
-    if (e.key === 'ArrowRight' && !e.shiftKey) {
-        aObject.left += 5;
-    }
-    if (e.key === 'ArrowUp' && !e.shiftKey) {
-        aObject.top -= 5;
-    }
-    if (e.key === 'ArrowDown' && !e.shiftKey) {
-        aObject.top += 5;
-    }
-
-    if(e.key === 'ArrowLeft' && e.shiftKey) {
-        aObject.rotate(aObject.angle-5);
-    }
-    if(e.key === 'ArrowRight' && e.shiftKey) {
-        aObject.rotate(aObject.angle+5);
-    }
-    if(e.key === 'ArrowDown' && e.shiftKey || e.key === 'ArrowUp' && e.shiftKey) {
-        aObject.rotate(aObject.angle+180);
-    }
-
-    if (e.key === 'c' && e.ctrlKey) {
-        cloneObject(null, aObject);
-    }
-    canvas.requestRenderAll();
-});
-
-window.onload = function() {
-    document.body.classList.remove("preload");
-}
