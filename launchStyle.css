@@ -71,7 +71,7 @@ hr.rounded {
 .social {
     justify-content:end;
     align-items: center;
-    padding-left: 620px;
+    padding-left: 660px;
     padding-top: 10px;
 }
 
@@ -80,7 +80,7 @@ hr.rounded {
     font-size: 65px;
     text-decoration: solid;
     padding-top: 65px;
-    padding-left: 400px;
+    padding-left: 430px;
     text-align:justify;
     text-shadow: 0 -1px 10px #FFF, 0 -20px 80px rgb(255, 230, 0), 0 -20px 100px #ff8800, 0 -50px 250px #F00;
     }
@@ -137,7 +137,7 @@ hr.rounded {
 .imga {
     text-align: center;
     padding-top: 10%;
-    padding-left: 490px;
+    padding-left: 470px;
 }
 
 #myBtn {
