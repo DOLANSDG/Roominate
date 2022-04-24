@@ -2,67 +2,161 @@
 body {
     height: 100%;
     font-family: Ubuntu-Bold;
-    background-color: #efd9ce;
+    background-color:#EFD9CE;
 
 }
+
+
+.center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -145%);
+}
+
+/* Navbar style */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    padding: 20px;
+}
+
+.bottomnav {
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    padding: 20px;
+}
+
+
+hr.rounded {
+    border-top: 4px solid #C6A795;
+    border-radius: 2px;
+  }
+
+.logo {
+    float:left;
+}
+.logoanother {
+    float: right;
+}
+
+.fa {
+    padding: 10px;
+    font-size: 100px;
+    width: 15px;
+    text-align: center;
+    text-decoration: none;
+    margin: 5px 2px;
+    border-radius: 50%;
+}
+  
+.fa:hover {
+    opacity: 0.7;
+}
+
+.fa-youtube {
+    background: #bb0000;
+    color: white;
+    justify-content: center;
+
+}
+  
+.fa-instagram {
+    background: #07144E;
+    color: white;
+    justify-content: center;
+}
+
+.social {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
+}
+
+#demotext {
+    color: #07144e;
+    font-size: 65px;
+    text-decoration: solid;
+    text-align:center;
+    padding-top: 25px;
+    text-shadow: 0 -1px 10px #FFF, 0 -20px 80px rgb(255, 230, 0), 0 -20px 100px #ff8800, 0 -50px 250px #F00;
+    }
+
+#demotextlarger {
+    color: #07144e;
+    font-size: 70px;
+    text-decoration: solid;
+    text-align:center;
+    padding-top: 10px;
+    text-shadow: 0 -1px 10px #FFF, 0 -20px 80px rgb(255, 230, 0), 0 -20px 100px #ff8800, 0 -50px 250px #F00;
+}
+
+
 .button {
-    background-color: #efd9ce;
+    background-color: #c6a795; 
     border: none;
-    color: rgb(22, 21, 21);
-    padding: 15px 32px;
+    color: #EFD9CE;
+    padding: 16px 32px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
-    padding: 15px 50px;
-    margin: 0 auto;
-    cursor: pointer;
-    outline: none;
-    overflow: hidden;
-    position: relative;
- 
-}
-
-.button span {
-    position: relative;
-    z-index: 1;
-  }
-
-.button:hover {
+    font-size: 30px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
     cursor: pointer;
 }
 
-.button:hover:after {
-    -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
-    transform: translateX(-9%) translateY(-25%) rotate(45deg);
-}
-
-.button:active {
-    background: #07144e; 
-}
-
-.button:after {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 470%;
-    width: 140%;
-    background: #bc96e6;
-    -webkit-transition: all .5s ease-in-out;
-    transition: all .5s ease-in-out;
-    -webkit-transform: translateX(-100%) translateY(-25%) rotate(45deg);
-    transform: translateX(-100%) translateY(-25%) rotate(45deg);
+.b1 {
+    background-color: #EFD9CE; 
+    color: #07144e; 
   }
-
-.container {
-    position: absolute;
-    top: 10%;
-  }
-
   
+.b1:hover {
+    background-color: #c6a795;
+    color: #EFD9CE;
+}
+.para {
+    color: #07144e;
+    font-size: 20px;
+    text-decoration: solid;
+    text-align: center;  
+}
 
+.paraanother {
+    color: #07144e;
+    text-decoration: solid;
+    text-align: center; 
+    font-size: 45px; 
+    text-shadow: 0 -1px 10px #FFF, 0 -20px 100px rgb(255, 230, 0), 0 -20px 150px #fa7900, 0 -50px 400px rgb(226, 0, 0);
+}
 
+.imga {
+    text-align: center;
+    padding-top: 10%;
+    padding-left: 510px;
+}
 
-
-
+#myBtn {
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed/sticky position */
+    bottom: 20px; /* Place the button at the bottom of the page */
+    right: 30px; /* Place the button 30px from the right */
+    z-index: 99; /* Make sure it does not overlap */
+    border: none; /* Remove borders */
+    outline: none; /* Remove outline */
+    background-color: #bc96e6; /* Set a background color */
+    color: #efd9ce; /* Text color */
+    cursor: pointer; /* Add a mouse pointer on hover */
+    padding: 15px; /* Some padding */
+    border-radius: 10px; /* Rounded corners */
+    font-size: 18px; /* Increase font size */
+  }
+  
+  #myBtn:hover {
+    background-color: #731dd8; /* Add a dark-grey background on hover */
+  }
