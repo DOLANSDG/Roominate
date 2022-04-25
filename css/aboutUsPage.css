@@ -9,11 +9,7 @@
   }
  
   .logo {
-    height: 80px;
-    width: 160px;
-    background-image: url(img/logo.png);
     background-size: cover;
-    display:inline-flexbox;
   }
 
   .dropdown {
@@ -130,3 +126,4 @@
     background-color: #bc96e6;
     text-shadow: 2px 3px 0 white;
   }
+  

@@ -1,6 +1,7 @@
 body{
-    margin:0 ;
-    background-color: white;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 18px;
+    background-color: #d6bff0;
     margin: 0;
     color: white;
 }
@@ -67,7 +68,7 @@ body{
 .left-text {
     width: 80%;
     text-align: center;
-    text-shadow: 1px 1px #07144e;
+    color: #731dd8;
 }
 
 .video {
@@ -98,7 +99,7 @@ body{
     margin: left;
     border: none;
     outline: none;
-    background-color: #07144e;
+    background-color: #C6A795;
     text-align: left;
     color: white;
     -webkit-border-radius: 10px 10px 0px 0px;
