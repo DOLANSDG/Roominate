@@ -1,7 +1,7 @@
 body{
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     font-size: 18px;
-    background-color: #d6bff0;
+    background-color: #C6A795;
     margin: 0;
     color: white;
 }
@@ -58,7 +58,7 @@ body{
 .left {
     left: 0;
     padding: 10px 10px 10px 10px;
-    background-color: #d6bff0;
+    background-color: #C6A795;
     overflow: hidden;
     margin-right: auto;
     margin-left: auto;
@@ -68,7 +68,9 @@ body{
 .left-text {
     width: 80%;
     text-align: center;
-    color: #731dd8;
+    color: #324286;
+    font-size: 20px;
+    text-decoration: solid;
 }
 
 .video {
@@ -116,10 +118,49 @@ body{
   padding: 0 18px;
   display: none;
   overflow: hidden;
-  background-color: white;
+  background-color: #324286;
   color: #797979;
   width: auto;
   font-family: 'Arial Narrow Bold', sans-serif;
   -webkit-border-radius: 0px 0px 10px 10px;
   border-radius: 0px 0px 10px 10px;
+}
+
+
+.accordion {
+  background-color: #C6A795;
+  color: #e7d7ce;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  transition: 0.4s;
+}
+
+.active, .accordion:hover {
+  background-color: #324286;
+}
+
+.accordion:after {
+  content: '\002B';
+  color: #324286;
+  font-weight: bold;
+  
+  float: right;
+  margin-left: 5px;
+}
+
+.active:after {
+  content: "\2212";
+}
+
+.panel {
+  padding: 0 18px;
+  background-color: #e7d7ce;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
 }
