@@ -570,7 +570,7 @@ widthInInput.oninput = function() {
     
     switch (aObject.type) {
         case 'ellipse':
-        aObject.set('ry', (currIn + (widthFtInput.value * 60)) / 2); // Divide by 2 for diameter instead of radius
+        aObject.set('rx', (currIn + (widthFtInput.value * 60)) / 2); // Divide by 2 for diameter instead of radius
         break;
         case 'rect':
         aObject.set('width', currIn + (widthFtInput.value * 60));
